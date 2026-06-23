@@ -31,6 +31,8 @@ public class NewsItem
     public int CategoryColorHex { get; set; }
     public string ImageUrl { get; set; } = string.Empty;
     public DateTime PublishedAt { get; set; }
+    public bool IsFeatured { get; set; }
+    public string PublishStatus { get; set; } = "Published";
 }
 
 public class EventItem
@@ -39,6 +41,8 @@ public class EventItem
     public DateTime EventDate { get; set; }
     public string TimeValue { get; set; } = string.Empty;
     public int? OrganizerUserId { get; set; }
+    public string? CommitteeKey { get; set; }
+    public bool IsPublic { get; set; } = true;
     public ICollection<EventRegistration> Registrations { get; set; } = [];
 }
 
@@ -103,6 +107,7 @@ public class ChatMessage
     public int? SenderUserId { get; set; }
     public string SenderNameKey { get; set; } = string.Empty;
     public bool IsAnnouncement { get; set; }
+    public bool IsHidden { get; set; }
     public DateTime SentAt { get; set; }
 }
 
@@ -129,6 +134,8 @@ public class Document
     public string CategoryKey { get; set; } = string.Empty;
     public DateTime DocumentDate { get; set; }
     public string FileSize { get; set; } = string.Empty;
+    public string FileUrl { get; set; } = string.Empty;
+    public string AccessLevel { get; set; } = "Public";
 }
 
 public class CouncilModule
@@ -148,6 +155,7 @@ public class CouncilMeeting
     public int Tasks { get; set; }
     public int Attachments { get; set; }
     public bool IsLatest { get; set; }
+    public string? MinutesFileUrl { get; set; }
 }
 
 public class CouncilListItem
@@ -191,6 +199,16 @@ public class ContactSubmission
     public string Subject { get; set; } = string.Empty;
     public string Message { get; set; } = string.Empty;
     public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
+    public bool IsRead { get; set; }
+}
+
+public class PasswordResetRequest
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string Email { get; set; } = string.Empty;
+    public DateTime RequestedAt { get; set; } = DateTime.UtcNow;
+    public bool IsResolved { get; set; }
 }
 
 public class AppSetting

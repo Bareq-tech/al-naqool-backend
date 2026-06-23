@@ -45,7 +45,7 @@ public static class DataSeeder
         var en = JsonDocument.Parse(enJson).RootElement;
         var ar = JsonDocument.Parse(arJson).RootElement;
 
-        foreach (var role in new[] { AppRoles.Admin, AppRoles.Member, AppRoles.Guest })
+        foreach (var role in AppRoles.All)
         {
             if (!await roleManager.RoleExistsAsync(role))
             {
@@ -65,7 +65,8 @@ public static class DataSeeder
             DateOfBirth = "March 15, 1985",
             MaritalStatus = "Married",
             ChildrenCount = 3,
-            EmailConfirmed = true
+            EmailConfirmed = true,
+            AccountStatus = AccountStatuses.Active
         };
         await userManager.CreateAsync(ahmed, "password123");
         await userManager.AddToRoleAsync(ahmed, AppRoles.Member);
@@ -78,7 +79,8 @@ public static class DataSeeder
             DisplayRole = "Administrator",
             MemberId = "ADMIN-001",
             Branch = "Al Naqool",
-            EmailConfirmed = true
+            EmailConfirmed = true,
+            AccountStatus = AccountStatuses.Active
         };
         await userManager.CreateAsync(admin, "Admin123!");
         await userManager.AddToRoleAsync(admin, AppRoles.Admin);
@@ -112,6 +114,51 @@ public static class DataSeeder
         SaveAppSetting(db, AppSettingKeys.GalleryTypes, en, ar, "galleryTypes");
         SaveAppSetting(db, AppSettingKeys.DocumentCategories, en, ar, "documentCategories");
         SaveAppSetting(db, AppSettingKeys.DirectoryBranches, en, ar, "directoryBranches");
+        db.AppSettings.Add(new AppSetting
+        {
+            Key = AppSettingKeys.TermsAndConditions,
+            ValueJson = JsonSerializer.Serialize(new Dictionary<string, string>
+            {
+                ["en"] = "By registering you agree to the family app terms and privacy policy.",
+                ["ar"] = "بالتسجيل فإنك توافق على شروط تطبيق العائلة وسياسة الخصوصية."
+            })
+        });
+        db.AppSettings.Add(new AppSetting
+        {
+            Key = AppSettingKeys.GuestPermissions,
+            ValueJson = JsonSerializer.Serialize(new
+            {
+                news = true,
+                events = true,
+                gallery = true,
+                documents = false,
+                council = false,
+                messages = false,
+                directory = true,
+                familyTree = true
+            })
+        });
+        db.AppSettings.Add(new AppSetting
+        {
+            Key = AppSettingKeys.AppBranding,
+            ValueJson = JsonSerializer.Serialize(new
+            {
+                appNameEn = "Bareq Al Naqool",
+                appNameAr = "بريق النقول",
+                logoUrl = string.Empty,
+                primaryColorHex = "0x1B4D3E"
+            })
+        });
+        db.AppSettings.Add(new AppSetting
+        {
+            Key = AppSettingKeys.QuickAccessTiles,
+            ValueJson = JsonSerializer.Serialize(new[]
+            {
+                new { key = "news", labelEn = "News", labelAr = "الأخبار", iconName = "newspaper", route = "/news", sortOrder = 1 },
+                new { key = "events", labelEn = "Events", labelAr = "الفعاليات", iconName = "calendar", route = "/events", sortOrder = 2 },
+                new { key = "gallery", labelEn = "Gallery", labelAr = "المعرض", iconName = "photo", route = "/gallery", sortOrder = 3 }
+            })
+        });
 
         var newsIndex = 0;
         foreach (var item in en.GetProperty("newsItems").EnumerateArray())

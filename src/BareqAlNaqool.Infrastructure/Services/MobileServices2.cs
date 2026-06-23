@@ -83,7 +83,10 @@ public class MessagesService(AppDbContext db, AppDataHelper helper) : IMessagesS
     public async Task<IReadOnlyList<ChatMessageDto>> GetChatMessagesAsync(string conversationId, int? userId, CancellationToken cancellationToken = default)
     {
         var parsedId = IdFormatter.ParseId(conversationId);
-        var messages = await db.ChatMessages.AsNoTracking().Where(x => x.ConversationId == parsedId).OrderBy(x => x.SentAt).ToListAsync(cancellationToken);
+        var messages = await db.ChatMessages.AsNoTracking()
+            .Where(x => x.ConversationId == parsedId && !x.IsHidden)
+            .OrderBy(x => x.SentAt)
+            .ToListAsync(cancellationToken);
         var result = new List<ChatMessageDto>();
         foreach (var message in messages)
         {
@@ -230,7 +233,8 @@ public class DocumentsService(AppDbContext db, AppDataHelper helper) : IDocument
             doc.FileSize,
             TranslationStore.GetString(map, "date"),
             TranslationStore.GetString(map, "category"),
-            TranslationStore.GetString(map, "description"));
+            TranslationStore.GetString(map, "description"),
+            doc.FileUrl);
     }
 }
 
@@ -464,6 +468,6 @@ public class DashboardService(AppDbContext db) : IDashboardService
             await db.Documents.CountAsync(cancellationToken),
             await db.Notifications.CountAsync(cancellationToken),
             await db.DirectoryMembers.CountAsync(cancellationToken),
-            await db.ContactSubmissions.CountAsync(cancellationToken));
+            await db.ContactSubmissions.CountAsync(x => !x.IsRead, cancellationToken));
     }
 }

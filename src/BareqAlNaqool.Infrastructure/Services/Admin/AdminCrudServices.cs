@@ -1,3 +1,4 @@
+using System.Globalization;
 using BareqAlNaqool.Application.DTOs.Admin;
 using BareqAlNaqool.Application.Interfaces;
 using BareqAlNaqool.Domain.Constants;
@@ -34,10 +35,12 @@ public class AdminNewsService(AppDbContext db) : IAdminCrudService<AdminNewsDto,
     {
         var entity = new NewsItem
         {
-            CategoryKey = dto.Category,
+            CategoryKey = dto.CategoryEn,
             CategoryColorHex = dto.CategoryColorHex,
             ImageUrl = dto.ImageUrl,
-            PublishedAt = DateTime.UtcNow
+            IsFeatured = dto.IsFeatured,
+            PublishStatus = dto.PublishStatus,
+            PublishedAt = dto.PublishedAt ?? DateTime.UtcNow
         };
         db.NewsItems.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
@@ -53,9 +56,16 @@ public class AdminNewsService(AppDbContext db) : IAdminCrudService<AdminNewsDto,
             return null;
         }
 
-        entity.CategoryKey = dto.Category;
+        entity.CategoryKey = dto.CategoryEn;
         entity.CategoryColorHex = dto.CategoryColorHex;
         entity.ImageUrl = dto.ImageUrl;
+        entity.IsFeatured = dto.IsFeatured;
+        entity.PublishStatus = dto.PublishStatus;
+        if (dto.PublishedAt.HasValue)
+        {
+            entity.PublishedAt = dto.PublishedAt.Value;
+        }
+
         await db.SaveChangesAsync(cancellationToken);
         await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
         return await MapAsync(entity, cancellationToken);
@@ -76,37 +86,40 @@ public class AdminNewsService(AppDbContext db) : IAdminCrudService<AdminNewsDto,
 
     private async Task<AdminNewsDto> MapAsync(NewsItem item, CancellationToken cancellationToken)
     {
-        var map = await TranslationStore.GetMapAsync(db, EntityTypes.NewsItem, item.Id, "en", cancellationToken);
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.NewsItem, item.Id, cancellationToken);
         return new AdminNewsDto(
             IdFormatter.ToStringId(item.Id),
-            TranslationStore.GetString(map, "category"),
-            TranslationStore.GetString(map, "title"),
-            TranslationStore.GetString(map, "description"),
-            TranslationStore.GetString(map, "body"),
-            TranslationStore.GetString(map, "publishedDate"),
+            AdminTranslationHelper.Get(en, "category"),
+            AdminTranslationHelper.Get(ar, "category"),
+            AdminTranslationHelper.Get(en, "title"),
+            AdminTranslationHelper.Get(ar, "title"),
+            AdminTranslationHelper.Get(en, "description"),
+            AdminTranslationHelper.Get(ar, "description"),
+            AdminTranslationHelper.Get(en, "body"),
+            AdminTranslationHelper.Get(ar, "body"),
+            AdminTranslationHelper.Get(en, "publishedDate"),
+            AdminTranslationHelper.Get(ar, "publishedDate"),
             item.CategoryColorHex,
-            item.ImageUrl);
+            item.ImageUrl,
+            item.IsFeatured,
+            item.PublishStatus,
+            item.PublishedAt);
     }
 
     private Task SaveTranslationsAsync(int id, AdminNewsUpdateDto dto, CancellationToken cancellationToken) =>
         SaveTranslationsAsync(id, new AdminNewsCreateDto(
-            dto.Category, dto.Title, dto.Description, dto.Body, dto.PublishedDate, dto.CategoryColorHex, dto.ImageUrl),
-            cancellationToken);
+            dto.CategoryEn, dto.CategoryAr, dto.TitleEn, dto.TitleAr, dto.DescriptionEn, dto.DescriptionAr,
+            dto.BodyEn, dto.BodyAr, dto.PublishedDateEn, dto.PublishedDateAr, dto.CategoryColorHex, dto.ImageUrl,
+            dto.IsFeatured, dto.PublishStatus, dto.PublishedAt), cancellationToken);
 
-    private async Task SaveTranslationsAsync(int id, AdminNewsCreateDto dto, CancellationToken cancellationToken)
-    {
-        var data = new
-        {
-            category = dto.Category,
-            title = dto.Title,
-            description = dto.Description,
-            body = dto.Body,
-            publishedDate = dto.PublishedDate
-        };
-        await TranslationStore.SaveAsync(db, EntityTypes.NewsItem, id, "en", data, cancellationToken);
-        await TranslationStore.SaveAsync(db, EntityTypes.NewsItem, id, "ar", data, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
-    }
+    private Task SaveTranslationsAsync(int id, AdminNewsCreateDto dto, CancellationToken cancellationToken) =>
+        AdminTranslationHelper.SaveBilingualAsync(
+            db,
+            EntityTypes.NewsItem,
+            id,
+            new { category = dto.CategoryEn, title = dto.TitleEn, description = dto.DescriptionEn, body = dto.BodyEn, publishedDate = dto.PublishedDateEn },
+            new { category = dto.CategoryAr, title = dto.TitleAr, description = dto.DescriptionAr, body = dto.BodyAr, publishedDate = dto.PublishedDateAr },
+            cancellationToken);
 }
 
 public class AdminEventsService(AppDbContext db) : IAdminCrudService<AdminEventDto, AdminEventCreateDto, AdminEventUpdateDto>
@@ -133,8 +146,11 @@ public class AdminEventsService(AppDbContext db) : IAdminCrudService<AdminEventD
     {
         var entity = new EventItem
         {
-            EventDate = DateTime.UtcNow,
-            TimeValue = dto.Time
+            EventDate = dto.EventDate,
+            TimeValue = dto.Time,
+            IsPublic = dto.IsPublic,
+            OrganizerUserId = ParseOrganizerUserId(dto.OrganizerUserId),
+            CommitteeKey = dto.CommitteeKey
         };
         db.Events.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
@@ -150,7 +166,11 @@ public class AdminEventsService(AppDbContext db) : IAdminCrudService<AdminEventD
             return null;
         }
 
+        entity.EventDate = dto.EventDate;
         entity.TimeValue = dto.Time;
+        entity.IsPublic = dto.IsPublic;
+        entity.OrganizerUserId = ParseOrganizerUserId(dto.OrganizerUserId);
+        entity.CommitteeKey = dto.CommitteeKey;
         await db.SaveChangesAsync(cancellationToken);
         await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
         return await MapAsync(entity, cancellationToken);
@@ -169,43 +189,49 @@ public class AdminEventsService(AppDbContext db) : IAdminCrudService<AdminEventD
         return true;
     }
 
+    private static int? ParseOrganizerUserId(string? value) =>
+        int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed) ? parsed : null;
+
     private async Task<AdminEventDto> MapAsync(EventItem item, CancellationToken cancellationToken)
     {
-        var map = await TranslationStore.GetMapAsync(db, EntityTypes.EventItem, item.Id, "en", cancellationToken);
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.EventItem, item.Id, cancellationToken);
         return new AdminEventDto(
             IdFormatter.ToStringId(item.Id),
-            TranslationStore.GetString(map, "day"),
-            TranslationStore.GetString(map, "month"),
-            TranslationStore.GetString(map, "title"),
-            TranslationStore.GetString(map, "location"),
-            TranslationStore.GetString(map, "time"),
-            TranslationStore.GetString(map, "fullDate"),
-            TranslationStore.GetString(map, "description"),
-            TranslationStore.GetString(map, "organizer"));
+            AdminTranslationHelper.Get(en, "day"),
+            AdminTranslationHelper.Get(ar, "day"),
+            AdminTranslationHelper.Get(en, "month"),
+            AdminTranslationHelper.Get(ar, "month"),
+            AdminTranslationHelper.Get(en, "title"),
+            AdminTranslationHelper.Get(ar, "title"),
+            AdminTranslationHelper.Get(en, "location"),
+            AdminTranslationHelper.Get(ar, "location"),
+            item.TimeValue,
+            AdminTranslationHelper.Get(en, "fullDate"),
+            AdminTranslationHelper.Get(ar, "fullDate"),
+            AdminTranslationHelper.Get(en, "description"),
+            AdminTranslationHelper.Get(ar, "description"),
+            AdminTranslationHelper.Get(en, "organizer"),
+            AdminTranslationHelper.Get(ar, "organizer"),
+            item.IsPublic,
+            item.OrganizerUserId?.ToString(CultureInfo.InvariantCulture),
+            item.CommitteeKey,
+            item.EventDate);
     }
 
     private Task SaveTranslationsAsync(int id, AdminEventUpdateDto dto, CancellationToken cancellationToken) =>
         SaveTranslationsAsync(id, new AdminEventCreateDto(
-            dto.Day, dto.Month, dto.Title, dto.Location, dto.Time, dto.FullDate, dto.Description, dto.Organizer),
-            cancellationToken);
+            dto.DayEn, dto.DayAr, dto.MonthEn, dto.MonthAr, dto.TitleEn, dto.TitleAr, dto.LocationEn, dto.LocationAr,
+            dto.Time, dto.FullDateEn, dto.FullDateAr, dto.DescriptionEn, dto.DescriptionAr, dto.OrganizerEn, dto.OrganizerAr,
+            dto.IsPublic, dto.OrganizerUserId, dto.CommitteeKey, dto.EventDate), cancellationToken);
 
-    private async Task SaveTranslationsAsync(int id, AdminEventCreateDto dto, CancellationToken cancellationToken)
-    {
-        var data = new
-        {
-            dto.Day,
-            dto.Month,
-            dto.Title,
-            dto.Location,
-            time = dto.Time,
-            dto.FullDate,
-            dto.Description,
-            dto.Organizer
-        };
-        await TranslationStore.SaveAsync(db, EntityTypes.EventItem, id, "en", data, cancellationToken);
-        await TranslationStore.SaveAsync(db, EntityTypes.EventItem, id, "ar", data, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
-    }
+    private Task SaveTranslationsAsync(int id, AdminEventCreateDto dto, CancellationToken cancellationToken) =>
+        AdminTranslationHelper.SaveBilingualAsync(
+            db,
+            EntityTypes.EventItem,
+            id,
+            new { day = dto.DayEn, month = dto.MonthEn, title = dto.TitleEn, location = dto.LocationEn, time = dto.Time, fullDate = dto.FullDateEn, description = dto.DescriptionEn, organizer = dto.OrganizerEn },
+            new { day = dto.DayAr, month = dto.MonthAr, title = dto.TitleAr, location = dto.LocationAr, time = dto.Time, fullDate = dto.FullDateAr, description = dto.DescriptionAr, organizer = dto.OrganizerAr },
+            cancellationToken);
 }
 
 public class AdminBranchesService(AppDbContext db) : IAdminCrudService<AdminBranchDto, AdminBranchCreateDto, AdminBranchUpdateDto>
@@ -271,25 +297,28 @@ public class AdminBranchesService(AppDbContext db) : IAdminCrudService<AdminBran
 
     private async Task<AdminBranchDto> MapAsync(FamilyBranch item, CancellationToken cancellationToken)
     {
-        var map = await TranslationStore.GetMapAsync(db, EntityTypes.FamilyBranch, item.Id, "en", cancellationToken);
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.FamilyBranch, item.Id, cancellationToken);
         return new AdminBranchDto(
             IdFormatter.ToStringId(item.Id),
-            TranslationStore.GetString(map, "name"),
+            AdminTranslationHelper.Get(en, "name"),
+            AdminTranslationHelper.Get(ar, "name"),
             item.MemberCount,
-            TranslationStore.GetString(map, "description"),
+            AdminTranslationHelper.Get(en, "description"),
+            AdminTranslationHelper.Get(ar, "description"),
             item.ImageUrl);
     }
 
     private Task SaveTranslationsAsync(int id, AdminBranchUpdateDto dto, CancellationToken cancellationToken) =>
-        SaveTranslationsAsync(id, new AdminBranchCreateDto(dto.Name, dto.MemberCount, dto.Description, dto.ImageUrl), cancellationToken);
+        SaveTranslationsAsync(id, new AdminBranchCreateDto(dto.NameEn, dto.NameAr, dto.MemberCount, dto.DescriptionEn, dto.DescriptionAr, dto.ImageUrl), cancellationToken);
 
-    private async Task SaveTranslationsAsync(int id, AdminBranchCreateDto dto, CancellationToken cancellationToken)
-    {
-        var data = new { name = dto.Name, description = dto.Description };
-        await TranslationStore.SaveAsync(db, EntityTypes.FamilyBranch, id, "en", data, cancellationToken);
-        await TranslationStore.SaveAsync(db, EntityTypes.FamilyBranch, id, "ar", data, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
-    }
+    private Task SaveTranslationsAsync(int id, AdminBranchCreateDto dto, CancellationToken cancellationToken) =>
+        AdminTranslationHelper.SaveBilingualAsync(
+            db,
+            EntityTypes.FamilyBranch,
+            id,
+            new { name = dto.NameEn, description = dto.DescriptionEn },
+            new { name = dto.NameAr, description = dto.DescriptionAr },
+            cancellationToken);
 }
 
 public class AdminAlbumsService(AppDbContext db) : IAdminCrudService<AdminAlbumDto, AdminAlbumCreateDto, AdminAlbumUpdateDto>
@@ -319,7 +348,7 @@ public class AdminAlbumsService(AppDbContext db) : IAdminCrudService<AdminAlbumD
             PhotoCount = dto.PhotoCount,
             ImageUrl = dto.ImageUrl,
             IsFeatured = dto.IsFeatured,
-            GalleryTypeKey = "Albums"
+            GalleryTypeKey = dto.GalleryTypeKey
         };
         db.Albums.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
@@ -338,6 +367,7 @@ public class AdminAlbumsService(AppDbContext db) : IAdminCrudService<AdminAlbumD
         entity.PhotoCount = dto.PhotoCount;
         entity.ImageUrl = dto.ImageUrl;
         entity.IsFeatured = dto.IsFeatured;
+        entity.GalleryTypeKey = dto.GalleryTypeKey;
         await db.SaveChangesAsync(cancellationToken);
         await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
         return await MapAsync(entity, cancellationToken);
@@ -358,26 +388,32 @@ public class AdminAlbumsService(AppDbContext db) : IAdminCrudService<AdminAlbumD
 
     private async Task<AdminAlbumDto> MapAsync(Album item, CancellationToken cancellationToken)
     {
-        var map = await TranslationStore.GetMapAsync(db, EntityTypes.Album, item.Id, "en", cancellationToken);
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.Album, item.Id, cancellationToken);
         return new AdminAlbumDto(
             IdFormatter.ToStringId(item.Id),
-            TranslationStore.GetString(map, "title"),
+            AdminTranslationHelper.Get(en, "title"),
+            AdminTranslationHelper.Get(ar, "title"),
             item.PhotoCount,
             item.ImageUrl,
             item.IsFeatured,
-            TranslationStore.GetString(map, "description"));
+            AdminTranslationHelper.Get(en, "description"),
+            AdminTranslationHelper.Get(ar, "description"),
+            item.GalleryTypeKey);
     }
 
     private Task SaveTranslationsAsync(int id, AdminAlbumUpdateDto dto, CancellationToken cancellationToken) =>
-        SaveTranslationsAsync(id, new AdminAlbumCreateDto(dto.Title, dto.PhotoCount, dto.ImageUrl, dto.IsFeatured, dto.Description), cancellationToken);
+        SaveTranslationsAsync(id, new AdminAlbumCreateDto(
+            dto.TitleEn, dto.TitleAr, dto.PhotoCount, dto.ImageUrl, dto.IsFeatured, dto.DescriptionEn, dto.DescriptionAr, dto.GalleryTypeKey),
+            cancellationToken);
 
-    private async Task SaveTranslationsAsync(int id, AdminAlbumCreateDto dto, CancellationToken cancellationToken)
-    {
-        var data = new { title = dto.Title, description = dto.Description };
-        await TranslationStore.SaveAsync(db, EntityTypes.Album, id, "en", data, cancellationToken);
-        await TranslationStore.SaveAsync(db, EntityTypes.Album, id, "ar", data, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
-    }
+    private Task SaveTranslationsAsync(int id, AdminAlbumCreateDto dto, CancellationToken cancellationToken) =>
+        AdminTranslationHelper.SaveBilingualAsync(
+            db,
+            EntityTypes.Album,
+            id,
+            new { title = dto.TitleEn, description = dto.DescriptionEn },
+            new { title = dto.TitleAr, description = dto.DescriptionAr },
+            cancellationToken);
 }
 
 public class AdminDocumentsService(AppDbContext db) : IAdminCrudService<AdminDocumentDto, AdminDocumentCreateDto, AdminDocumentUpdateDto>
@@ -405,8 +441,10 @@ public class AdminDocumentsService(AppDbContext db) : IAdminCrudService<AdminDoc
         var entity = new Document
         {
             CategoryKey = dto.Category,
-            DocumentDate = DateTime.UtcNow,
-            FileSize = dto.FileSize
+            DocumentDate = ParseDocumentDate(dto.DateEn),
+            FileSize = dto.FileSize,
+            FileUrl = dto.FileUrl,
+            AccessLevel = dto.AccessLevel
         };
         db.Documents.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
@@ -423,7 +461,10 @@ public class AdminDocumentsService(AppDbContext db) : IAdminCrudService<AdminDoc
         }
 
         entity.CategoryKey = dto.Category;
+        entity.DocumentDate = ParseDocumentDate(dto.DateEn);
         entity.FileSize = dto.FileSize;
+        entity.FileUrl = dto.FileUrl;
+        entity.AccessLevel = dto.AccessLevel;
         await db.SaveChangesAsync(cancellationToken);
         await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
         return await MapAsync(entity, cancellationToken);
@@ -442,28 +483,46 @@ public class AdminDocumentsService(AppDbContext db) : IAdminCrudService<AdminDoc
         return true;
     }
 
+    private static DateTime ParseDocumentDate(string dateEn)
+    {
+        if (DateTime.TryParse(dateEn, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsed))
+        {
+            return parsed;
+        }
+
+        return DateTime.UtcNow;
+    }
+
     private async Task<AdminDocumentDto> MapAsync(Document item, CancellationToken cancellationToken)
     {
-        var map = await TranslationStore.GetMapAsync(db, EntityTypes.Document, item.Id, "en", cancellationToken);
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.Document, item.Id, cancellationToken);
         return new AdminDocumentDto(
             IdFormatter.ToStringId(item.Id),
-            TranslationStore.GetString(map, "title"),
+            AdminTranslationHelper.Get(en, "title"),
+            AdminTranslationHelper.Get(ar, "title"),
             item.FileSize,
-            TranslationStore.GetString(map, "date"),
-            TranslationStore.GetString(map, "category"),
-            TranslationStore.GetString(map, "description"));
+            AdminTranslationHelper.Get(en, "date"),
+            AdminTranslationHelper.Get(ar, "date"),
+            item.CategoryKey,
+            AdminTranslationHelper.Get(en, "description"),
+            AdminTranslationHelper.Get(ar, "description"),
+            item.FileUrl,
+            item.AccessLevel);
     }
 
     private Task SaveTranslationsAsync(int id, AdminDocumentUpdateDto dto, CancellationToken cancellationToken) =>
-        SaveTranslationsAsync(id, new AdminDocumentCreateDto(dto.Title, dto.FileSize, dto.Date, dto.Category, dto.Description), cancellationToken);
+        SaveTranslationsAsync(id, new AdminDocumentCreateDto(
+            dto.TitleEn, dto.TitleAr, dto.FileSize, dto.DateEn, dto.DateAr, dto.Category, dto.DescriptionEn, dto.DescriptionAr, dto.FileUrl, dto.AccessLevel),
+            cancellationToken);
 
-    private async Task SaveTranslationsAsync(int id, AdminDocumentCreateDto dto, CancellationToken cancellationToken)
-    {
-        var data = new { title = dto.Title, date = dto.Date, category = dto.Category, description = dto.Description };
-        await TranslationStore.SaveAsync(db, EntityTypes.Document, id, "en", data, cancellationToken);
-        await TranslationStore.SaveAsync(db, EntityTypes.Document, id, "ar", data, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
-    }
+    private Task SaveTranslationsAsync(int id, AdminDocumentCreateDto dto, CancellationToken cancellationToken) =>
+        AdminTranslationHelper.SaveBilingualAsync(
+            db,
+            EntityTypes.Document,
+            id,
+            new { title = dto.TitleEn, date = dto.DateEn, description = dto.DescriptionEn },
+            new { title = dto.TitleAr, date = dto.DateAr, description = dto.DescriptionAr },
+            cancellationToken);
 }
 
 public class AdminNotificationsService(AppDbContext db, UserManager<ApplicationUser> userManager) : IAdminCrudService<AdminNotificationDto, AdminNotificationCreateDto, AdminNotificationUpdateDto>
@@ -495,8 +554,11 @@ public class AdminNotificationsService(AppDbContext db, UserManager<ApplicationU
         };
         db.Notifications.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
-        var users = await userManager.Users.ToListAsync(cancellationToken);
-        foreach (var user in users.Where(x => !x.IsGuest))
+
+        var users = await userManager.Users
+            .Where(x => !x.IsGuest && x.AccountStatus == AccountStatuses.Active)
+            .ToListAsync(cancellationToken);
+        foreach (var user in users)
         {
             db.UserNotifications.Add(new UserNotification
             {
@@ -506,6 +568,7 @@ public class AdminNotificationsService(AppDbContext db, UserManager<ApplicationU
             });
         }
 
+        await db.SaveChangesAsync(cancellationToken);
         await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
         return await MapAsync(entity, cancellationToken);
     }
@@ -539,24 +602,27 @@ public class AdminNotificationsService(AppDbContext db, UserManager<ApplicationU
 
     private async Task<AdminNotificationDto> MapAsync(NotificationItem item, CancellationToken cancellationToken)
     {
-        var map = await TranslationStore.GetMapAsync(db, EntityTypes.NotificationItem, item.Id, "en", cancellationToken);
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.NotificationItem, item.Id, cancellationToken);
         return new AdminNotificationDto(
             IdFormatter.ToStringId(item.Id),
-            TranslationStore.GetString(map, "title"),
-            TranslationStore.GetString(map, "body"),
-            TranslationStore.GetString(map, "type"));
+            AdminTranslationHelper.Get(en, "title"),
+            AdminTranslationHelper.Get(ar, "title"),
+            AdminTranslationHelper.Get(en, "body"),
+            AdminTranslationHelper.Get(ar, "body"),
+            item.TypeKey);
     }
 
     private Task SaveTranslationsAsync(int id, AdminNotificationUpdateDto dto, CancellationToken cancellationToken) =>
-        SaveTranslationsAsync(id, new AdminNotificationCreateDto(dto.Title, dto.Body, dto.Type), cancellationToken);
+        SaveTranslationsAsync(id, new AdminNotificationCreateDto(dto.TitleEn, dto.TitleAr, dto.BodyEn, dto.BodyAr, dto.Type), cancellationToken);
 
-    private async Task SaveTranslationsAsync(int id, AdminNotificationCreateDto dto, CancellationToken cancellationToken)
-    {
-        var data = new { title = dto.Title, body = dto.Body, type = dto.Type };
-        await TranslationStore.SaveAsync(db, EntityTypes.NotificationItem, id, "en", data, cancellationToken);
-        await TranslationStore.SaveAsync(db, EntityTypes.NotificationItem, id, "ar", data, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
-    }
+    private Task SaveTranslationsAsync(int id, AdminNotificationCreateDto dto, CancellationToken cancellationToken) =>
+        AdminTranslationHelper.SaveBilingualAsync(
+            db,
+            EntityTypes.NotificationItem,
+            id,
+            new { title = dto.TitleEn, body = dto.BodyEn },
+            new { title = dto.TitleAr, body = dto.BodyAr },
+            cancellationToken);
 }
 
 public class AdminCouncilItemsService(AppDbContext db) : IAdminCrudService<AdminCouncilItemDto, AdminCouncilItemCreateDto, AdminCouncilItemUpdateDto>
@@ -622,26 +688,32 @@ public class AdminCouncilItemsService(AppDbContext db) : IAdminCrudService<Admin
 
     private async Task<AdminCouncilItemDto> MapAsync(CouncilListItem item, CancellationToken cancellationToken)
     {
-        var map = await TranslationStore.GetMapAsync(db, EntityTypes.CouncilListItem, item.Id, "en", cancellationToken);
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.CouncilListItem, item.Id, cancellationToken);
         return new AdminCouncilItemDto(
             IdFormatter.ToStringId(item.Id),
             item.ModuleKey,
-            TranslationStore.GetString(map, "title"),
-            TranslationStore.GetString(map, "subtitle"),
-            TranslationStore.GetString(map, "meta"),
-            TranslationStore.GetString(map, "status", item.StatusKey ?? string.Empty));
+            AdminTranslationHelper.Get(en, "title"),
+            AdminTranslationHelper.Get(ar, "title"),
+            AdminTranslationHelper.Get(en, "subtitle"),
+            AdminTranslationHelper.Get(ar, "subtitle"),
+            AdminTranslationHelper.Get(en, "meta"),
+            AdminTranslationHelper.Get(ar, "meta"),
+            item.StatusKey ?? AdminTranslationHelper.Get(en, "status"));
     }
 
     private Task SaveTranslationsAsync(int id, AdminCouncilItemUpdateDto dto, CancellationToken cancellationToken) =>
-        SaveTranslationsAsync(id, new AdminCouncilItemCreateDto(dto.ModuleId, dto.Title, dto.Subtitle, dto.Meta, dto.Status), cancellationToken);
+        SaveTranslationsAsync(id, new AdminCouncilItemCreateDto(
+            dto.ModuleId, dto.TitleEn, dto.TitleAr, dto.SubtitleEn, dto.SubtitleAr, dto.MetaEn, dto.MetaAr, dto.Status),
+            cancellationToken);
 
-    private async Task SaveTranslationsAsync(int id, AdminCouncilItemCreateDto dto, CancellationToken cancellationToken)
-    {
-        var data = new { title = dto.Title, subtitle = dto.Subtitle, meta = dto.Meta, status = dto.Status };
-        await TranslationStore.SaveAsync(db, EntityTypes.CouncilListItem, id, "en", data, cancellationToken);
-        await TranslationStore.SaveAsync(db, EntityTypes.CouncilListItem, id, "ar", data, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
-    }
+    private Task SaveTranslationsAsync(int id, AdminCouncilItemCreateDto dto, CancellationToken cancellationToken) =>
+        AdminTranslationHelper.SaveBilingualAsync(
+            db,
+            EntityTypes.CouncilListItem,
+            id,
+            new { title = dto.TitleEn, subtitle = dto.SubtitleEn, meta = dto.MetaEn, status = dto.Status ?? string.Empty },
+            new { title = dto.TitleAr, subtitle = dto.SubtitleAr, meta = dto.MetaAr, status = dto.Status ?? string.Empty },
+            cancellationToken);
 }
 
 public class AdminDirectoryService(AppDbContext db) : IAdminCrudService<AdminDirectoryMemberDto, AdminDirectoryMemberCreateDto, AdminDirectoryMemberUpdateDto>
@@ -709,35 +781,50 @@ public class AdminDirectoryService(AppDbContext db) : IAdminCrudService<AdminDir
 
     private async Task<AdminDirectoryMemberDto> MapAsync(DirectoryMember item, CancellationToken cancellationToken)
     {
-        var map = await TranslationStore.GetMapAsync(db, EntityTypes.DirectoryMember, item.Id, "en", cancellationToken);
-        var branchMap = await TranslationStore.GetMapAsync(db, EntityTypes.FamilyBranch, item.BranchId, "en", cancellationToken);
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.DirectoryMember, item.Id, cancellationToken);
+        var (branchEn, branchAr) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.FamilyBranch, item.BranchId, cancellationToken);
         return new AdminDirectoryMemberDto(
             IdFormatter.ToStringId(item.Id),
-            TranslationStore.GetString(map, "name"),
-            TranslationStore.GetString(map, "role"),
+            AdminTranslationHelper.Get(en, "name"),
+            AdminTranslationHelper.Get(ar, "name"),
+            AdminTranslationHelper.Get(en, "role"),
+            AdminTranslationHelper.Get(ar, "role"),
             IdFormatter.ToStringId(item.BranchId),
-            TranslationStore.GetString(map, "branchName", TranslationStore.GetString(branchMap, "name")),
+            AdminTranslationHelper.Get(branchEn, "name"),
+            AdminTranslationHelper.Get(branchAr, "name"),
             item.Phone,
             item.Email,
-            TranslationStore.GetString(map, "city"));
+            AdminTranslationHelper.Get(en, "city"),
+            AdminTranslationHelper.Get(ar, "city"));
     }
 
     private Task SaveTranslationsAsync(DirectoryMember entity, AdminDirectoryMemberUpdateDto dto, CancellationToken cancellationToken) =>
-        SaveTranslationsAsync(entity, new AdminDirectoryMemberCreateDto(dto.Name, dto.Role, dto.BranchId, dto.Phone, dto.Email, dto.City), cancellationToken);
+        SaveTranslationsAsync(entity, new AdminDirectoryMemberCreateDto(
+            dto.NameEn, dto.NameAr, dto.RoleEn, dto.RoleAr, dto.BranchId, dto.Phone, dto.Email, dto.CityEn, dto.CityAr),
+            cancellationToken);
 
     private async Task SaveTranslationsAsync(DirectoryMember entity, AdminDirectoryMemberCreateDto dto, CancellationToken cancellationToken)
     {
-        var branchMap = await TranslationStore.GetMapAsync(db, EntityTypes.FamilyBranch, entity.BranchId, "en", cancellationToken);
-        var data = new
-        {
-            name = dto.Name,
-            role = dto.Role,
-            branchName = TranslationStore.GetString(branchMap, "name"),
-            city = dto.City
-        };
-        await TranslationStore.SaveAsync(db, EntityTypes.DirectoryMember, entity.Id, "en", data, cancellationToken);
-        await TranslationStore.SaveAsync(db, EntityTypes.DirectoryMember, entity.Id, "ar", data, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
+        var (branchEn, branchAr) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.FamilyBranch, entity.BranchId, cancellationToken);
+        await AdminTranslationHelper.SaveBilingualAsync(
+            db,
+            EntityTypes.DirectoryMember,
+            entity.Id,
+            new
+            {
+                name = dto.NameEn,
+                role = dto.RoleEn,
+                branchName = AdminTranslationHelper.Get(branchEn, "name"),
+                city = dto.CityEn
+            },
+            new
+            {
+                name = dto.NameAr,
+                role = dto.RoleAr,
+                branchName = AdminTranslationHelper.Get(branchAr, "name"),
+                city = dto.CityAr
+            },
+            cancellationToken);
     }
 }
 
@@ -767,10 +854,16 @@ public class AdminUsersService(UserManager<ApplicationUser> userManager) : IAdmi
         {
             UserName = dto.Username,
             Email = dto.Email,
+            PhoneNumber = dto.Phone,
             FullName = dto.FullName,
             DisplayRole = dto.Role,
             MemberId = dto.MemberId,
             Branch = dto.Branch,
+            DateOfBirth = dto.DateOfBirth,
+            MaritalStatus = dto.MaritalStatus,
+            ChildrenCount = dto.ChildrenCount,
+            AccountStatus = dto.AccountStatus,
+            IsGuest = dto.Role == AppRoles.Guest,
             EmailConfirmed = true
         };
         var result = await userManager.CreateAsync(user, dto.Password);
@@ -779,8 +872,7 @@ public class AdminUsersService(UserManager<ApplicationUser> userManager) : IAdmi
             throw new InvalidOperationException(string.Join("; ", result.Errors.Select(x => x.Description)));
         }
 
-        var role = dto.Role.Contains("Admin", StringComparison.OrdinalIgnoreCase) ? AppRoles.Admin : AppRoles.Member;
-        await userManager.AddToRoleAsync(user, role);
+        await AssignRoleAsync(user, dto.Role);
         return await MapAsync(user);
     }
 
@@ -793,10 +885,16 @@ public class AdminUsersService(UserManager<ApplicationUser> userManager) : IAdmi
         }
 
         user.Email = dto.Email;
+        user.PhoneNumber = dto.Phone;
         user.FullName = dto.FullName;
         user.DisplayRole = dto.Role;
         user.MemberId = dto.MemberId;
         user.Branch = dto.Branch;
+        user.DateOfBirth = dto.DateOfBirth;
+        user.MaritalStatus = dto.MaritalStatus;
+        user.ChildrenCount = dto.ChildrenCount;
+        user.AccountStatus = dto.AccountStatus;
+        user.IsGuest = dto.Role == AppRoles.Guest;
         await userManager.UpdateAsync(user);
         if (!string.IsNullOrWhiteSpace(dto.Password))
         {
@@ -804,6 +902,7 @@ public class AdminUsersService(UserManager<ApplicationUser> userManager) : IAdmi
             await userManager.AddPasswordAsync(user, dto.Password);
         }
 
+        await AssignRoleAsync(user, dto.Role);
         return await MapAsync(user);
     }
 
@@ -819,17 +918,40 @@ public class AdminUsersService(UserManager<ApplicationUser> userManager) : IAdmi
         return result.Succeeded;
     }
 
+    private async Task AssignRoleAsync(ApplicationUser user, string role)
+    {
+        if (!AppRoles.All.Contains(role))
+        {
+            throw new InvalidOperationException($"Invalid role: {role}");
+        }
+
+        var currentRoles = await userManager.GetRolesAsync(user);
+        if (currentRoles.Count > 0)
+        {
+            await userManager.RemoveFromRolesAsync(user, currentRoles);
+        }
+
+        await userManager.AddToRoleAsync(user, role);
+    }
+
     private async Task<AdminUserDto> MapAsync(ApplicationUser user)
     {
         var roles = await userManager.GetRolesAsync(user);
         return new AdminUserDto(
-            user.Id.ToString(),
+            user.Id.ToString(CultureInfo.InvariantCulture),
             user.UserName ?? string.Empty,
             user.Email ?? string.Empty,
             user.FullName,
             roles.FirstOrDefault() ?? AppRoles.Member,
             user.MemberId,
             user.Branch,
-            user.IsGuest);
+            user.PhoneNumber ?? string.Empty,
+            user.DateOfBirth,
+            user.MaritalStatus,
+            user.ChildrenCount,
+            user.AccountStatus,
+            user.RegistrationRelation,
+            user.IsGuest,
+            user.TermsAcceptedAt);
     }
 }

@@ -42,7 +42,11 @@ public class HomeService(AppDbContext db, AppDataHelper helper) : IHomeService
 
     public async Task<NewsItemDto> GetLatestNewsAsync(CancellationToken cancellationToken = default)
     {
-        var item = await db.NewsItems.AsNoTracking().OrderByDescending(x => x.PublishedAt).FirstAsync(cancellationToken);
+        var item = await db.NewsItems.AsNoTracking()
+            .Where(x => x.PublishStatus == PublishStatuses.Published && x.PublishedAt <= DateTime.UtcNow)
+            .OrderByDescending(x => x.IsFeatured)
+            .ThenByDescending(x => x.PublishedAt)
+            .FirstAsync(cancellationToken);
         return await MapNewsAsync(item, cancellationToken);
     }
 
@@ -85,7 +89,10 @@ public class NewsService(AppDbContext db, AppDataHelper helper) : INewsService
 
     public async Task<IReadOnlyList<NewsItemDto>> GetNewsAsync(string? category, CancellationToken cancellationToken = default)
     {
-        var items = await db.NewsItems.AsNoTracking().OrderByDescending(x => x.PublishedAt).ToListAsync(cancellationToken);
+        var items = await db.NewsItems.AsNoTracking()
+            .Where(x => x.PublishStatus == PublishStatuses.Published && x.PublishedAt <= DateTime.UtcNow)
+            .OrderByDescending(x => x.PublishedAt)
+            .ToListAsync(cancellationToken);
         var result = new List<NewsItemDto>();
         foreach (var item in items)
         {
@@ -141,7 +148,10 @@ public class EventsService(AppDbContext db, AppDataHelper helper) : IEventsServi
 {
     public async Task<IReadOnlyList<EventItemDto>> GetEventsAsync(string filter, int? userId, CancellationToken cancellationToken = default)
     {
-        var items = await db.Events.AsNoTracking().OrderBy(x => x.EventDate).ToListAsync(cancellationToken);
+        var items = await db.Events.AsNoTracking()
+            .Where(x => x.IsPublic)
+            .OrderBy(x => x.EventDate)
+            .ToListAsync(cancellationToken);
         var registrations = userId.HasValue
             ? await db.EventRegistrations.AsNoTracking().Where(x => x.UserId == userId.Value).Select(x => x.EventId).ToListAsync(cancellationToken)
             : [];

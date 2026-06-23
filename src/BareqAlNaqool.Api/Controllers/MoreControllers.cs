@@ -69,7 +69,7 @@ public class GalleryController(IGalleryService galleryService) : ApiControllerBa
 }
 
 [Route("api/documents")]
-public class DocumentsController(IDocumentsService documentsService) : ApiControllerBase
+public class DocumentsController(IDocumentsService documentsService, IFileStorageService fileStorage) : ApiControllerBase
 {
     [HttpGet("categories")]
     [AllowAnonymous]
@@ -87,6 +87,25 @@ public class DocumentsController(IDocumentsService documentsService) : ApiContro
     {
         var item = await documentsService.GetDocumentByIdAsync(id, cancellationToken);
         return item is null ? NotFound() : Ok(item);
+    }
+
+    [HttpGet("{id}/download")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Download(string id, CancellationToken cancellationToken)
+    {
+        var item = await documentsService.GetDocumentByIdAsync(id, cancellationToken);
+        if (item is null || string.IsNullOrWhiteSpace(item.FileUrl))
+        {
+            return NotFound();
+        }
+
+        var stream = await fileStorage.OpenReadAsync(item.FileUrl, cancellationToken);
+        if (stream is null)
+        {
+            return NotFound();
+        }
+
+        return File(stream, "application/octet-stream", Path.GetFileName(item.FileUrl));
     }
 }
 

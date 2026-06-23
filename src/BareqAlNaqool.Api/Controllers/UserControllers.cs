@@ -27,6 +27,11 @@ public class AuthController(IAuthService authService) : ApiControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterRequestDto request, CancellationToken cancellationToken)
         => Ok(await authService.RegisterAsync(request, cancellationToken));
 
+    [HttpGet("terms")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Terms(CancellationToken cancellationToken)
+        => Ok(await authService.GetTermsAsync(cancellationToken));
+
     [HttpPost("guest")]
     [AllowAnonymous]
     public async Task<IActionResult> Guest(CancellationToken cancellationToken)

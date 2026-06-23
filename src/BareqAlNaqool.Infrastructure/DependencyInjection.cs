@@ -23,6 +23,8 @@ public static class DependencyInjection
     {
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
         services.Configure<DatabaseStartupOptions>(configuration.GetSection(DatabaseStartupOptions.SectionName));
+        services.Configure<StorageOptions>(configuration.GetSection(StorageOptions.SectionName));
+        services.AddSingleton<IFileStorageService, Storage.LocalFileStorageService>();
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(DatabaseConnection.Resolve(configuration, connectionStringName)));
@@ -93,6 +95,24 @@ public static class DependencyInjection
         services.AddScoped<IAdminCrudService<AdminCouncilItemDto, AdminCouncilItemCreateDto, AdminCouncilItemUpdateDto>, AdminCouncilItemsService>();
         services.AddScoped<IAdminCrudService<AdminDirectoryMemberDto, AdminDirectoryMemberCreateDto, AdminDirectoryMemberUpdateDto>, AdminDirectoryService>();
         services.AddScoped<IAdminCrudService<AdminUserDto, AdminUserCreateDto, AdminUserUpdateDto>, AdminUsersService>();
+
+        services.AddScoped<IAdminCrudService<AdminBranchMemberDto, AdminBranchMemberCreateDto, AdminBranchMemberUpdateDto>, AdminBranchMembersService>();
+        services.AddScoped<IAdminCrudService<AdminTreeMemberDto, AdminTreeMemberCreateDto, AdminTreeMemberUpdateDto>, AdminTreeMembersService>();
+        services.AddScoped<IAdminCrudService<AdminLandingSlideDto, AdminLandingSlideCreateDto, AdminLandingSlideUpdateDto>, AdminLandingSlidesService>();
+        services.AddScoped<IAdminCrudService<AdminGalleryPhotoDto, AdminGalleryPhotoCreateDto, AdminGalleryPhotoUpdateDto>, AdminGalleryPhotosService>();
+        services.AddScoped<IAdminCrudService<AdminCouncilModuleDto, AdminCouncilModuleCreateDto, AdminCouncilModuleUpdateDto>, AdminCouncilModulesService>();
+        services.AddScoped<IAdminCrudService<AdminCouncilMeetingDto, AdminCouncilMeetingCreateDto, AdminCouncilMeetingUpdateDto>, AdminCouncilMeetingsService>();
+        services.AddScoped<IAdminCrudService<AdminConversationDto, AdminConversationCreateDto, AdminConversationUpdateDto>, AdminConversationsService>();
+
+        services.AddScoped<IAdminHomeService, AdminHomeService>();
+        services.AddScoped<IAdminPresidentService, AdminPresidentService>();
+        services.AddScoped<IAdminRegistrationService, AdminRegistrationService>();
+        services.AddScoped<IAdminPasswordService, AdminPasswordService>();
+        services.AddScoped<IAdminRoleService, AdminRoleService>();
+        services.AddScoped<IAdminEventRegistrationService, AdminEventRegistrationService>();
+        services.AddScoped<IAdminMessagingService, AdminMessagingService>();
+        services.AddScoped<IAdminContactService, AdminContactService>();
+        services.AddScoped<IAdminSettingsService, AdminSettingsService>();
 
         return services;
     }

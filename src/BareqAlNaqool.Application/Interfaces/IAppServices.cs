@@ -78,11 +78,12 @@ public interface IProfileService
 public interface IAuthService
 {
     Task<AuthResponseDto> LoginAsync(LoginRequest request, CancellationToken cancellationToken = default);
-    Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request, CancellationToken cancellationToken = default);
+    Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto request, CancellationToken cancellationToken = default);
     Task<AuthResponseDto> ContinueAsGuestAsync(CancellationToken cancellationToken = default);
     Task LogoutAsync(int userId, CancellationToken cancellationToken = default);
     Task ForgotPasswordAsync(string email, CancellationToken cancellationToken = default);
     Task<AuthSessionDto?> GetSessionAsync(int? userId, CancellationToken cancellationToken = default);
+    Task<TermsDto> GetTermsAsync(CancellationToken cancellationToken = default);
 }
 
 public interface IDirectoryService

@@ -12,5 +12,8 @@ public class ApplicationUser : IdentityUser<int>
     public string MaritalStatus { get; set; } = string.Empty;
     public int ChildrenCount { get; set; }
     public bool IsGuest { get; set; }
+    public string AccountStatus { get; set; } = "Active";
+    public string? RegistrationRelation { get; set; }
+    public DateTime? TermsAcceptedAt { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

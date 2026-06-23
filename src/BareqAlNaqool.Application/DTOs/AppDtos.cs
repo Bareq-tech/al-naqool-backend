@@ -39,7 +39,7 @@ public record ChatMessageDto(string Id, string ConversationId, string SenderName
 
 public record SendMessageRequest(string Content);
 
-public record DocumentItemDto(string Id, string Title, string FileSize, string Date, string Category, string Description);
+public record DocumentItemDto(string Id, string Title, string FileSize, string Date, string Category, string Description, string FileUrl);
 
 public record AlbumItemDto(string Id, string Title, int PhotoCount, string ImageUrl, bool IsFeatured, string Description);
 
@@ -84,7 +84,12 @@ public record RegisterRequestDto(
     string Username,
     string Password,
     string DateOfBirth,
-    string Relation);
+    string Relation,
+    bool AcceptTerms);
+
+public record RegisterResponseDto(string Status, string Message);
+
+public record TermsDto(string En, string Ar);
 
 public record ForgotPasswordRequest(string Email);
 
