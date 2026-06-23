@@ -60,7 +60,7 @@ dotnet run --project src/BareqAlNaqool.Api
 dotnet run --project src/BareqAlNaqool.Admin
 ```
 
-**Swagger UI** (Development only):
+**Swagger UI** — visit the service root URL or `/swagger`:
 
 | API | URL |
 |-----|-----|

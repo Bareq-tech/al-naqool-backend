@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
 
 namespace BareqAlNaqool.Infrastructure.OpenApi;
@@ -41,17 +40,14 @@ public static class SwaggerExtensions
 
     public static WebApplication UseBareqSwagger(this WebApplication app, string apiTitle)
     {
-        if (!app.Environment.IsDevelopment())
-        {
-            return app;
-        }
-
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", apiTitle);
             options.RoutePrefix = "swagger";
         });
+
+        app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
         return app;
     }
