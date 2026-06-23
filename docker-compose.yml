@@ -11,6 +11,41 @@ services:
       - "5432:5432"
     volumes:
       - bareq_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bareq_alnaqool"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "5000:8080"
+    environment:
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=bareq_alnaqool;Username=postgres;Password=postgres
+      Jwt__Key: BareqAlNaqoolDevSecretKeyChangeInProduction!
+      Jwt__Issuer: BareqAlNaqool.Api
+      Jwt__Audience: BareqAlNaqool.Clients
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile.admin
+    ports:
+      - "5001:8080"
+    environment:
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=bareq_alnaqool;Username=postgres;Password=postgres
+      Jwt__Key: BareqAlNaqoolDevSecretKeyChangeInProduction!
+      Jwt__Issuer: BareqAlNaqool.Admin
+      Jwt__Audience: BareqAlNaqool.AdminClients
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   bareq_pg_data:
