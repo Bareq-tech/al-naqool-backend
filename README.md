@@ -15,13 +15,15 @@
 ```
 bareq_alnaqool_api/
 ├── BareqAlNaqool.slnx
-├── docker-compose.yml          Local PostgreSQL
+├── docker-compose.yml          Local PostgreSQL + optional API containers
 ├── Dockerfile.api              Mobile API container
 ├── Dockerfile.admin            Admin API container
+├── Dockerfile.migrate          One-off database migration job
 └── src/
     ├── BareqAlNaqool.Domain/          Entities and constants
     ├── BareqAlNaqool.Application/     DTOs and service interfaces
     ├── BareqAlNaqool.Infrastructure/  EF Core, Identity, JWT, services, seed data
+    ├── BareqAlNaqool.Migrator/        CLI migration + seed runner
     ├── BareqAlNaqool.Api/             Mobile REST API (port 5000)
     └── BareqAlNaqool.Admin/           Admin REST API (port 5001)
 ```
@@ -67,11 +69,13 @@ dotnet run --project src/BareqAlNaqool.Admin
 
 Use the **Authorize** button to paste a JWT from `POST /api/auth/login` (mobile) or `POST /api/admin/auth/login` (admin).
 
-On first startup the mobile API applies EF Core migrations and seeds demo data from `Infrastructure/Seed/en.json` and `ar.json`. Both hosts share the same PostgreSQL database.
+On first startup in **Development**, the mobile API applies EF Core migrations and seeds demo data from `Infrastructure/Seed/en.json` and `ar.json`. Both hosts share the same PostgreSQL database.
+
+**Health checks:** `GET /health` (liveness) and `GET /health/ready` (includes database).
 
 ### Connection string
 
-Default (see `appsettings.json`):
+Local default (see `appsettings.Development.json`):
 
 ```
 Host=localhost;Port=5432;Database=bareq_alnaqool;Username=postgres;Password=postgres
@@ -91,53 +95,85 @@ dotnet ef database update \
   --startup-project src/BareqAlNaqool.Api
 ```
 
-Migrations run automatically on startup (`MigrateAsync`). Seeding runs only from the mobile API host.
+Or run the migrator directly:
+
+```bash
+dotnet run --project src/BareqAlNaqool.Migrator              # migrate only
+dotnet run --project src/BareqAlNaqool.Migrator -- --seed  # migrate + seed
+```
+
+In Development, the mobile API still migrates/seeds on startup by default (`Database:MigrateOnStartup` / `Database:SeedOnStartup` in `appsettings.Development.json`). Production containers do **not** migrate on startup.
 
 ## Railway deployment
 
-Deploy **two services** from this repo, both connected to the same Railway PostgreSQL instance.
+Deploy **three services** from this repo: a one-off **Migrator**, then **Mobile API** and **Admin API** — all connected to the same Railway PostgreSQL instance.
 
 ### 1. Add PostgreSQL
 
-In your Railway project, add a **PostgreSQL** plugin. Railway injects `DATABASE_URL` automatically.
+In your Railway project, add a **PostgreSQL** plugin.
 
-### 2. Mobile API service
+### 2. Database migrator (run before API deploys)
+
+| Setting | Value |
+|---------|-------|
+| Dockerfile | `Dockerfile.migrate` |
+| Root directory | repository root |
+
+**Environment variables:**
+
+| Variable | Value |
+|----------|-------|
+| `DATABASE_URL` | `${{ Postgres.DATABASE_URL }}` (use your Postgres service name) |
+
+**Start command** (first deploy only, to seed demo data):
+
+```
+--seed
+```
+
+After the first successful run, remove `--seed` from the start command (or delete the migrator service). Re-run the migrator only when you add new EF migrations.
+
+### 3. Mobile API service
 
 | Setting | Value |
 |---------|-------|
 | Dockerfile | `Dockerfile.api` |
 | Root directory | repository root |
 
-**Environment variables:**
+**Required environment variables:**
 
 | Variable | Notes |
 |----------|-------|
-| `DATABASE_URL` | Set automatically when Postgres is linked |
-| `Jwt__Key` | Long random secret (required in production) |
+| `DATABASE_URL` | `${{ Postgres.DATABASE_URL }}` — required on **both** API services |
+| `Jwt__Key` | Long random secret, 32+ characters (required) |
 | `Jwt__Issuer` | `BareqAlNaqool.Api` |
 | `Jwt__Audience` | `BareqAlNaqool.Clients` |
 
-### 3. Admin API service
+Containers run with `ASPNETCORE_ENVIRONMENT=Production`. The app refuses to start if `DATABASE_URL` or `Jwt__Key` is missing or uses a dev default.
+
+### 4. Admin API service
 
 | Setting | Value |
 |---------|-------|
 | Dockerfile | `Dockerfile.admin` |
 | Root directory | repository root |
 
-Link the **same** PostgreSQL instance. Override JWT settings for admin:
+Link the **same** PostgreSQL instance:
 
 | Variable | Example |
 |----------|---------|
-| `Jwt__Key` | Separate long random secret |
+| `DATABASE_URL` | `${{ Postgres.DATABASE_URL }}` |
+| `Jwt__Key` | Separate long random secret (32+ chars) |
 | `Jwt__Issuer` | `BareqAlNaqool.Admin` |
 | `Jwt__Audience` | `BareqAlNaqool.AdminClients` |
 
-Railway sets `PORT`; both Dockerfiles bind to `0.0.0.0:8080` and `ConfigureRailwayPort()` reads `PORT` at runtime.
+Railway sets `PORT`; Dockerfiles bind to `0.0.0.0:8080` and `ConfigureRailwayPort()` reads `PORT` at runtime.
 
-### First deploy
+### Deploy order
 
-1. Deploy the mobile API first (runs migrations + seed).
-2. Deploy the admin API second (applies migrations only).
+1. Run the **Migrator** service once (`--seed` on first deploy).
+2. Deploy **Mobile API**.
+3. Deploy **Admin API**.
 
 Point the Flutter app `API_BASE_URL` at the mobile API Railway URL.
 
@@ -198,12 +234,14 @@ Each CRUD resource supports `GET`, `GET/{id}`, `POST`, `PUT/{id}`, `DELETE/{id}`
 
 ## Configuration
 
-`appsettings.json` in each host project:
+| Setting | Local (Development) | Production (Railway) |
+|---------|---------------------|----------------------|
+| Database | `ConnectionStrings__DefaultConnection` or localhost default | `DATABASE_URL=${{ Postgres.DATABASE_URL }}` |
+| JWT | `Jwt__Key` in `.env` or `appsettings.Development.json` | `Jwt__Key` (32+ chars, unique per service) |
+| Migrations | Auto on mobile API startup | Run `Dockerfile.migrate` job |
+| Seed data | Auto on mobile API startup (Development) | Migrator with `--seed` (first deploy only) |
 
-- `ConnectionStrings:DefaultConnection` — PostgreSQL (overridden by `DATABASE_URL` on Railway)
-- `Jwt` — `Key`, `Issuer`, `Audience`, `ExpiryMinutes`
-
-Use double-underscore env vars in production, e.g. `Jwt__Key`.
+Use double-underscore env vars, e.g. `Jwt__Key`, `Database__MigrateOnStartup`.
 
 ## Notes
 

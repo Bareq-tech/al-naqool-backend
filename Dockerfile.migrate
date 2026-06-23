@@ -5,19 +5,15 @@ COPY BareqAlNaqool.slnx .
 COPY src/BareqAlNaqool.Domain/BareqAlNaqool.Domain.csproj src/BareqAlNaqool.Domain/
 COPY src/BareqAlNaqool.Application/BareqAlNaqool.Application.csproj src/BareqAlNaqool.Application/
 COPY src/BareqAlNaqool.Infrastructure/BareqAlNaqool.Infrastructure.csproj src/BareqAlNaqool.Infrastructure/
-COPY src/BareqAlNaqool.Api/BareqAlNaqool.Api.csproj src/BareqAlNaqool.Api/
+COPY src/BareqAlNaqool.Migrator/BareqAlNaqool.Migrator.csproj src/BareqAlNaqool.Migrator/
 
-RUN dotnet restore src/BareqAlNaqool.Api/BareqAlNaqool.Api.csproj
+RUN dotnet restore src/BareqAlNaqool.Migrator/BareqAlNaqool.Migrator.csproj
 
 COPY src/ src/
-RUN dotnet publish src/BareqAlNaqool.Api/BareqAlNaqool.Api.csproj -c Release -o /app/publish --no-restore
+RUN dotnet publish src/BareqAlNaqool.Migrator/BareqAlNaqool.Migrator.csproj -c Release -o /app/publish --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+FROM mcr.microsoft.com/dotnet/runtime:10.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
-ENV ASPNETCORE_URLS=http://0.0.0.0:8080
-ENV ASPNETCORE_ENVIRONMENT=Production
-EXPOSE 8080
-
-ENTRYPOINT ["dotnet", "BareqAlNaqool.Api.dll"]
+ENTRYPOINT ["dotnet", "BareqAlNaqool.Migrator.dll"]

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Npgsql;
 
 namespace BareqAlNaqool.Infrastructure.Persistence;
@@ -16,7 +17,15 @@ public static class DatabaseConnection
         var connectionString = configuration.GetConnectionString(name);
         if (string.IsNullOrWhiteSpace(connectionString))
         {
-            throw new InvalidOperationException($"Connection string '{name}' was not found.");
+            throw new InvalidOperationException(
+                $"Connection string '{name}' was not found. Set DATABASE_URL or ConnectionStrings__{name}.");
+        }
+
+        if (IsProduction() && PointsToLocalHost(connectionString))
+        {
+            throw new InvalidOperationException(
+                $"Connection string '{name}' points to localhost in Production. " +
+                "Set DATABASE_URL to your PostgreSQL instance.");
         }
 
         return connectionString;
@@ -35,7 +44,7 @@ public static class DatabaseConnection
             Password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : string.Empty
         };
 
-        if (!IsLocalHost(uri.Host))
+        if (ShouldRequireSsl(uri.Host))
         {
             builder.SslMode = SslMode.Require;
         }
@@ -43,10 +52,38 @@ public static class DatabaseConnection
         return builder.ConnectionString;
     }
 
+    private static bool ShouldRequireSsl(string host)
+    {
+        return !IsLocalHost(host);
+    }
+
     private static bool IsLocalHost(string host)
     {
         return host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
             || host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase)
-            || host.Equals("postgres", StringComparison.OrdinalIgnoreCase);
+            || host.Equals("postgres", StringComparison.OrdinalIgnoreCase)
+            || host.EndsWith(".railway.internal", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool PointsToLocalHost(string connectionString)
+    {
+        try
+        {
+            var builder = new NpgsqlConnectionStringBuilder(connectionString);
+            return IsLocalHost(builder.Host ?? string.Empty);
+        }
+        catch
+        {
+            return connectionString.Contains("localhost", StringComparison.OrdinalIgnoreCase)
+                || connectionString.Contains("127.0.0.1", StringComparison.OrdinalIgnoreCase);
+        }
+    }
+
+    private static bool IsProduction()
+    {
+        return string.Equals(
+            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+            Environments.Production,
+            StringComparison.OrdinalIgnoreCase);
     }
 }

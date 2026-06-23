@@ -24,6 +24,7 @@ services:
     ports:
       - "5000:8080"
     environment:
+      ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=bareq_alnaqool;Username=postgres;Password=postgres
       Jwt__Key: BareqAlNaqoolDevSecretKeyChangeInProduction!
       Jwt__Issuer: BareqAlNaqool.Api
@@ -39,6 +40,7 @@ services:
     ports:
       - "5001:8080"
     environment:
+      ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=bareq_alnaqool;Username=postgres;Password=postgres
       Jwt__Key: BareqAlNaqoolDevSecretKeyChangeInProduction!
       Jwt__Issuer: BareqAlNaqool.Admin

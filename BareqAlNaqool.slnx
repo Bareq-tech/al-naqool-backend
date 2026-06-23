@@ -5,5 +5,6 @@
     <Project Path="src/BareqAlNaqool.Application/BareqAlNaqool.Application.csproj" />
     <Project Path="src/BareqAlNaqool.Domain/BareqAlNaqool.Domain.csproj" />
     <Project Path="src/BareqAlNaqool.Infrastructure/BareqAlNaqool.Infrastructure.csproj" />
+    <Project Path="src/BareqAlNaqool.Migrator/BareqAlNaqool.Migrator.csproj" />
   </Folder>
 </Solution>
