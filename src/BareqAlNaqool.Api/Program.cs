@@ -8,6 +8,7 @@ builder.ValidateProductionSettings();
 
 builder.Services.AddControllers();
 builder.Services.AddBareqSwagger("Bareq Al Naqool Mobile API");
+builder.Services.AddBareqCors(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddBareqHealthChecks();
 
@@ -19,6 +20,7 @@ await DatabaseStartup.ApplyConfiguredStartupAsync(
     app.Logger);
 
 app.MapBareqHealthChecks();
+app.UseBareqCors();
 app.UseBareqSwagger("Bareq Al Naqool Mobile API");
 
 app.UseAuthentication();

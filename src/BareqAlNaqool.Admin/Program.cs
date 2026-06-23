@@ -8,12 +8,14 @@ builder.ValidateProductionSettings();
 
 builder.Services.AddControllers();
 builder.Services.AddBareqSwagger("Bareq Al Naqool Admin API");
+builder.Services.AddBareqCors(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddBareqHealthChecks();
 
 var app = builder.Build();
 
 app.MapBareqHealthChecks();
+app.UseBareqCors();
 app.UseBareqSwagger("Bareq Al Naqool Admin API");
 
 app.UseAuthentication();
