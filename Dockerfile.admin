@@ -1,0 +1,22 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY BareqAlNaqool.slnx .
+COPY src/BareqAlNaqool.Domain/BareqAlNaqool.Domain.csproj src/BareqAlNaqool.Domain/
+COPY src/BareqAlNaqool.Application/BareqAlNaqool.Application.csproj src/BareqAlNaqool.Application/
+COPY src/BareqAlNaqool.Infrastructure/BareqAlNaqool.Infrastructure.csproj src/BareqAlNaqool.Infrastructure/
+COPY src/BareqAlNaqool.Admin/BareqAlNaqool.Admin.csproj src/BareqAlNaqool.Admin/
+
+RUN dotnet restore src/BareqAlNaqool.Admin/BareqAlNaqool.Admin.csproj
+
+COPY src/ src/
+RUN dotnet publish src/BareqAlNaqool.Admin/BareqAlNaqool.Admin.csproj -c Release -o /app/publish --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "BareqAlNaqool.Admin.dll"]

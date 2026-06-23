@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bareq-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bareq_alnaqool
+    ports:
+      - "5432:5432"
+    volumes:
+      - bareq_pg_data:/var/lib/postgresql/data
+
+volumes:
+  bareq_pg_data:

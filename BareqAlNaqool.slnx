@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BareqAlNaqool.Admin/BareqAlNaqool.Admin.csproj" />
+    <Project Path="src/BareqAlNaqool.Api/BareqAlNaqool.Api.csproj" />
+    <Project Path="src/BareqAlNaqool.Application/BareqAlNaqool.Application.csproj" />
+    <Project Path="src/BareqAlNaqool.Domain/BareqAlNaqool.Domain.csproj" />
+    <Project Path="src/BareqAlNaqool.Infrastructure/BareqAlNaqool.Infrastructure.csproj" />
+  </Folder>
+</Solution>

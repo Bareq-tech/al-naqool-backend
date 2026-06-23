@@ -1,0 +1,862 @@
+{
+  "president": "عبدالله النقول",
+  "landingSlides": [
+    {
+      "titleLine1": "نوحّد عائلتنا،",
+      "titleLine2": "ونحافظ على إرثنا",
+      "subtitle": "ابقَ على تواصل ومطلع ومشارك مع عائلتك — أينما كنت."
+    },
+    {
+      "titleLine1": "استكشف تراثك،",
+      "titleLine2": "واكتشف جذورك",
+      "subtitle": "اكتشف الفروع والأعضاء وقصة عائلة النقول عبر الأجيال."
+    },
+    {
+      "titleLine1": "ابقوا على اطلاع معًا،",
+      "titleLine2": "ولا تفوّتوا لحظة",
+      "subtitle": "الفعاليات والإعلانات وتحديثات المجلس — كلها في مكان واحد."
+    }
+  ],
+  "homeStats": {
+    "totalMembers": 2458,
+    "familyBranches": 11,
+    "newsUpdates": 24,
+    "upcomingEvents": 8
+  },
+  "newsCategories": [
+    "الكل",
+    "عام",
+    "مواليد",
+    "أعراس",
+    "تعازي"
+  ],
+  "newsItems": [
+    {
+      "id": "1",
+      "category": "المجلس",
+      "title": "جدولة الاجتماع السنوي لمجلس العائلة",
+      "description": "سيعقد الاجتماع السنوي لمجلس العائلة الشهر القادم لمناقشة أمور عائلية مهمة.",
+      "body": "يسر مجلس عائلة النقول الإعلان عن عقد الاجتماع السنوي الشهر القادم في مركز التراث. يُرجى من ممثلي الفروع الحضور. تشمل جدول الأعمال مبادرات الحفاظ على التراث وبرامج الشباب والتخطيط للتجمع العائلي السنوي.",
+      "timeAgo": "منذ ساعتين",
+      "publishedDate": "18 يونيو 2024",
+      "categoryColorHex": "0xFF00332B",
+      "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "2",
+      "category": "عرس",
+      "title": "تهانينا لأحمد وفاطمة",
+      "description": "إعلان احتفال زفاف لفرع المفرح.",
+      "body": "تتقدم عائلة النقول بأحر التهاني لأحمد وفاطمة بمناسبة زفافهما. سيُقام الاحتفال في القاعة الكبرى في 28 يونيو 2024. يُدعى جميع أفراد العائلة للمشاركة في هذه المناسبة السعيدة.",
+      "timeAgo": "أمس",
+      "publishedDate": "17 يونيو 2024",
+      "categoryColorHex": "0xFF8B5A2B",
+      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "3",
+      "category": "مولود",
+      "title": "إضافة جديدة لفرع المفرح",
+      "description": "إعلان ميلاد يُرحّب بعضو جديد في العائلة.",
+      "body": "يسرنا الإعلان عن ولادة طفل سليم لفرع المفرح. الأم والطفل بخير. تطلب العائلة دعواتكم وتهانيّكم في هذا الوقت المبارك.",
+      "timeAgo": "منذ يومين",
+      "publishedDate": "16 يونيو 2024",
+      "categoryColorHex": "0xFF2E7D32",
+      "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "4",
+      "category": "عام",
+      "title": "إعلان التجمع العائلي",
+      "description": "تفاصيل التجمع العائلي السنوي القادم.",
+      "body": "ضعوا موعد التجمع العائلي السنوي لعائلة النقول في تقويمكم. سيشمل حدث هذا العام عروضًا تراثية ومعرضًا للتراث وأنشطة لجميع الفئات العمرية. يفتح التسجيل الأسبوع القادم عبر تطبيق العائلة.",
+      "timeAgo": "منذ 3 أيام",
+      "publishedDate": "15 يونيو 2024",
+      "categoryColorHex": "0xFF546E7A",
+      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "5",
+      "category": "تعازي",
+      "title": "تعازينا لفرع الظافر",
+      "description": "أحر التعازي لعائلة الظافر.",
+      "body": "يعرب مجلس عائلة النقول عن أحر التعازي لفرع الظافر في وفاتهم الأخيرة. نسأل الله أن يلهم العائلة الصبر والسلوان. تمت مشاركة ترتيبات الجنازة مع أعضاء الفرع.",
+      "timeAgo": "منذ أسبوع",
+      "publishedDate": "11 يونيو 2024",
+      "categoryColorHex": "0xFF546E7A",
+      "imageUrl": "https://images.unsplash.com/photo-1770786106021-52580470e31e?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "events": [
+    {
+      "id": "1",
+      "day": "01",
+      "month": "يون",
+      "title": "التجمع العائلي السنوي",
+      "location": "مركز تراث النقول",
+      "time": "6:00 PM",
+      "fullDate": "السبت، 1 يونيو 2024",
+      "description": "انضموا إلينا في التجمع العائلي السنوي لعائلة النقول مع عشاء وعروض ثقافية وتكريم المساهمين في المجتمع.",
+      "organizer": "لجنة الفعاليات",
+      "isMine": true
+    },
+    {
+      "id": "2",
+      "day": "15",
+      "month": "يون",
+      "title": "اجتماع مجلس الإدارة",
+      "location": "قاعة مجلس العائلة",
+      "time": "4:00 PM",
+      "fullDate": "السبت، 15 يونيو 2024",
+      "description": "اجتماع ربع سنوي لمراجعة قرارات المجلس وتقارير اللجان والمبادرات القادمة لجميع فروع العائلة.",
+      "organizer": "مجلس العائلة",
+      "isMine": false
+    },
+    {
+      "id": "3",
+      "day": "22",
+      "month": "يون",
+      "title": "ورشة لجنة الشباب",
+      "location": "المركز المجتمعي",
+      "time": "10:00 AM",
+      "fullDate": "السبت، 22 يونيو 2024",
+      "description": "ورشة قيادة وتراث مخصصة لأفراد العائلة الشباب من عمر 16–25 سنة. التسجيل مطلوب.",
+      "organizer": "لجنة الشباب",
+      "isMine": true
+    },
+    {
+      "id": "4",
+      "day": "05",
+      "month": "يول",
+      "title": "عشاء احتفال العيد",
+      "location": "القاعة الكبرى",
+      "time": "7:30 PM",
+      "fullDate": "الجمعة، 5 يوليو 2024",
+      "description": "احتفلوا بالعيد مع عائلة النقول الممتدة. يشمل العشاء التقليدي وأنشطة للأطفال.",
+      "organizer": "اللجنة الاجتماعية",
+      "isMine": false
+    }
+  ],
+  "branches": [
+    {
+      "id": "1",
+      "name": "المفرح",
+      "memberCount": 3,
+      "description": "من أكبر الفروع، معروف بالقيادة المجتمعية والحفاظ على التراث.",
+      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "2",
+      "name": "الظافر",
+      "memberCount": 2,
+      "description": "فرع تاريخي بجذور عميقة في المنطقة الشرقية من نسب العائلة.",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "3",
+      "name": "الراشد",
+      "memberCount": 1,
+      "description": "نشط في مبادرات التعليم وبرامج تنمية الشباب.",
+      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "4",
+      "name": "السعيد",
+      "memberCount": 1,
+      "description": "مساهم في أرشيف العائلة وجهود توثيق النسب.",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "5",
+      "name": "الحمد",
+      "memberCount": 1,
+      "description": "يركز على الرفاه الاجتماعي ودعم أفراد العائلة المحتاجين.",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=200&h=200&q=80"
+    }
+  ],
+  "branchMembers": [
+    {
+      "id": "1",
+      "name": "محمد المفرح",
+      "role": "رئيس الفرع",
+      "branchId": "1",
+      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "2",
+      "name": "سارة المفرح",
+      "role": "أمين السر",
+      "branchId": "1",
+      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "3",
+      "name": "عمر المفرح",
+      "role": "عضو",
+      "branchId": "1",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "4",
+      "name": "خالد الظافر",
+      "role": "رئيس الفرع",
+      "branchId": "2",
+      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "5",
+      "name": "فاطمة الظافر",
+      "role": "عضو",
+      "branchId": "2",
+      "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "6",
+      "name": "عبدالله الراشد",
+      "role": "رئيس الفرع",
+      "branchId": "3",
+      "imageUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "7",
+      "name": "نورة السعيد",
+      "role": "رئيس الفرع",
+      "branchId": "4",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "id": "8",
+      "name": "حسن الحمد",
+      "role": "رئيس الفرع",
+      "branchId": "5",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=200&h=200&q=80"
+    }
+  ],
+  "founderLineage": [
+    {
+      "generation": 1,
+      "name": "عبدالله النقول",
+      "subtitle": "المؤسس",
+      "isFounder": true,
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "generation": 2,
+      "name": "محمد النقول",
+      "subtitle": "ابن",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "generation": 2,
+      "name": "خالد النقول",
+      "subtitle": "ابن",
+      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "generation": 2,
+      "name": "سعيد النقول",
+      "subtitle": "ابن",
+      "imageUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "generation": 3,
+      "name": "أحمد المفرح",
+      "subtitle": "الجيل الثالث",
+      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "generation": 3,
+      "name": "نورة الرشيد",
+      "subtitle": "الجيل الثالث",
+      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80"
+    },
+    {
+      "generation": 3,
+      "name": "حسن الحمد",
+      "subtitle": "الجيل الثالث",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=200&h=200&q=80"
+    }
+  ],
+  "messageFilters": [
+    "الكل",
+    "الإعلانات",
+    "المجموعات",
+    "مباشر"
+  ],
+  "conversations": [
+    {
+      "id": "1",
+      "name": "مجلس العائلة",
+      "lastMessage": "تمت مشاركة جدول الاجتماع",
+      "time": "10:30 AM",
+      "unreadCount": 3,
+      "isGroup": true,
+      "type": "الإعلانات"
+    },
+    {
+      "id": "2",
+      "name": "فرع المفرح",
+      "lastMessage": "تم تحديث تفاصيل تجمع العيد",
+      "time": "أمس",
+      "unreadCount": 0,
+      "isGroup": true,
+      "type": "المجموعات"
+    },
+    {
+      "id": "3",
+      "name": "عبدالله النقول",
+      "lastMessage": "شكرًا على التحديث",
+      "time": "الإثنين",
+      "unreadCount": 1,
+      "isGroup": false,
+      "type": "مباشر"
+    },
+    {
+      "id": "4",
+      "name": "لجنة الفعاليات",
+      "lastMessage": "تم تأكيد الموقع للفعالية القادمة",
+      "time": "الأحد",
+      "unreadCount": 0,
+      "isGroup": true,
+      "type": "المجموعات"
+    }
+  ],
+  "chatMessages": [
+    {
+      "id": "1",
+      "conversationId": "1",
+      "senderName": "إدارة المجلس",
+      "content": "مرحبًا بكم في مجموعة مجلس العائلة. يرجى مراجعة جدول الاجتماع.",
+      "time": "9:00 AM",
+      "isMe": false,
+      "isAnnouncement": true
+    },
+    {
+      "id": "2",
+      "conversationId": "1",
+      "senderName": "عبدالله النقول",
+      "content": "يبدو جدول الأعمال شاملاً. سأحضر الجلسة الافتتاحية.",
+      "time": "9:15 AM",
+      "isMe": false
+    },
+    {
+      "id": "3",
+      "conversationId": "1",
+      "senderName": "أنت",
+      "content": "راجعت المستندات. جاهز للمناقشة.",
+      "time": "9:45 AM",
+      "isMe": true
+    },
+    {
+      "id": "4",
+      "conversationId": "1",
+      "senderName": "إدارة المجلس",
+      "content": "تمت مشاركة جدول الاجتماع",
+      "time": "10:30 AM",
+      "isMe": false,
+      "isAnnouncement": true
+    },
+    {
+      "id": "5",
+      "conversationId": "2",
+      "senderName": "محمد المفرح",
+      "content": "سيبدأ تجمع العيد الساعة 7 مساءً في مركز التراث.",
+      "time": "أمس",
+      "isMe": false
+    },
+    {
+      "id": "6",
+      "conversationId": "2",
+      "senderName": "أنت",
+      "content": "شكرًا. سأؤكد الحضور غدًا.",
+      "time": "أمس",
+      "isMe": true
+    },
+    {
+      "id": "7",
+      "conversationId": "3",
+      "senderName": "عبدالله النقول",
+      "content": "السلام عليكم أحمد، هل يمكنك مشاركة قائمة أعضاء الفرع؟",
+      "time": "الإثنين",
+      "isMe": false
+    },
+    {
+      "id": "8",
+      "conversationId": "3",
+      "senderName": "أنت",
+      "content": "وعليكم السلام. رفعتها في قسم المستندات.",
+      "time": "الإثنين",
+      "isMe": true
+    },
+    {
+      "id": "9",
+      "conversationId": "3",
+      "senderName": "عبدالله النقول",
+      "content": "شكرًا على التحديث",
+      "time": "الإثنين",
+      "isMe": false
+    },
+    {
+      "id": "10",
+      "conversationId": "4",
+      "senderName": "لجنة الفعاليات",
+      "content": "تم تأكيد الموقع للفعالية القادمة في القاعة الكبرى.",
+      "time": "الأحد",
+      "isMe": false,
+      "isAnnouncement": true
+    }
+  ],
+  "galleryTypes": [
+    "صور",
+    "فيديوهات",
+    "ألبومات",
+    "مستندات"
+  ],
+  "albums": [
+    {
+      "id": "1",
+      "title": "التجمع العائلي - عيد 2023",
+      "photoCount": 124,
+      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?auto=format&fit=crop&w=800&q=80",
+      "isFeatured": true,
+      "description": "ذكريات من تجمع العائلة في عيد 2023 بمركز التراث."
+    },
+    {
+      "id": "2",
+      "title": "فعاليات العائلة",
+      "photoCount": 86,
+      "imageUrl": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
+      "isFeatured": false,
+      "description": "أبرز لحظات الفعاليات السنوية والاحتفالات المجتمعية."
+    },
+    {
+      "id": "3",
+      "title": "الأعراس",
+      "photoCount": 64,
+      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80",
+      "isFeatured": false,
+      "description": "احتفالات الأعراس في جميع فروع العائلة."
+    },
+    {
+      "id": "4",
+      "title": "الرحلات",
+      "photoCount": 42,
+      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?auto=format&fit=crop&w=800&q=80",
+      "isFeatured": false,
+      "description": "رحلات العائلة واللقاءات عبر السنوات."
+    }
+  ],
+  "galleryPhotos": [
+    {
+      "id": "1",
+      "albumId": "1",
+      "caption": "حفل الافتتاح",
+      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "2",
+      "albumId": "1",
+      "caption": "عشاء العائلة",
+      "imageUrl": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "3",
+      "albumId": "1",
+      "caption": "صورة جماعية",
+      "imageUrl": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "4",
+      "albumId": "1",
+      "caption": "أنشطة الأطفال",
+      "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "5",
+      "albumId": "1",
+      "caption": "تجمع المساء",
+      "imageUrl": "https://images.unsplash.com/photo-1770786106021-52580470e31e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "6",
+      "albumId": "1",
+      "caption": "عرض التراث",
+      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "7",
+      "albumId": "2",
+      "caption": "فعالية سنوية",
+      "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "8",
+      "albumId": "2",
+      "caption": "حفل التكريم",
+      "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "9",
+      "albumId": "3",
+      "caption": "حفل الزفاف",
+      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "10",
+      "albumId": "4",
+      "caption": "رحلة جبلية",
+      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "documentCategories": [
+    "الكل",
+    "المجلس",
+    "سجلات العائلة",
+    "قانوني"
+  ],
+  "documents": [
+    {
+      "id": "1",
+      "title": "وثيقة نسب العائلة",
+      "fileSize": "2.4 MB",
+      "date": "12 مارس 2024",
+      "category": "سجلات العائلة",
+      "description": "سجلات نسب كاملة تتبع نسب عائلة النقول عبر جميع الفروع."
+    },
+    {
+      "id": "2",
+      "title": "محضر اجتماع المجلس - الربع الأول",
+      "fileSize": "1.1 MB",
+      "date": "05 أبريل 2024",
+      "category": "المجلس",
+      "description": "محضر رسمي لاجتماع مجلس العائلة للربع الأول 2024 يشمل القرارات وخطوات العمل."
+    },
+    {
+      "id": "3",
+      "title": "دستور العائلة",
+      "fileSize": "3.8 MB",
+      "date": "20 يناير 2024",
+      "category": "قانوني",
+      "description": "الدستور الحاكم لمجلس عائلة النقول وإرشادات الأعضاء."
+    },
+    {
+      "id": "4",
+      "title": "التقرير السنوي 2023",
+      "fileSize": "5.2 MB",
+      "date": "15 ديسمبر 2023",
+      "category": "المجلس",
+      "description": "تقرير سنوي شامل يغطي أنشطة المجلس والمالية وملخصات الفروع."
+    }
+  ],
+  "councilModules": [
+    {
+      "id": "meetings",
+      "iconName": "meeting",
+      "label": "الاجتماعات",
+      "subtitle": "12 إجمالي"
+    },
+    {
+      "id": "committees",
+      "iconName": "committee",
+      "label": "اللجان",
+      "subtitle": "6 نشطة"
+    },
+    {
+      "id": "voting",
+      "iconName": "voting",
+      "label": "التصويت",
+      "subtitle": "2 مفتوحة"
+    },
+    {
+      "id": "tasks",
+      "iconName": "tasks",
+      "label": "المهام",
+      "subtitle": "5 مهام مفتوحة"
+    },
+    {
+      "id": "decisions",
+      "iconName": "decisions",
+      "label": "القرارات",
+      "subtitle": "18 مسجلة"
+    },
+    {
+      "id": "members",
+      "iconName": "members",
+      "label": "الأعضاء",
+      "subtitle": "24 عضو مجلس"
+    }
+  ],
+  "latestMeeting": {
+    "title": "اجتماع مجلس الربع الثاني",
+    "date": "15 يونيو 2024",
+    "time": "4:00 PM",
+    "location": "قاعة مجلس العائلة",
+    "decisions": 4,
+    "tasks": 5,
+    "attachments": 3
+  },
+  "profile": {
+    "name": "أحمد عبدالله النقول",
+    "role": "فرد من العائلة",
+    "memberId": "AN-2024-0847",
+    "email": "ahmed.alnaqool@email.com",
+    "phone": "+966 50 123 4567",
+    "branch": "المفرح",
+    "dateOfBirth": "15 مارس 1985",
+    "maritalStatus": "متزوج",
+    "childrenCount": 3
+  },
+  "notifications": [
+    {
+      "id": "1",
+      "title": "تذكير باجتماع المجلس",
+      "body": "يبدأ اجتماع مجلس الربع الثاني غدًا الساعة 4:00 PM.",
+      "timeAgo": "منذ ساعتين",
+      "type": "المجلس",
+      "isRead": false
+    },
+    {
+      "id": "2",
+      "title": "إعلان جديد",
+      "body": "تم نشر تفاصيل التجمع العائلي السنوي.",
+      "timeAgo": "أمس",
+      "type": "الأخبار",
+      "isRead": false
+    },
+    {
+      "id": "3",
+      "title": "تأكيد تسجيل الفعالية",
+      "body": "تم تسجيلك في ورشة لجنة الشباب.",
+      "timeAgo": "منذ يومين",
+      "type": "الفعاليات",
+      "isRead": true
+    },
+    {
+      "id": "4",
+      "title": "رسالة جديدة",
+      "body": "أرسل لك عبدالله النقول رسالة.",
+      "timeAgo": "منذ 3 أيام",
+      "type": "الرسائل",
+      "isRead": true
+    }
+  ],
+  "directoryBranches": [
+    "الكل",
+    "المفرح",
+    "الظافر",
+    "الراشد",
+    "السعيد",
+    "الحمد"
+  ],
+  "directory": [
+    {
+      "id": "1",
+      "name": "محمد المفرح",
+      "role": "رئيس الفرع",
+      "branchId": "1",
+      "branchName": "المفرح",
+      "phone": "+966 50 111 2233",
+      "email": "mohammed.mofreh@email.com",
+      "city": "الرياض"
+    },
+    {
+      "id": "2",
+      "name": "سارة المفرح",
+      "role": "أمين السر",
+      "branchId": "1",
+      "branchName": "المفرح",
+      "phone": "+966 50 222 3344",
+      "email": "sara.mofreh@email.com",
+      "city": "الرياض"
+    },
+    {
+      "id": "3",
+      "name": "عمر المفرح",
+      "role": "عضو",
+      "branchId": "1",
+      "branchName": "المفرح",
+      "phone": "+966 50 333 4455",
+      "email": "omar.mofreh@email.com",
+      "city": "جدة"
+    },
+    {
+      "id": "4",
+      "name": "خالد الظافر",
+      "role": "رئيس الفرع",
+      "branchId": "2",
+      "branchName": "الظافر",
+      "phone": "+966 50 444 5566",
+      "email": "khalid.dhafer@email.com",
+      "city": "الدمام"
+    },
+    {
+      "id": "5",
+      "name": "فاطمة الظافر",
+      "role": "عضو",
+      "branchId": "2",
+      "branchName": "الظافر",
+      "phone": "+966 50 555 6677",
+      "email": "fatima.dhafer@email.com",
+      "city": "الدمام"
+    },
+    {
+      "id": "6",
+      "name": "عبدالله الراشد",
+      "role": "رئيس الفرع",
+      "branchId": "3",
+      "branchName": "الراشد",
+      "phone": "+966 50 666 7788",
+      "email": "abdullah.rashid@email.com",
+      "city": "مكة"
+    },
+    {
+      "id": "7",
+      "name": "نورة السعيد",
+      "role": "رئيس الفرع",
+      "branchId": "4",
+      "branchName": "السعيد",
+      "phone": "+966 50 777 8899",
+      "email": "noura.saeed@email.com",
+      "city": "المدينة"
+    },
+    {
+      "id": "8",
+      "name": "حسن الحمد",
+      "role": "رئيس الفرع",
+      "branchId": "5",
+      "branchName": "الحمد",
+      "phone": "+966 50 888 9900",
+      "email": "hassan.hamad@email.com",
+      "city": "الرياض"
+    },
+    {
+      "id": "9",
+      "name": "أحمد عبدالله النقول",
+      "role": "فرد من العائلة",
+      "branchId": "1",
+      "branchName": "المفرح",
+      "phone": "+966 50 123 4567",
+      "email": "ahmed.alnaqool@email.com",
+      "city": "الرياض"
+    }
+  ],
+  "councilItems": {
+    "meetings": [
+      {
+        "id": "1",
+        "title": "اجتماع مجلس الربع الثاني",
+        "subtitle": "قاعة مجلس العائلة",
+        "meta": "15 يونيو 2024 · 4:00 PM",
+        "status": "قادم"
+      },
+      {
+        "id": "2",
+        "title": "الاجتماع العام السنوي",
+        "subtitle": "مركز التراث",
+        "meta": "10 يوليو 2024 · 5:00 PM",
+        "status": "مجدول"
+      },
+      {
+        "id": "3",
+        "title": "اجتماع مجلس الربع الأول",
+        "subtitle": "قاعة مجلس العائلة",
+        "meta": "12 مارس 2024 · 4:00 PM",
+        "status": "مكتمل"
+      }
+    ],
+    "committees": [
+      {
+        "id": "1",
+        "title": "لجنة الفعاليات",
+        "subtitle": "12 عضوًا",
+        "meta": "الرئيس: محمد المفرح",
+        "status": "نشطة"
+      },
+      {
+        "id": "2",
+        "title": "لجنة الشباب",
+        "subtitle": "8 أعضاء",
+        "meta": "الرئيس: عمر المفرح",
+        "status": "نشطة"
+      },
+      {
+        "id": "3",
+        "title": "لجنة التراث",
+        "subtitle": "10 أعضاء",
+        "meta": "الرئيسة: نورة السعيد",
+        "status": "نشطة"
+      }
+    ],
+    "voting": [
+      {
+        "id": "1",
+        "title": "اعتماد الميزانية السنوية",
+        "subtitle": "يغلق خلال 3 أيام",
+        "meta": "142 صوتًا",
+        "status": "مفتوح"
+      },
+      {
+        "id": "2",
+        "title": "تمويل برنامج الشباب",
+        "subtitle": "يغلق خلال 5 أيام",
+        "meta": "98 صوتًا",
+        "status": "مفتوح"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "1",
+        "title": "إعداد جدول اجتماع الربع الثاني",
+        "subtitle": "مسندة إلى سارة المفرح",
+        "meta": "الاستحقاق 12 يونيو 2024",
+        "status": "قيد التنفيذ"
+      },
+      {
+        "id": "2",
+        "title": "تحديث سجلات نسب العائلة",
+        "subtitle": "مسندة إلى لجنة التراث",
+        "meta": "الاستحقاق 20 يونيو 2024",
+        "status": "مفتوح"
+      }
+    ],
+    "decisions": [
+      {
+        "id": "1",
+        "title": "اعتماد موقع التجمع السنوي",
+        "subtitle": "قرار #2024-18",
+        "meta": "معتمد · 28 مايو 2024",
+        "status": "معتمد"
+      },
+      {
+        "id": "2",
+        "title": "إطلاق برنامج قيادة الشباب",
+        "subtitle": "قرار #2024-17",
+        "meta": "معتمد · 15 مايو 2024",
+        "status": "معتمد"
+      }
+    ],
+    "members": [
+      {
+        "id": "1",
+        "title": "عبدالله النقول",
+        "subtitle": "رئيس المجلس",
+        "meta": "فرع النقول",
+        "status": "نشط"
+      },
+      {
+        "id": "2",
+        "title": "محمد المفرح",
+        "subtitle": "ممثل الفرع",
+        "meta": "المفرح",
+        "status": "نشط"
+      },
+      {
+        "id": "3",
+        "title": "خالد الظافر",
+        "subtitle": "ممثل الفرع",
+        "meta": "الظافر",
+        "status": "نشط"
+      }
+    ]
+  }
+}
