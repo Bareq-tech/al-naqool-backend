@@ -1,6 +1,7 @@
 using BareqAlNaqool.Infrastructure;
 using BareqAlNaqool.Infrastructure.Hosting;
 using BareqAlNaqool.Infrastructure.OpenApi;
+using BareqAlNaqool.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureRailwayPort();
@@ -13,6 +14,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddBareqHealthChecks();
 
 var app = builder.Build();
+
+app.Logger.LogInformation("Database target: {DatabaseTarget}", DatabaseConnection.Describe(app.Configuration));
 
 app.MapBareqHealthChecks();
 app.UseBareqCors();

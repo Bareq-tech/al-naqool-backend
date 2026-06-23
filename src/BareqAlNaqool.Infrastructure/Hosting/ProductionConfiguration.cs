@@ -25,7 +25,24 @@ public static class ProductionConfiguration
         }
 
         ValidateDatabaseConfiguration(builder.Configuration);
+        ValidateDatabaseStartupConfiguration(builder.Configuration);
         ValidateJwtConfiguration(builder.Configuration);
+    }
+
+    private static void ValidateDatabaseStartupConfiguration(IConfiguration configuration)
+    {
+        var databaseStartup = configuration.GetSection(DatabaseStartupOptions.SectionName).Get<DatabaseStartupOptions>();
+        if (databaseStartup is null)
+        {
+            return;
+        }
+
+        if (databaseStartup.MigrateOnStartup || databaseStartup.SeedOnStartup)
+        {
+            throw new InvalidOperationException(
+                "Database__MigrateOnStartup and Database__SeedOnStartup must not be enabled in Production. " +
+                "Remove them from Railway and run migrations with Dockerfile.migrate instead.");
+        }
     }
 
     private static void ValidateDatabaseConfiguration(IConfiguration configuration)
