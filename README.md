@@ -112,26 +112,22 @@ Deploy **three services** from this repo: a one-off **Migrator**, then **Mobile 
 
 In your Railway project, add a **PostgreSQL** plugin.
 
-### 2. Database migrator (run before API deploys)
+### 2. Deploy API services
 
-| Setting | Value |
-|---------|-------|
-| Dockerfile | `Dockerfile.migrate` |
-| Root directory | repository root |
+Migrations run **automatically on startup** in Production (same pattern as Midank WebApi). On first deploy, if the database is empty, demo data and admin accounts are seeded once.
 
-**Environment variables:**
+| Service | Dockerfile |
+|---------|------------|
+| Mobile API | `Dockerfile.api` |
+| Admin API | `Dockerfile.admin` |
+
+**Optional:** `Dockerfile.migrate` is still available as a standalone migration job if you prefer not to migrate from the API containers.
+
+**Environment variables** (both API services):
 
 | Variable | Value |
 |----------|-------|
 | `ConnectionStrings__DefaultConnection` | `${{ Postgres.DATABASE_URL }}` (use your Postgres service name) |
-
-**Start command** (first deploy only, to seed demo data):
-
-```
---seed
-```
-
-After the first successful run, remove `--seed` from the start command (or delete the migrator service). Re-run the migrator only when you add new EF migrations.
 
 ### 3. Mobile API service
 
@@ -171,9 +167,8 @@ Railway sets `PORT`; Dockerfiles bind to `0.0.0.0:8080` and `ConfigureRailwayPor
 
 ### Deploy order
 
-1. Run the **Migrator** service once (`--seed` on first deploy).
-2. Deploy **Mobile API**.
-3. Deploy **Admin API**.
+1. Deploy **Admin API** or **Mobile API** (either one applies migrations on startup).
+2. Deploy the other API service.
 
 Point the Flutter app `API_BASE_URL` at the mobile API Railway URL.
 

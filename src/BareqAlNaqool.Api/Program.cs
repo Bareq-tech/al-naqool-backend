@@ -27,7 +27,8 @@ if (app.Environment.IsProduction())
 await DatabaseStartup.ApplyConfiguredStartupAsync(
     app.Services,
     app.Configuration,
-    app.Logger);
+    app.Logger,
+    app.Environment);
 
 app.MapBareqHealthChecks();
 app.UseBareqCors();

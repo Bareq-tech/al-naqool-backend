@@ -24,6 +24,12 @@ if (app.Environment.IsProduction())
         app.Logger);
 }
 
+await DatabaseStartup.ApplyConfiguredStartupAsync(
+    app.Services,
+    app.Configuration,
+    app.Logger,
+    app.Environment);
+
 app.MapBareqHealthChecks();
 app.UseBareqCors();
 app.UseBareqSwagger("Bareq Al Naqool Admin API");

@@ -37,11 +37,11 @@ public static class ProductionConfiguration
             return;
         }
 
-        if (databaseStartup.MigrateOnStartup || databaseStartup.SeedOnStartup)
+        if (databaseStartup.SeedOnStartup)
         {
             throw new InvalidOperationException(
-                "Database__MigrateOnStartup and Database__SeedOnStartup must not be enabled in Production. " +
-                "Remove them from Railway and run migrations with Dockerfile.migrate instead.");
+                "Database__SeedOnStartup must not be enabled in Production after the first deploy. " +
+                "Initial seed runs automatically when the database is empty.");
         }
     }
 
