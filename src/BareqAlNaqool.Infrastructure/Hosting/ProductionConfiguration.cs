@@ -47,24 +47,22 @@ public static class ProductionConfiguration
 
     private static void ValidateDatabaseConfiguration(IConfiguration configuration)
     {
-        var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL")
+        var raw = configuration.GetConnectionString("DefaultConnection")
+            ?? Environment.GetEnvironmentVariable("DATABASE_URL")
             ?? configuration["DATABASE_URL"];
-        var pgHost = Environment.GetEnvironmentVariable("PGHOST");
 
-        if (string.IsNullOrWhiteSpace(databaseUrl) && string.IsNullOrWhiteSpace(pgHost))
+        if (string.IsNullOrWhiteSpace(raw))
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            if (!string.IsNullOrWhiteSpace(connectionString))
-            {
-                throw new InvalidOperationException(
-                    "ConnectionStrings__DefaultConnection is set but DATABASE_URL is missing in Production. " +
-                    "Remove ConnectionStrings__DefaultConnection from Railway and add " +
-                    "DATABASE_URL=${{ Postgres.DATABASE_URL }} instead.");
-            }
-
             throw new InvalidOperationException(
-                "DATABASE_URL must be set in Production. " +
-                "Add DATABASE_URL=${{ Postgres.DATABASE_URL }} to your Railway service.");
+                "ConnectionStrings__DefaultConnection must be set in Production. " +
+                "On Railway: ConnectionStrings__DefaultConnection=${{ Postgres.DATABASE_URL }}");
+        }
+
+        if (raw.Contains("#{", StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "ConnectionStrings__DefaultConnection is still a placeholder. " +
+                "Set it on Railway using the Postgres service reference.");
         }
 
         _ = DatabaseConnection.Resolve(configuration);

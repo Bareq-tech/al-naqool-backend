@@ -123,7 +123,7 @@ In your Railway project, add a **PostgreSQL** plugin.
 
 | Variable | Value |
 |----------|-------|
-| `DATABASE_URL` | `${{ Postgres.DATABASE_URL }}` (use your Postgres service name) |
+| `ConnectionStrings__DefaultConnection` | `${{ Postgres.DATABASE_URL }}` (use your Postgres service name) |
 
 **Start command** (first deploy only, to seed demo data):
 
@@ -144,12 +144,12 @@ After the first successful run, remove `--seed` from the start command (or delet
 
 | Variable | Notes |
 |----------|-------|
-| `DATABASE_URL` | `${{ Postgres.DATABASE_URL }}` — required on **both** API services |
+| `ConnectionStrings__DefaultConnection` | `${{ Postgres.DATABASE_URL }}` — required on **both** API services |
 | `Jwt__Key` | Long random secret, 32+ characters (required) |
 | `Jwt__Issuer` | `BareqAlNaqool.Api` |
 | `Jwt__Audience` | `BareqAlNaqool.Clients` |
 
-Containers run with `ASPNETCORE_ENVIRONMENT=Production`. The app refuses to start if `DATABASE_URL` or `Jwt__Key` is missing or uses a dev default.
+Containers run with `ASPNETCORE_ENVIRONMENT=Production`. The app refuses to start if `ConnectionStrings__DefaultConnection` or `Jwt__Key` is missing or uses a dev default.
 
 ### 4. Admin API service
 
@@ -162,7 +162,7 @@ Link the **same** PostgreSQL instance:
 
 | Variable | Example |
 |----------|---------|
-| `DATABASE_URL` | `${{ Postgres.DATABASE_URL }}` |
+| `ConnectionStrings__DefaultConnection` | `${{ Postgres.DATABASE_URL }}` |
 | `Jwt__Key` | Separate long random secret (32+ chars) |
 | `Jwt__Issuer` | `BareqAlNaqool.Admin` |
 | `Jwt__Audience` | `BareqAlNaqool.AdminClients` |
@@ -236,7 +236,7 @@ Each CRUD resource supports `GET`, `GET/{id}`, `POST`, `PUT/{id}`, `DELETE/{id}`
 
 | Setting | Local (Development) | Production (Railway) |
 |---------|---------------------|----------------------|
-| Database | `ConnectionStrings__DefaultConnection` or localhost default | `DATABASE_URL=${{ Postgres.DATABASE_URL }}` |
+| Database | `ConnectionStrings__DefaultConnection` or localhost default | `ConnectionStrings__DefaultConnection=${{ Postgres.DATABASE_URL }}` |
 | JWT | `Jwt__Key` in `.env` or `appsettings.Development.json` | `Jwt__Key` (32+ chars, unique per service) |
 | Migrations | Auto on mobile API startup | Run `Dockerfile.migrate` job |
 | Seed data | Auto on mobile API startup (Development) | Migrator with `--seed` (first deploy only) |

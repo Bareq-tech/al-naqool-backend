@@ -1,231 +1,105 @@
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 
 namespace BareqAlNaqool.Infrastructure.Persistence;
 
 public static class DatabaseConnection
 {
-    private const string DevDatabaseName = "bareq_alnaqool";
-
     public static string Resolve(IConfiguration configuration, string name = "DefaultConnection")
     {
-        var (connectionString, source) = ResolveInternal(configuration, name);
-        ValidateProductionTarget(connectionString, source);
-        return connectionString;
+        var raw = GetRawConnectionString(configuration, name);
+
+        if (IsPlaceholder(raw))
+        {
+            throw new InvalidOperationException(
+                $"Connection string '{name}' is missing or still a placeholder. " +
+                "On Railway, set ConnectionStrings__DefaultConnection=${{ Postgres.DATABASE_URL }} " +
+                "(reference your Postgres service — same pattern as Midank WebApi).");
+        }
+
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            throw new InvalidOperationException(
+                $"Connection string '{name}' was not found. " +
+                "Set ConnectionStrings__DefaultConnection locally, or on Railway use " +
+                "ConnectionStrings__DefaultConnection=${{ Postgres.DATABASE_URL }}.");
+        }
+
+        return NpgsqlConnectionStringHelper.Normalize(raw);
     }
 
     public static string Describe(IConfiguration configuration, string name = "DefaultConnection")
     {
-        var (connectionString, source) = ResolveInternal(configuration, name);
-        var builder = new NpgsqlConnectionStringBuilder(connectionString);
+        var raw = GetRawConnectionString(configuration, name);
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            return "source=none";
+        }
+
+        var builder = new NpgsqlConnectionStringBuilder(NpgsqlConnectionStringHelper.Normalize(raw));
+        var source = !string.IsNullOrWhiteSpace(configuration.GetConnectionString(name))
+            ? $"ConnectionStrings:{name}"
+            : "DATABASE_URL";
         return $"source={source}, host={builder.Host}, database={builder.Database}, user={builder.Username}";
     }
 
-    private static (string ConnectionString, string Source) ResolveInternal(
-        IConfiguration configuration,
-        string name)
+    public static async Task VerifyConnectivityAsync(
+        string connectionString,
+        ILogger? logger = null,
+        CancellationToken cancellationToken = default)
     {
-        if (IsProduction())
+        try
         {
-            return ResolveProduction(configuration);
+            await using var connection = new NpgsqlConnection(connectionString);
+            await connection.OpenAsync(cancellationToken);
+            logger?.LogInformation("Database connection verified.");
         }
-
-        return ResolveDevelopment(configuration, name);
-    }
-
-    private static (string ConnectionString, string Source) ResolveProduction(IConfiguration configuration)
-    {
-        var fromPgVariables = TryBuildFromPgVariables();
-        if (fromPgVariables is not null)
+        catch (PostgresException ex) when (ex.SqlState == "28P01")
         {
-            return (fromPgVariables, "PGHOST/PGUSER/PGPASSWORD");
-        }
-
-        var databaseUrl = GetDatabaseUrl(configuration);
-        if (!string.IsNullOrWhiteSpace(databaseUrl))
-        {
-            return (ParseDatabaseUrl(databaseUrl), "DATABASE_URL");
-        }
-
-        throw new InvalidOperationException(
-            "DATABASE_URL must be set in Production. " +
-            "On Railway, use DATABASE_URL=${{ Postgres.DATABASE_URL }} (reference your Postgres service). " +
-            "Remove ConnectionStrings__DefaultConnection and any manually typed postgres:// URL.");
-    }
-
-    private static (string ConnectionString, string Source) ResolveDevelopment(
-        IConfiguration configuration,
-        string name)
-    {
-        var fromPgVariables = TryBuildFromPgVariables();
-        if (fromPgVariables is not null)
-        {
-            return (fromPgVariables, "PGHOST/PGUSER/PGPASSWORD");
-        }
-
-        var databaseUrl = GetDatabaseUrl(configuration);
-        if (!string.IsNullOrWhiteSpace(databaseUrl))
-        {
-            return (ParseDatabaseUrl(databaseUrl), "DATABASE_URL");
-        }
-
-        var connectionString = configuration.GetConnectionString(name);
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
+            var builder = new NpgsqlConnectionStringBuilder(connectionString);
             throw new InvalidOperationException(
-                $"Connection string '{name}' was not found. Set DATABASE_URL or ConnectionStrings__{name}.");
+                $"PostgreSQL password authentication failed for user '{builder.Username}' on host '{builder.Host}'. " +
+                "On Railway use ConnectionStrings__DefaultConnection=${{ Postgres.DATABASE_URL }} with no quotes. " +
+                "Remove any manually typed connection string or dev password.",
+                ex);
+        }
+    }
+
+    private static string? GetRawConnectionString(IConfiguration configuration, string name)
+    {
+        var fromConfig = SanitizeValue(configuration.GetConnectionString(name));
+        if (!string.IsNullOrWhiteSpace(fromConfig))
+        {
+            return fromConfig;
         }
 
-        return (connectionString, $"ConnectionStrings:{name}");
+        // Backward compatibility if DATABASE_URL is set instead of ConnectionStrings__DefaultConnection.
+        return SanitizeValue(Environment.GetEnvironmentVariable("DATABASE_URL"))
+            ?? SanitizeValue(configuration["DATABASE_URL"]);
     }
 
-    private static string? GetDatabaseUrl(IConfiguration configuration)
-    {
-        return Environment.GetEnvironmentVariable("DATABASE_URL")
-            ?? configuration["DATABASE_URL"];
-    }
+    private static bool IsPlaceholder(string? value) =>
+        !string.IsNullOrWhiteSpace(value) && value.Contains("#{", StringComparison.Ordinal);
 
-    private static string? TryBuildFromPgVariables()
+    private static string? SanitizeValue(string? value)
     {
-        var host = Environment.GetEnvironmentVariable("PGHOST")
-            ?? Environment.GetEnvironmentVariable("POSTGRES_HOST");
-        var password = Environment.GetEnvironmentVariable("PGPASSWORD")
-            ?? Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-
-        if (string.IsNullOrWhiteSpace(host) || string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(value))
         {
             return null;
         }
 
-        var builder = new NpgsqlConnectionStringBuilder
+        var trimmed = value.Trim();
+        if (trimmed.Length >= 2 && trimmed.StartsWith('"') && trimmed.EndsWith('"'))
         {
-            Host = host,
-            Port = int.TryParse(
-                Environment.GetEnvironmentVariable("PGPORT") ?? Environment.GetEnvironmentVariable("POSTGRES_PORT"),
-                out var port)
-                ? port
-                : 5432,
-            Database = Environment.GetEnvironmentVariable("PGDATABASE")
-                ?? Environment.GetEnvironmentVariable("POSTGRES_DB")
-                ?? string.Empty,
-            Username = Environment.GetEnvironmentVariable("PGUSER")
-                ?? Environment.GetEnvironmentVariable("POSTGRES_USER")
-                ?? string.Empty,
-            Password = password
-        };
-
-        if (ShouldRequireSsl(host))
-        {
-            builder.SslMode = SslMode.Require;
+            trimmed = trimmed[1..^1].Trim();
         }
 
-        return builder.ConnectionString;
-    }
-
-    private static string ParseDatabaseUrl(string databaseUrl)
-    {
-        var normalized = databaseUrl.Trim();
-
-        if (!normalized.Contains("://", StringComparison.Ordinal))
+        if (trimmed.Length >= 2 && trimmed.StartsWith('\'') && trimmed.EndsWith('\''))
         {
-            return normalized;
+            trimmed = trimmed[1..^1].Trim();
         }
 
-        var schemeEnd = normalized.IndexOf("://", StringComparison.Ordinal) + 3;
-        var remainder = normalized[schemeEnd..];
-        var atIndex = remainder.LastIndexOf('@');
-        if (atIndex < 0)
-        {
-            throw new InvalidOperationException("DATABASE_URL is malformed.");
-        }
-
-        var credentials = remainder[..atIndex];
-        var hostPart = remainder[(atIndex + 1)..];
-
-        var colonIndex = credentials.IndexOf(':');
-        var username = colonIndex >= 0
-            ? Uri.UnescapeDataString(credentials[..colonIndex])
-            : Uri.UnescapeDataString(credentials);
-        var password = colonIndex >= 0
-            ? Uri.UnescapeDataString(credentials[(colonIndex + 1)..])
-            : string.Empty;
-
-        var queryIndex = hostPart.IndexOf('?');
-        if (queryIndex >= 0)
-        {
-            hostPart = hostPart[..queryIndex];
-        }
-
-        var slashIndex = hostPart.IndexOf('/');
-        var hostAndPort = slashIndex >= 0 ? hostPart[..slashIndex] : hostPart;
-        var database = slashIndex >= 0 ? hostPart[(slashIndex + 1)..] : string.Empty;
-
-        var portColonIndex = hostAndPort.LastIndexOf(':');
-        var host = portColonIndex >= 0 ? hostAndPort[..portColonIndex] : hostAndPort;
-        var parsedPort = portColonIndex >= 0
-            && int.TryParse(hostAndPort[(portColonIndex + 1)..], out var port)
-            ? port
-            : 5432;
-
-        var builder = new NpgsqlConnectionStringBuilder
-        {
-            Host = host,
-            Port = parsedPort,
-            Database = database,
-            Username = username,
-            Password = password
-        };
-
-        if (ShouldRequireSsl(host))
-        {
-            builder.SslMode = SslMode.Require;
-        }
-
-        return builder.ConnectionString;
-    }
-
-    private static void ValidateProductionTarget(string connectionString, string source)
-    {
-        if (!IsProduction())
-        {
-            return;
-        }
-
-        var builder = new NpgsqlConnectionStringBuilder(connectionString);
-        var host = builder.Host ?? string.Empty;
-        var database = builder.Database ?? string.Empty;
-
-        if (database.Equals(DevDatabaseName, StringComparison.OrdinalIgnoreCase)
-            && (host.EndsWith(".railway.internal", StringComparison.OrdinalIgnoreCase)
-                || host.Equals("postgres", StringComparison.OrdinalIgnoreCase)))
-        {
-            throw new InvalidOperationException(
-                $"Database '{DevDatabaseName}' is a local dev name but host '{host}' is Railway. " +
-                $"Your {source} was likely typed manually. Delete DATABASE_URL on this service and re-add it as " +
-                "a reference: DATABASE_URL=${{ Postgres.DATABASE_URL }}. " +
-                "The Railway database name is usually 'railway', not 'bareq_alnaqool'.");
-        }
-    }
-
-    private static bool ShouldRequireSsl(string host)
-    {
-        return !IsLocalHost(host);
-    }
-
-    private static bool IsLocalHost(string host)
-    {
-        return host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
-            || host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase)
-            || host.Equals("postgres", StringComparison.OrdinalIgnoreCase)
-            || host.EndsWith(".railway.internal", StringComparison.OrdinalIgnoreCase);
-    }
-
-    private static bool IsProduction()
-    {
-        return string.Equals(
-            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-            Environments.Production,
-            StringComparison.OrdinalIgnoreCase);
+        return string.IsNullOrWhiteSpace(trimmed) ? null : trimmed;
     }
 }

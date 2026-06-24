@@ -17,6 +17,13 @@ var app = builder.Build();
 
 app.Logger.LogInformation("Database target: {DatabaseTarget}", DatabaseConnection.Describe(app.Configuration));
 
+if (app.Environment.IsProduction())
+{
+    await DatabaseConnection.VerifyConnectivityAsync(
+        DatabaseConnection.Resolve(app.Configuration),
+        app.Logger);
+}
+
 await DatabaseStartup.ApplyConfiguredStartupAsync(
     app.Services,
     app.Configuration,
