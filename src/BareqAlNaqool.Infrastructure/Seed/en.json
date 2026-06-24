@@ -1,281 +1,35 @@
 {
-  "president": "Abdullah Al Naqool",
+  "president": "Abdullah Mohammed Al Naqool",
   "landingSlides": [
     {
-      "titleLine1": "Uniting Our Family,",
-      "titleLine2": "Preserving Our Legacy",
-      "subtitle": "Stay connected, informed, and engaged with your family - wherever you are."
+      "titleLine1": "United by Heritage,",
+      "titleLine2": "Connected by Family",
+      "subtitle": "The official app of Al Naqool family — news, events, and council updates in one place."
     },
     {
-      "titleLine1": "Explore Your Heritage,",
-      "titleLine2": "Discover Your Roots",
-      "subtitle": "Discover branches, members, and the story of Al Naqool across generations."
+      "titleLine1": "From Riyadh to Jeddah,",
+      "titleLine2": "One Extended Family",
+      "subtitle": "Explore branches, meet members, and follow your lineage across generations."
     },
     {
-      "titleLine1": "Stay Informed Together,",
-      "titleLine2": "Never Miss a Moment",
-      "subtitle": "Events, announcements, and council updates - all in one place."
+      "titleLine1": "Council Decisions,",
+      "titleLine2": "Transparent to All",
+      "subtitle": "Meetings, committees, voting, and documents — accessible to every member."
     }
   ],
   "homeStats": {
-    "totalMembers": 2458,
-    "familyBranches": 11,
-    "newsUpdates": 24,
-    "upcomingEvents": 8
+    "totalMembers": 2486,
+    "familyBranches": 6,
+    "newsUpdates": 8,
+    "upcomingEvents": 6
   },
   "newsCategories": [
     "All",
     "General",
     "Births",
     "Weddings",
-    "Condolences"
-  ],
-  "newsItems": [
-    {
-      "id": "1",
-      "category": "Council",
-      "title": "Annual Family Council Meeting Scheduled",
-      "description": "The annual family council meeting will be held next month to discuss important family matters.",
-      "body": "The Al Naqool Family Council is pleased to announce that the annual meeting will take place next month at the Heritage Center. All branch representatives are requested to attend. Agenda items include heritage preservation initiatives, youth programs, and the annual family gathering planning.",
-      "timeAgo": "2 hours ago",
-      "publishedDate": "June 18, 2024",
-      "categoryColorHex": "0xFF00332B",
-      "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "2",
-      "category": "Wedding",
-      "title": "Congratulations to Ahmed & Fatima",
-      "description": "Wedding celebration announcement for the Al Mofreh branch.",
-      "body": "The Al Naqool family extends heartfelt congratulations to Ahmed and Fatima on their wedding. The celebration will be held at the Grand Ballroom on June 28, 2024. All family members are warmly invited to share in this joyous occasion.",
-      "timeAgo": "Yesterday",
-      "publishedDate": "June 17, 2024",
-      "categoryColorHex": "0xFF8B5A2B",
-      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "3",
-      "category": "Birth",
-      "title": "New Addition to Al Mofreh Branch",
-      "description": "Birth announcement welcoming a new family member.",
-      "body": "We are delighted to announce the birth of a healthy baby boy to the Al Mofreh branch. Mother and child are doing well. The family requests your prayers and well wishes during this blessed time.",
-      "timeAgo": "2 days ago",
-      "publishedDate": "June 16, 2024",
-      "categoryColorHex": "0xFF2E7D32",
-      "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "4",
-      "category": "General",
-      "title": "Family Gathering Announcement",
-      "description": "Details for the upcoming annual family gathering.",
-      "body": "Mark your calendars for the annual Al Naqool family gathering. This year's event will feature traditional performances, a heritage exhibition, and activities for all age groups. Registration opens next week through the family app.",
-      "timeAgo": "3 days ago",
-      "publishedDate": "June 15, 2024",
-      "categoryColorHex": "0xFF546E7A",
-      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "5",
-      "category": "Condolences",
-      "title": "Condolences to Al Dhafer Branch",
-      "description": "Our deepest sympathies to the Al Dhafer family.",
-      "body": "The Al Naqool Family Council expresses its deepest condolences to the Al Dhafer branch on their recent loss. May Allah grant patience and comfort to the bereaved family. Funeral arrangements have been shared with branch members.",
-      "timeAgo": "1 week ago",
-      "publishedDate": "June 11, 2024",
-      "categoryColorHex": "0xFF546E7A",
-      "imageUrl": "https://images.unsplash.com/photo-1770786106021-52580470e31e?auto=format&fit=crop&w=800&q=80"
-    }
-  ],
-  "events": [
-    {
-      "id": "1",
-      "day": "01",
-      "month": "Jun",
-      "title": "Annual Family Gathering",
-      "location": "Al Naqool Heritage Center",
-      "time": "6:00 PM",
-      "fullDate": "Saturday, June 1, 2024",
-      "description": "Join us for the annual Al Naqool family gathering featuring dinner, cultural performances, and awards for community contributors.",
-      "organizer": "Events Committee",
-      "isMine": true
-    },
-    {
-      "id": "2",
-      "day": "15",
-      "month": "Jun",
-      "title": "Council Board Meeting",
-      "location": "Family Council Hall",
-      "time": "4:00 PM",
-      "fullDate": "Saturday, June 15, 2024",
-      "description": "Quarterly board meeting to review council decisions, committee reports, and upcoming initiatives for all family branches.",
-      "organizer": "Family Council",
-      "isMine": false
-    },
-    {
-      "id": "3",
-      "day": "22",
-      "month": "Jun",
-      "title": "Youth Committee Workshop",
-      "location": "Community Center",
-      "time": "10:00 AM",
-      "fullDate": "Saturday, June 22, 2024",
-      "description": "A leadership and heritage workshop designed for young family members aged 16–25. Registration is required.",
-      "organizer": "Youth Committee",
-      "isMine": true
-    },
-    {
-      "id": "4",
-      "day": "05",
-      "month": "Jul",
-      "title": "Eid Celebration Dinner",
-      "location": "Grand Ballroom",
-      "time": "7:30 PM",
-      "fullDate": "Friday, July 5, 2024",
-      "description": "Celebrate Eid together with the extended Al Naqool family. Traditional dinner and children's activities included.",
-      "organizer": "Social Committee",
-      "isMine": false
-    }
-  ],
-  "branches": [
-    {
-      "id": "1",
-      "name": "Al Mofreh",
-      "memberCount": 3,
-      "description": "One of the largest branches, known for community leadership and cultural preservation.",
-      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "2",
-      "name": "Al Dhafer",
-      "memberCount": 2,
-      "description": "A historic branch with deep roots in the eastern region of the family lineage.",
-      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "3",
-      "name": "Al Rashid",
-      "memberCount": 1,
-      "description": "Active in education initiatives and youth development programs.",
-      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "4",
-      "name": "Al Saeed",
-      "memberCount": 1,
-      "description": "Contributors to the family archive and genealogy documentation efforts.",
-      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "5",
-      "name": "Al Hamad",
-      "memberCount": 1,
-      "description": "Focused on social welfare and supporting family members in need.",
-      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=200&h=200&q=80"
-    }
-  ],
-  "branchMembers": [
-    {
-      "id": "1",
-      "name": "Mohammed Al Mofreh",
-      "role": "Branch Head",
-      "branchId": "1",
-      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "2",
-      "name": "Sara Al Mofreh",
-      "role": "Secretary",
-      "branchId": "1",
-      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "3",
-      "name": "Omar Al Mofreh",
-      "role": "Member",
-      "branchId": "1",
-      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "4",
-      "name": "Khalid Al Dhafer",
-      "role": "Branch Head",
-      "branchId": "2",
-      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "5",
-      "name": "Fatima Al Dhafer",
-      "role": "Member",
-      "branchId": "2",
-      "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "6",
-      "name": "Abdullah Al Rashid",
-      "role": "Branch Head",
-      "branchId": "3",
-      "imageUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "7",
-      "name": "Noura Al Saeed",
-      "role": "Branch Head",
-      "branchId": "4",
-      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "id": "8",
-      "name": "Hassan Al Hamad",
-      "role": "Branch Head",
-      "branchId": "5",
-      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=200&h=200&q=80"
-    }
-  ],
-  "founderLineage": [
-    {
-      "generation": 1,
-      "name": "Abdullah Al Naqool",
-      "subtitle": "The Founder",
-      "isFounder": true,
-      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "generation": 2,
-      "name": "Mohammed Al Naqool",
-      "subtitle": "Son",
-      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "generation": 2,
-      "name": "Khalid Al Naqool",
-      "subtitle": "Son",
-      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "generation": 2,
-      "name": "Saeed Al Naqool",
-      "subtitle": "Son",
-      "imageUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "generation": 3,
-      "name": "Ahmed Al Mofreh",
-      "subtitle": "3rd Generation",
-      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "generation": 3,
-      "name": "Noura Al Rashid",
-      "subtitle": "3rd Generation",
-      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80"
-    },
-    {
-      "generation": 3,
-      "name": "Hassan Al Hamad",
-      "subtitle": "3rd Generation",
-      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=200&h=200&q=80"
-    }
+    "Condolences",
+    "Council"
   ],
   "messageFilters": [
     "All",
@@ -283,269 +37,792 @@
     "Groups",
     "Direct"
   ],
-  "conversations": [
-    {
-      "id": "1",
-      "name": "Family Council",
-      "lastMessage": "Meeting agenda has been shared",
-      "time": "10:30 AM",
-      "unreadCount": 3,
-      "isGroup": true,
-      "type": "Announcements"
-    },
-    {
-      "id": "2",
-      "name": "Al Mofreh Branch",
-      "lastMessage": "Eid gathering details updated",
-      "time": "Yesterday",
-      "unreadCount": 0,
-      "isGroup": true,
-      "type": "Groups"
-    },
-    {
-      "id": "3",
-      "name": "Abdullah Al Naqool",
-      "lastMessage": "Thank you for the update",
-      "time": "Mon",
-      "unreadCount": 1,
-      "isGroup": false,
-      "type": "Direct"
-    },
-    {
-      "id": "4",
-      "name": "Events Committee",
-      "lastMessage": "Venue confirmed for next event",
-      "time": "Sun",
-      "unreadCount": 0,
-      "isGroup": true,
-      "type": "Groups"
-    }
-  ],
-  "chatMessages": [
-    {
-      "id": "1",
-      "conversationId": "1",
-      "senderName": "Council Admin",
-      "content": "Welcome to the Family Council group. Please review the meeting agenda.",
-      "time": "9:00 AM",
-      "isMe": false,
-      "isAnnouncement": true
-    },
-    {
-      "id": "2",
-      "conversationId": "1",
-      "senderName": "Abdullah Al Naqool",
-      "content": "The agenda looks comprehensive. I will attend the opening session.",
-      "time": "9:15 AM",
-      "isMe": false
-    },
-    {
-      "id": "3",
-      "conversationId": "1",
-      "senderName": "You",
-      "content": "I have reviewed the documents. Ready for the discussion.",
-      "time": "9:45 AM",
-      "isMe": true
-    },
-    {
-      "id": "4",
-      "conversationId": "1",
-      "senderName": "Council Admin",
-      "content": "Meeting agenda has been shared",
-      "time": "10:30 AM",
-      "isMe": false,
-      "isAnnouncement": true
-    },
-    {
-      "id": "5",
-      "conversationId": "2",
-      "senderName": "Mohammed Al Mofreh",
-      "content": "Eid gathering will start at 7 PM at the Heritage Center.",
-      "time": "Yesterday",
-      "isMe": false
-    },
-    {
-      "id": "6",
-      "conversationId": "2",
-      "senderName": "You",
-      "content": "Thank you. I will confirm attendance by tomorrow.",
-      "time": "Yesterday",
-      "isMe": true
-    },
-    {
-      "id": "7",
-      "conversationId": "3",
-      "senderName": "Abdullah Al Naqool",
-      "content": "Assalamu alaikum Ahmed, could you share the branch member list?",
-      "time": "Mon",
-      "isMe": false
-    },
-    {
-      "id": "8",
-      "conversationId": "3",
-      "senderName": "You",
-      "content": "Wa alaikum assalam. I have uploaded it to the documents section.",
-      "time": "Mon",
-      "isMe": true
-    },
-    {
-      "id": "9",
-      "conversationId": "3",
-      "senderName": "Abdullah Al Naqool",
-      "content": "Thank you for the update",
-      "time": "Mon",
-      "isMe": false
-    },
-    {
-      "id": "10",
-      "conversationId": "4",
-      "senderName": "Events Committee",
-      "content": "Venue confirmed for next event at the Grand Ballroom.",
-      "time": "Sun",
-      "isMe": false,
-      "isAnnouncement": true
-    }
-  ],
   "galleryTypes": [
     "Photos",
     "Videos",
     "Albums",
-    "Documents"
-  ],
-  "albums": [
-    {
-      "id": "1",
-      "title": "Family Gathering - Eid 2023",
-      "photoCount": 124,
-      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?auto=format&fit=crop&w=800&q=80",
-      "isFeatured": true,
-      "description": "Memories from the Eid 2023 family gathering at the Heritage Center."
-    },
-    {
-      "id": "2",
-      "title": "Family Events",
-      "photoCount": 86,
-      "imageUrl": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
-      "isFeatured": false,
-      "description": "Highlights from annual events and community celebrations."
-    },
-    {
-      "id": "3",
-      "title": "Weddings",
-      "photoCount": 64,
-      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80",
-      "isFeatured": false,
-      "description": "Wedding celebrations across all family branches."
-    },
-    {
-      "id": "4",
-      "title": "Trips",
-      "photoCount": 42,
-      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?auto=format&fit=crop&w=800&q=80",
-      "isFeatured": false,
-      "description": "Family trips and reunions over the years."
-    }
-  ],
-  "galleryPhotos": [
-    {
-      "id": "1",
-      "albumId": "1",
-      "caption": "Opening ceremony",
-      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "2",
-      "albumId": "1",
-      "caption": "Family dinner",
-      "imageUrl": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "3",
-      "albumId": "1",
-      "caption": "Group photo",
-      "imageUrl": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "4",
-      "albumId": "1",
-      "caption": "Children activities",
-      "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "5",
-      "albumId": "1",
-      "caption": "Evening gathering",
-      "imageUrl": "https://images.unsplash.com/photo-1770786106021-52580470e31e?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "6",
-      "albumId": "1",
-      "caption": "Heritage display",
-      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "7",
-      "albumId": "2",
-      "caption": "Annual event",
-      "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "8",
-      "albumId": "2",
-      "caption": "Award ceremony",
-      "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "9",
-      "albumId": "3",
-      "caption": "Wedding reception",
-      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      "id": "10",
-      "albumId": "4",
-      "caption": "Mountain trip",
-      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?auto=format&fit=crop&w=800&q=80"
-    }
+    "Heritage"
   ],
   "documentCategories": [
     "All",
     "Council",
     "Family Records",
-    "Legal"
+    "Legal",
+    "Financial"
+  ],
+  "directoryBranches": [
+    "All",
+    "Al Mofreh",
+    "Al Dhafer",
+    "Al Rashid",
+    "Al Saeed",
+    "Al Hamad",
+    "Al Naqool"
+  ],
+  "termsEn": "By registering you agree to the Al Naqool family app terms, privacy policy, and council bylaws. Member data is used only for family communication.",
+  "termsAr": "بالتسجيل فإنك توافق على شروط تطبيق عائلة النقول وسياسة الخصوصية ولوائح المجلس. تُستخدم بيانات الأعضاء للتواصل العائلي فقط.",
+  "branches": [
+    {
+      "key": "mofreh",
+      "name": "Al Mofreh",
+      "memberCount": 412,
+      "description": "The largest branch, based in Riyadh. Known for organizing annual gatherings and youth programs.",
+      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400"
+    },
+    {
+      "key": "dhafer",
+      "name": "Al Dhafer",
+      "memberCount": 318,
+      "description": "Eastern Province branch with a strong role in social support and condolence coordination.",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400"
+    },
+    {
+      "key": "rashid",
+      "name": "Al Rashid",
+      "memberCount": 285,
+      "description": "Makkah branch active in education scholarships and Hajj season coordination.",
+      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400"
+    },
+    {
+      "key": "saeed",
+      "name": "Al Saeed",
+      "memberCount": 264,
+      "description": "Medina branch leading genealogy documentation and the family digital archive.",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400"
+    },
+    {
+      "key": "hamad",
+      "name": "Al Hamad",
+      "memberCount": 231,
+      "description": "Southern branch focused on welfare funds and supporting elderly members.",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400"
+    },
+    {
+      "key": "naqool",
+      "name": "Al Naqool",
+      "memberCount": 198,
+      "description": "The founding line — council presidency and central administration.",
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400"
+    }
+  ],
+  "users": [
+    {
+      "key": "admin",
+      "userName": "admin",
+      "email": "admin@alnaqool.com",
+      "password": "Admin123!",
+      "fullName": "System Administrator",
+      "displayRole": "Administrator",
+      "memberId": "ADMIN-001",
+      "branchKey": "naqool",
+      "phone": "+966500000001",
+      "role": "Admin",
+      "accountStatus": "Active",
+      "dateOfBirth": "January 1, 1980",
+      "maritalStatus": "Married",
+      "childrenCount": 0
+    },
+    {
+      "key": "ahmed",
+      "userName": "ahmed",
+      "email": "ahmed.alnaqool@email.com",
+      "password": "password123",
+      "fullName": "Ahmed Abdullah Al Naqool",
+      "displayRole": "Family Member",
+      "memberId": "AN-2026-0847",
+      "branchKey": "mofreh",
+      "phone": "+966501234567",
+      "role": "Member",
+      "accountStatus": "Active",
+      "dateOfBirth": "March 15, 1985",
+      "maritalStatus": "Married",
+      "childrenCount": 3
+    },
+    {
+      "key": "mohammed",
+      "userName": "mohammed.mofreh",
+      "email": "mohammed.mofreh@alnaqool.com",
+      "password": "password123",
+      "fullName": "Mohammed Salman Al Mofreh",
+      "displayRole": "Branch Head",
+      "memberId": "AN-2026-0101",
+      "branchKey": "mofreh",
+      "phone": "+966501112233",
+      "role": "BranchHead",
+      "accountStatus": "Active",
+      "dateOfBirth": "August 12, 1972",
+      "maritalStatus": "Married",
+      "childrenCount": 5
+    },
+    {
+      "key": "khalid",
+      "userName": "khalid.dhafer",
+      "email": "khalid.dhafer@alnaqool.com",
+      "password": "password123",
+      "fullName": "Khalid Ibrahim Al Dhafer",
+      "displayRole": "Branch Head",
+      "memberId": "AN-2026-0201",
+      "branchKey": "dhafer",
+      "phone": "+966504445566",
+      "role": "BranchHead",
+      "accountStatus": "Active",
+      "dateOfBirth": "May 3, 1975",
+      "maritalStatus": "Married",
+      "childrenCount": 4
+    },
+    {
+      "key": "noura",
+      "userName": "noura.saeed",
+      "email": "noura.saeed@alnaqool.com",
+      "password": "password123",
+      "fullName": "Noura Fahad Al Saeed",
+      "displayRole": "Secretary",
+      "memberId": "AN-2026-0401",
+      "branchKey": "saeed",
+      "phone": "+966507778899",
+      "role": "Secretary",
+      "accountStatus": "Active",
+      "dateOfBirth": "November 22, 1988",
+      "maritalStatus": "Married",
+      "childrenCount": 2
+    },
+    {
+      "key": "omar",
+      "userName": "omar.mofreh",
+      "email": "omar.mofreh@alnaqool.com",
+      "password": "password123",
+      "fullName": "Omar Mohammed Al Mofreh",
+      "displayRole": "Committee Organizer",
+      "memberId": "AN-2026-0103",
+      "branchKey": "mofreh",
+      "phone": "+966503334455",
+      "role": "CommitteeOrganizer",
+      "accountStatus": "Active",
+      "dateOfBirth": "June 9, 1995",
+      "maritalStatus": "Single",
+      "childrenCount": 0
+    },
+    {
+      "key": "president",
+      "userName": "abdullah.president",
+      "email": "abdullah.president@alnaqool.com",
+      "password": "password123",
+      "fullName": "Abdullah Mohammed Al Naqool",
+      "displayRole": "Council President",
+      "memberId": "AN-2026-0001",
+      "branchKey": "naqool",
+      "phone": "+966509998877",
+      "role": "CouncilPresident",
+      "accountStatus": "Active",
+      "dateOfBirth": "February 14, 1968",
+      "maritalStatus": "Married",
+      "childrenCount": 6
+    },
+    {
+      "key": "pending_faisal",
+      "userName": "faisal.new",
+      "email": "faisal.rashid@gmail.com",
+      "password": "password123",
+      "fullName": "Faisal Turki Al Rashid",
+      "displayRole": "Family Member",
+      "memberId": "PENDING-001",
+      "branchKey": "rashid",
+      "phone": "+966506667788",
+      "role": "Member",
+      "accountStatus": "Pending",
+      "registrationRelation": "Son of Abdullah Al Rashid",
+      "dateOfBirth": "April 18, 1998",
+      "maritalStatus": "Single",
+      "childrenCount": 0
+    }
+  ],
+  "newsItems": [
+    {
+      "category": "Council",
+      "title": "Q2 Family Council Meeting — June 28",
+      "description": "Agenda published for the quarterly council session in Riyadh.",
+      "body": "The Family Council invites all branch representatives to the Q2 meeting at Al Naqool Heritage Center. Topics: annual budget, youth fund, and Eid gathering planning.",
+      "publishedDate": "June 20, 2026",
+      "categoryColorHex": "0xFF00332B",
+      "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800",
+      "isFeatured": true,
+      "publishStatus": "Published"
+    },
+    {
+      "category": "Weddings",
+      "title": "Wedding of Turki Al Hamad & Layla Al Saeed",
+      "description": "Celebration in Abha on July 12, 2026.",
+      "body": "The family congratulates Turki and Layla. Men's reception at 9 PM; women's gathering at Al Faisaliah Hall. RSVP through the Events section.",
+      "publishedDate": "June 18, 2026",
+      "categoryColorHex": "0xFF8B5A2B",
+      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800",
+      "isFeatured": true,
+      "publishStatus": "Published"
+    },
+    {
+      "category": "Births",
+      "title": "Welcome Rayan — Al Mofreh Branch",
+      "description": "Birth announcement: baby boy to Ahmed and Hessa Al Mofreh.",
+      "body": "We thank Allah for the safe arrival of Rayan. Mother and child are well. Aqiqah details will be shared by the branch head.",
+      "publishedDate": "June 15, 2026",
+      "categoryColorHex": "0xFF2E7D32",
+      "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800",
+      "isFeatured": false,
+      "publishStatus": "Published"
+    },
+    {
+      "category": "General",
+      "title": "Annual Family Gathering — Save the Date",
+      "description": "Mark December 18, 2026 on your calendar.",
+      "body": "This year's gathering returns to Riyadh with heritage exhibitions, children's corner, and recognition of community contributors.",
+      "publishedDate": "June 10, 2026",
+      "categoryColorHex": "0xFF546E7A",
+      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?w=800",
+      "isFeatured": true,
+      "publishStatus": "Published"
+    },
+    {
+      "category": "Condolences",
+      "title": "Condolences to Al Dhafer Branch",
+      "description": "Passing of Sheikh Ibrahim Al Dhafer — may he rest in peace.",
+      "body": "The council extends condolences to the Al Dhafer branch. Prayer times and burial location shared with branch members. Charity fund link in Documents.",
+      "publishedDate": "June 5, 2026",
+      "categoryColorHex": "0xFF37474F",
+      "imageUrl": "https://images.unsplash.com/photo-1770786106021-52580470e31e?w=800",
+      "isFeatured": false,
+      "publishStatus": "Published"
+    },
+    {
+      "category": "Council",
+      "title": "Youth Leadership Program Launched",
+      "description": "Applications open for ages 18–30.",
+      "body": "The Youth Committee announces a six-month leadership program covering heritage, governance, and community service. Apply before July 1.",
+      "publishedDate": "May 28, 2026",
+      "categoryColorHex": "0xFF1565C0",
+      "imageUrl": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800",
+      "isFeatured": false,
+      "publishStatus": "Published"
+    },
+    {
+      "category": "General",
+      "title": "Updated Family Directory Published",
+      "description": "2026 directory now available in the app.",
+      "body": "Branch heads verified contact details. Members can update their profile or request corrections through the secretary.",
+      "publishedDate": "May 20, 2026",
+      "categoryColorHex": "0xFF546E7A",
+      "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800",
+      "isFeatured": false,
+      "publishStatus": "Published"
+    },
+    {
+      "category": "Births",
+      "title": "Congratulations — Al Rashid Branch",
+      "description": "Twin girls born to Faisal and Reem Al Rashid.",
+      "body": "Named Joud and Layan. The family requests prayers and shares joy with all branches.",
+      "publishedDate": "May 12, 2026",
+      "categoryColorHex": "0xFF2E7D32",
+      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800",
+      "isFeatured": false,
+      "publishStatus": "Published"
+    }
+  ],
+  "events": [
+    {
+      "day": "28",
+      "month": "Jun",
+      "title": "Q2 Council Meeting",
+      "location": "Al Naqool Heritage Center, Riyadh",
+      "time": "4:00 PM",
+      "fullDate": "June 28, 2026",
+      "description": "Quarterly council session — budget review, committee reports, and Eid planning.",
+      "organizer": "Family Council",
+      "organizerUserKey": "president",
+      "committeeKey": "council",
+      "isPublic": false,
+      "isMine": true
+    },
+    {
+      "day": "05",
+      "month": "Jul",
+      "title": "Youth Workshop — Leadership & Heritage",
+      "location": "King Abdulaziz Center, Riyadh",
+      "time": "10:00 AM",
+      "fullDate": "July 5, 2026",
+      "description": "Interactive workshop for members aged 18–30. Registration required.",
+      "organizer": "Youth Committee",
+      "organizerUserKey": "omar",
+      "committeeKey": "youth",
+      "isPublic": true,
+      "isMine": true
+    },
+    {
+      "day": "12",
+      "month": "Jul",
+      "title": "Wedding Reception — Turki & Layla",
+      "location": "Abha — Al Faisaliah Hall",
+      "time": "9:00 PM",
+      "fullDate": "July 12, 2026",
+      "description": "Family celebration for Turki Al Hamad and Layla Al Saeed.",
+      "organizer": "Social Committee",
+      "organizerUserKey": "mohammed",
+      "committeeKey": "events",
+      "isPublic": true,
+      "isMine": false
+    },
+    {
+      "day": "20",
+      "month": "Aug",
+      "title": "Heritage Archive Open Day",
+      "location": "Medina — Al Saeed Family House",
+      "time": "5:00 PM",
+      "fullDate": "August 20, 2026",
+      "description": "Tour the digitized genealogy archive with the Heritage Committee.",
+      "organizer": "Heritage Committee",
+      "organizerUserKey": "noura",
+      "committeeKey": "heritage",
+      "isPublic": true,
+      "isMine": false
+    },
+    {
+      "day": "15",
+      "month": "Sep",
+      "title": "Eastern Province Branch Reunion",
+      "location": "Dammam Corniche Pavilion",
+      "time": "7:00 PM",
+      "fullDate": "September 15, 2026",
+      "description": "Al Dhafer branch annual reunion — dinner and children's activities.",
+      "organizer": "Al Dhafer Branch",
+      "organizerUserKey": "khalid",
+      "committeeKey": "dhafer",
+      "isPublic": true,
+      "isMine": false
+    },
+    {
+      "day": "18",
+      "month": "Dec",
+      "title": "Annual Family Gathering 2026",
+      "location": "Riyadh — Diplomatic Quarter",
+      "time": "6:00 PM",
+      "fullDate": "December 18, 2026",
+      "description": "The flagship annual gathering for all branches.",
+      "organizer": "Events Committee",
+      "organizerUserKey": "mohammed",
+      "committeeKey": "events",
+      "isPublic": true,
+      "isMine": true
+    }
+  ],
+  "branchMembers": [
+    {
+      "name": "Mohammed Salman Al Mofreh",
+      "role": "Branch Head",
+      "branchKey": "mofreh",
+      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200"
+    },
+    {
+      "name": "Sara Hamed Al Mofreh",
+      "role": "Secretary",
+      "branchKey": "mofreh",
+      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200"
+    },
+    {
+      "name": "Omar Mohammed Al Mofreh",
+      "role": "Youth Representative",
+      "branchKey": "mofreh",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200"
+    },
+    {
+      "name": "Khalid Ibrahim Al Dhafer",
+      "role": "Branch Head",
+      "branchKey": "dhafer",
+      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200"
+    },
+    {
+      "name": "Fatima Nasser Al Dhafer",
+      "role": "Social Affairs",
+      "branchKey": "dhafer",
+      "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
+    },
+    {
+      "name": "Abdullah Turki Al Rashid",
+      "role": "Branch Head",
+      "branchKey": "rashid",
+      "imageUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200"
+    },
+    {
+      "name": "Noura Fahad Al Saeed",
+      "role": "Branch Head",
+      "branchKey": "saeed",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200"
+    },
+    {
+      "name": "Hassan Ali Al Hamad",
+      "role": "Branch Head",
+      "branchKey": "hamad",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200"
+    },
+    {
+      "name": "Abdullah Mohammed Al Naqool",
+      "role": "Council President",
+      "branchKey": "naqool",
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200"
+    },
+    {
+      "name": "Maha Saud Al Naqool",
+      "role": "Council Secretary",
+      "branchKey": "naqool",
+      "imageUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200"
+    }
+  ],
+  "founderLineage": [
+    {
+      "generation": 1,
+      "name": "Naqool bin Abdullah",
+      "subtitle": "Founder — early 19th century",
+      "isFounder": true,
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200"
+    },
+    {
+      "generation": 2,
+      "name": "Mohammed Al Naqool",
+      "subtitle": "Eldest son — settled in Najd",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200"
+    },
+    {
+      "generation": 2,
+      "name": "Ibrahim Al Naqool",
+      "subtitle": "Founder of Al Dhafer line",
+      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200"
+    },
+    {
+      "generation": 3,
+      "name": "Salman Al Mofreh",
+      "subtitle": "Al Mofreh branch patriarch",
+      "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200"
+    },
+    {
+      "generation": 3,
+      "name": "Fahad Al Saeed",
+      "subtitle": "Medina line — archive keeper",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200"
+    },
+    {
+      "generation": 4,
+      "name": "Abdullah Mohammed Al Naqool",
+      "subtitle": "Current council president",
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200"
+    },
+    {
+      "generation": 5,
+      "name": "Ahmed Abdullah Al Naqool",
+      "subtitle": "5th generation — Al Mofreh",
+      "imageUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200"
+    }
+  ],
+  "conversations": [
+    {
+      "key": "council",
+      "name": "Family Council",
+      "lastMessage": "Q2 agenda uploaded to Documents",
+      "time": "10:30 AM",
+      "unreadCount": 2,
+      "isGroup": true,
+      "type": "Announcements",
+      "participantUserKeys": [
+        "ahmed",
+        "president",
+        "mohammed",
+        "noura"
+      ]
+    },
+    {
+      "key": "mofreh",
+      "name": "Al Mofreh Branch",
+      "lastMessage": "Eid volunteer list — please confirm",
+      "time": "Yesterday",
+      "unreadCount": 0,
+      "isGroup": true,
+      "type": "Groups",
+      "participantUserKeys": [
+        "ahmed",
+        "mohammed",
+        "omar"
+      ]
+    },
+    {
+      "key": "president_dm",
+      "name": "Abdullah Al Naqool",
+      "lastMessage": "Shukran, received the branch report",
+      "time": "Mon",
+      "unreadCount": 1,
+      "isGroup": false,
+      "type": "Direct",
+      "participantUserKeys": [
+        "ahmed",
+        "president"
+      ]
+    },
+    {
+      "key": "events",
+      "name": "Events Committee",
+      "lastMessage": "Venue contract signed for December gathering",
+      "time": "Sun",
+      "unreadCount": 0,
+      "isGroup": true,
+      "type": "Groups",
+      "participantUserKeys": [
+        "omar",
+        "mohammed",
+        "khalid"
+      ]
+    },
+    {
+      "key": "youth",
+      "name": "Youth Committee",
+      "lastMessage": "Workshop registration closes Friday",
+      "time": "Sat",
+      "unreadCount": 3,
+      "isGroup": true,
+      "type": "Announcements",
+      "participantUserKeys": [
+        "omar",
+        "ahmed"
+      ]
+    }
+  ],
+  "chatMessages": [
+    {
+      "conversationKey": "council",
+      "senderName": "Council Admin",
+      "senderUserKey": null,
+      "content": "Assalamu alaikum. Q2 meeting agenda is now in Documents.",
+      "time": "9:00 AM",
+      "isMe": false,
+      "isAnnouncement": true
+    },
+    {
+      "conversationKey": "council",
+      "senderName": "Abdullah Al Naqool",
+      "senderUserKey": "president",
+      "content": "Thank you. All branch heads should review before Thursday.",
+      "time": "9:20 AM",
+      "isMe": false
+    },
+    {
+      "conversationKey": "council",
+      "senderName": "You",
+      "senderUserKey": "ahmed",
+      "content": "Al Mofreh branch confirms attendance.",
+      "time": "9:45 AM",
+      "isMe": true
+    },
+    {
+      "conversationKey": "mofreh",
+      "senderName": "Mohammed Al Mofreh",
+      "senderUserKey": "mohammed",
+      "content": "Volunteers needed for the July workshop — reply here.",
+      "time": "Yesterday",
+      "isMe": false
+    },
+    {
+      "conversationKey": "mofreh",
+      "senderName": "You",
+      "senderUserKey": "ahmed",
+      "content": "I can help with registration desk.",
+      "time": "Yesterday",
+      "isMe": true
+    },
+    {
+      "conversationKey": "president_dm",
+      "senderName": "Abdullah Al Naqool",
+      "senderUserKey": "president",
+      "content": "Ahmed, please send the updated Mofreh member count.",
+      "time": "Mon",
+      "isMe": false
+    },
+    {
+      "conversationKey": "president_dm",
+      "senderName": "You",
+      "senderUserKey": "ahmed",
+      "content": "Uploaded to Documents — 412 active members.",
+      "time": "Mon",
+      "isMe": true
+    },
+    {
+      "conversationKey": "president_dm",
+      "senderName": "Abdullah Al Naqool",
+      "senderUserKey": "president",
+      "content": "Shukran, received the branch report",
+      "time": "Mon",
+      "isMe": false
+    },
+    {
+      "conversationKey": "events",
+      "senderName": "Events Committee",
+      "senderUserKey": "omar",
+      "content": "December gathering venue confirmed — Diplomatic Quarter.",
+      "time": "Sun",
+      "isMe": false,
+      "isAnnouncement": true
+    },
+    {
+      "conversationKey": "youth",
+      "senderName": "Omar Al Mofreh",
+      "senderUserKey": "omar",
+      "content": "Workshop registration closes this Friday.",
+      "time": "Sat",
+      "isMe": false
+    }
+  ],
+  "albums": [
+    {
+      "key": "eid2025",
+      "title": "Eid Gathering 2025 — Riyadh",
+      "photoCount": 6,
+      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?w=800",
+      "isFeatured": true,
+      "galleryTypeKey": "Photos",
+      "description": "Annual Eid reunion at the Heritage Center."
+    },
+    {
+      "key": "weddings",
+      "title": "Wedding Celebrations",
+      "photoCount": 4,
+      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800",
+      "isFeatured": false,
+      "galleryTypeKey": "Photos",
+      "description": "Weddings across branches 2024–2026."
+    },
+    {
+      "key": "heritage",
+      "title": "Heritage & Manuscripts",
+      "photoCount": 3,
+      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?w=800",
+      "isFeatured": true,
+      "galleryTypeKey": "Heritage",
+      "description": "Archive digitization and old family photos."
+    },
+    {
+      "key": "council2025",
+      "title": "Council Meetings 2025",
+      "photoCount": 2,
+      "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800",
+      "isFeatured": false,
+      "galleryTypeKey": "Albums",
+      "description": "Official council sessions and signings."
+    }
+  ],
+  "galleryPhotos": [
+    {
+      "albumKey": "eid2025",
+      "caption": "Opening dua and welcome",
+      "imageUrl": "https://images.unsplash.com/photo-1758985776354-4df674930917?w=800"
+    },
+    {
+      "albumKey": "eid2025",
+      "caption": "Family dinner — main hall",
+      "imageUrl": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800"
+    },
+    {
+      "albumKey": "eid2025",
+      "caption": "Group photo — all branches",
+      "imageUrl": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800"
+    },
+    {
+      "albumKey": "eid2025",
+      "caption": "Children's corner",
+      "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800"
+    },
+    {
+      "albumKey": "eid2025",
+      "caption": "Heritage exhibition",
+      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?w=800"
+    },
+    {
+      "albumKey": "eid2025",
+      "caption": "Evening closing",
+      "imageUrl": "https://images.unsplash.com/photo-1770786106021-52580470e31e?w=800"
+    },
+    {
+      "albumKey": "weddings",
+      "caption": "Ahmed & Hessa reception",
+      "imageUrl": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800"
+    },
+    {
+      "albumKey": "weddings",
+      "caption": "Turki & Layla engagement",
+      "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800"
+    },
+    {
+      "albumKey": "heritage",
+      "caption": "Original genealogy manuscript",
+      "imageUrl": "https://images.unsplash.com/photo-1681419671941-aa9bc9df0bfb?w=800"
+    },
+    {
+      "albumKey": "heritage",
+      "caption": "Archive digitization team",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800"
+    },
+    {
+      "albumKey": "council2025",
+      "caption": "Q4 2025 signing session",
+      "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800"
+    }
   ],
   "documents": [
     {
-      "id": "1",
-      "title": "Family Genealogy Document",
-      "fileSize": "2.4 MB",
-      "date": "Mar 12, 2024",
+      "title": "Al Naqool Family Genealogy — 2026 Edition",
+      "fileSize": "4.2 MB",
+      "date": "March 10, 2026",
       "category": "Family Records",
-      "description": "Complete genealogy records tracing the Al Naqool family lineage across all branches."
+      "description": "Verified lineage across six branches with photos and migration notes.",
+      "fileUrl": "/files/genealogy-2026.pdf",
+      "accessLevel": "Members"
     },
     {
-      "id": "2",
-      "title": "Council Meeting Minutes - Q1",
-      "fileSize": "1.1 MB",
-      "date": "Apr 05, 2024",
+      "title": "Q1 2026 Council Minutes",
+      "fileSize": "1.3 MB",
+      "date": "April 8, 2026",
       "category": "Council",
-      "description": "Official minutes from the Q1 2024 Family Council meeting including decisions and action items."
+      "description": "Approved decisions, task assignments, and attendance.",
+      "fileUrl": "/files/minutes-q1-2026.pdf",
+      "accessLevel": "Council"
     },
     {
-      "id": "3",
-      "title": "Family Constitution",
-      "fileSize": "3.8 MB",
-      "date": "Jan 20, 2024",
+      "title": "Family Constitution & Bylaws",
+      "fileSize": "2.8 MB",
+      "date": "January 15, 2026",
       "category": "Legal",
-      "description": "The governing constitution of the Al Naqool Family Council and member guidelines."
+      "description": "Governing document for the Family Council and member conduct.",
+      "fileUrl": "/files/constitution.pdf",
+      "accessLevel": "Members"
     },
     {
-      "id": "4",
-      "title": "Annual Report 2023",
-      "fileSize": "5.2 MB",
-      "date": "Dec 15, 2023",
+      "title": "Annual Report 2025",
+      "fileSize": "5.6 MB",
+      "date": "December 20, 2025",
       "category": "Council",
-      "description": "Comprehensive annual report covering council activities, finances, and branch summaries."
+      "description": "Activities, welfare fund summary, and branch highlights.",
+      "fileUrl": "/files/annual-report-2025.pdf",
+      "accessLevel": "Council"
+    },
+    {
+      "title": "Youth Program Budget 2026",
+      "fileSize": "890 KB",
+      "date": "May 5, 2026",
+      "category": "Financial",
+      "description": "Proposed budget for youth leadership and scholarship programs.",
+      "fileUrl": "/files/youth-budget-2026.pdf",
+      "accessLevel": "Council"
+    },
+    {
+      "title": "Guest Welcome Guide",
+      "fileSize": "420 KB",
+      "date": "June 1, 2026",
+      "category": "Family Records",
+      "description": "Introduction to branches and how to register as a guest.",
+      "fileUrl": "/files/guest-guide.pdf",
+      "accessLevel": "Public"
     }
   ],
   "councilModules": [
@@ -553,13 +830,13 @@
       "id": "meetings",
       "iconName": "meeting",
       "label": "Meetings",
-      "subtitle": "12 Total"
+      "subtitle": "14 Total"
     },
     {
       "id": "committees",
       "iconName": "committee",
       "label": "Committees",
-      "subtitle": "6 Active"
+      "subtitle": "7 Active"
     },
     {
       "id": "voting",
@@ -571,290 +848,328 @@
       "id": "tasks",
       "iconName": "tasks",
       "label": "Tasks",
-      "subtitle": "5 Open Tasks"
+      "subtitle": "6 Open"
     },
     {
       "id": "decisions",
       "iconName": "decisions",
       "label": "Decisions",
-      "subtitle": "18 Recorded"
+      "subtitle": "22 Recorded"
     },
     {
       "id": "members",
       "iconName": "members",
       "label": "Members",
-      "subtitle": "24 Council"
+      "subtitle": "28 Council"
     }
   ],
   "latestMeeting": {
-    "title": "Q2 Council Meeting",
-    "date": "June 15, 2024",
+    "title": "Q2 Council Meeting 2026",
+    "date": "June 28, 2026",
     "time": "4:00 PM",
-    "location": "Family Council Hall",
-    "decisions": 4,
-    "tasks": 5,
-    "attachments": 3
-  },
-  "profile": {
-    "name": "Ahmed Abdullah Al Naqool",
-    "role": "Family Member",
-    "memberId": "AN-2024-0847",
-    "email": "ahmed.alnaqool@email.com",
-    "phone": "+966 50 123 4567",
-    "branch": "Al Mofreh",
-    "dateOfBirth": "March 15, 1985",
-    "maritalStatus": "Married",
-    "childrenCount": 3
+    "location": "Al Naqool Heritage Center, Riyadh",
+    "decisions": 5,
+    "tasks": 7,
+    "attachments": 4,
+    "minutesFileUrl": "/files/minutes-q2-2026-draft.pdf"
   },
   "notifications": [
     {
-      "id": "1",
       "title": "Council Meeting Reminder",
-      "body": "Q2 Council Meeting starts tomorrow at 4:00 PM.",
-      "timeAgo": "2 hours ago",
+      "body": "Q2 meeting on June 28 at 4:00 PM — Heritage Center.",
       "type": "Council",
       "isRead": false
     },
     {
-      "id": "2",
-      "title": "New Announcement",
-      "body": "Annual Family Gathering details have been published.",
-      "timeAgo": "Yesterday",
+      "title": "Youth Workshop Registration",
+      "body": "You are registered for July 5 leadership workshop.",
+      "type": "Events",
+      "isRead": false
+    },
+    {
+      "title": "New Document Available",
+      "body": "Q1 2026 council minutes published.",
+      "type": "Documents",
+      "isRead": true
+    },
+    {
+      "title": "Branch Message",
+      "body": "Mohammed Al Mofreh posted in Al Mofreh group.",
+      "type": "Messages",
+      "isRead": true
+    },
+    {
+      "title": "Wedding Announcement",
+      "body": "Turki & Layla celebration — July 12 in Abha.",
       "type": "News",
       "isRead": false
     },
     {
-      "id": "3",
-      "title": "Event Registration Confirmed",
-      "body": "You are registered for the Youth Committee Workshop.",
-      "timeAgo": "2 days ago",
-      "type": "Events",
-      "isRead": true
-    },
-    {
-      "id": "4",
-      "title": "New Message",
-      "body": "Abdullah Al Naqool sent you a message.",
-      "timeAgo": "3 days ago",
-      "type": "Messages",
-      "isRead": true
+      "title": "Registration Pending",
+      "body": "New member Faisal Al Rashid awaiting approval.",
+      "type": "Admin",
+      "isRead": false
     }
-  ],
-  "directoryBranches": [
-    "All",
-    "Al Mofreh",
-    "Al Dhafer",
-    "Al Rashid",
-    "Al Saeed",
-    "Al Hamad"
   ],
   "directory": [
     {
-      "id": "1",
-      "name": "Mohammed Al Mofreh",
+      "name": "Mohammed Salman Al Mofreh",
       "role": "Branch Head",
-      "branchId": "1",
-      "branchName": "Al Mofreh",
-      "phone": "+966 50 111 2233",
-      "email": "mohammed.mofreh@email.com",
-      "city": "Riyadh"
+      "branchKey": "mofreh",
+      "phone": "+966501112233",
+      "email": "mohammed.mofreh@alnaqool.com",
+      "city": "Riyadh",
+      "userKey": "mohammed"
     },
     {
-      "id": "2",
-      "name": "Sara Al Mofreh",
+      "name": "Sara Hamed Al Mofreh",
       "role": "Secretary",
-      "branchId": "1",
-      "branchName": "Al Mofreh",
-      "phone": "+966 50 222 3344",
-      "email": "sara.mofreh@email.com",
+      "branchKey": "mofreh",
+      "phone": "+966502223344",
+      "email": "sara.mofreh@alnaqool.com",
       "city": "Riyadh"
     },
     {
-      "id": "3",
-      "name": "Omar Al Mofreh",
-      "role": "Member",
-      "branchId": "1",
-      "branchName": "Al Mofreh",
-      "phone": "+966 50 333 4455",
-      "email": "omar.mofreh@email.com",
-      "city": "Jeddah"
+      "name": "Ahmed Abdullah Al Naqool",
+      "role": "Family Member",
+      "branchKey": "mofreh",
+      "phone": "+966501234567",
+      "email": "ahmed.alnaqool@email.com",
+      "city": "Riyadh",
+      "userKey": "ahmed"
     },
     {
-      "id": "4",
-      "name": "Khalid Al Dhafer",
+      "name": "Khalid Ibrahim Al Dhafer",
       "role": "Branch Head",
-      "branchId": "2",
-      "branchName": "Al Dhafer",
-      "phone": "+966 50 444 5566",
-      "email": "khalid.dhafer@email.com",
-      "city": "Dammam"
+      "branchKey": "dhafer",
+      "phone": "+966504445566",
+      "email": "khalid.dhafer@alnaqool.com",
+      "city": "Dammam",
+      "userKey": "khalid"
     },
     {
-      "id": "5",
-      "name": "Fatima Al Dhafer",
-      "role": "Member",
-      "branchId": "2",
-      "branchName": "Al Dhafer",
-      "phone": "+966 50 555 6677",
-      "email": "fatima.dhafer@email.com",
-      "city": "Dammam"
+      "name": "Fatima Nasser Al Dhafer",
+      "role": "Social Affairs",
+      "branchKey": "dhafer",
+      "phone": "+966505556677",
+      "email": "fatima.dhafer@alnaqool.com",
+      "city": "Khobar"
     },
     {
-      "id": "6",
-      "name": "Abdullah Al Rashid",
+      "name": "Abdullah Turki Al Rashid",
       "role": "Branch Head",
-      "branchId": "3",
-      "branchName": "Al Rashid",
-      "phone": "+966 50 666 7788",
-      "email": "abdullah.rashid@email.com",
+      "branchKey": "rashid",
+      "phone": "+966506667788",
+      "email": "abdullah.rashid@alnaqool.com",
       "city": "Makkah"
     },
     {
-      "id": "7",
-      "name": "Noura Al Saeed",
+      "name": "Noura Fahad Al Saeed",
       "role": "Branch Head",
-      "branchId": "4",
-      "branchName": "Al Saeed",
-      "phone": "+966 50 777 8899",
-      "email": "noura.saeed@email.com",
-      "city": "Medina"
+      "branchKey": "saeed",
+      "phone": "+966507778899",
+      "email": "noura.saeed@alnaqool.com",
+      "city": "Medina",
+      "userKey": "noura"
     },
     {
-      "id": "8",
+      "name": "Hassan Ali Al Hamad",
+      "role": "Branch Head",
+      "branchKey": "hamad",
+      "phone": "+966508889900",
+      "email": "hassan.hamad@alnaqool.com",
+      "city": "Abha"
+    },
+    {
+      "name": "Abdullah Mohammed Al Naqool",
+      "role": "Council President",
+      "branchKey": "naqool",
+      "phone": "+966509998877",
+      "email": "abdullah.president@alnaqool.com",
+      "city": "Riyadh",
+      "userKey": "president"
+    },
+    {
+      "name": "Maha Saud Al Naqool",
+      "role": "Council Secretary",
+      "branchKey": "naqool",
+      "phone": "+966500112233",
+      "email": "maha.naqool@alnaqool.com",
+      "city": "Riyadh"
+    },
+    {
+      "name": "Omar Mohammed Al Mofreh",
+      "role": "Youth Representative",
+      "branchKey": "mofreh",
+      "phone": "+966503334455",
+      "email": "omar.mofreh@alnaqool.com",
+      "city": "Riyadh",
+      "userKey": "omar"
+    },
+    {
+      "name": "Faisal Turki Al Rashid",
+      "role": "Applicant",
+      "branchKey": "rashid",
+      "phone": "+966506667788",
+      "email": "faisal.rashid@gmail.com",
+      "city": "Jeddah",
+      "userKey": "pending_faisal"
+    }
+  ],
+  "contactSubmissions": [
+    {
+      "name": "Layla Al Saeed",
+      "email": "layla.saeed@email.com",
+      "subject": "Wedding photo upload",
+      "message": "How can I share photos from our engagement for the family gallery?",
+      "isRead": false
+    },
+    {
+      "name": "Guest User",
+      "email": "visitor@example.com",
+      "subject": "Membership inquiry",
+      "message": "I believe I am related through the Al Rashid branch. How do I register?",
+      "isRead": true
+    },
+    {
       "name": "Hassan Al Hamad",
-      "role": "Branch Head",
-      "branchId": "5",
-      "branchName": "Al Hamad",
-      "phone": "+966 50 888 9900",
-      "email": "hassan.hamad@email.com",
-      "city": "Riyadh"
-    },
+      "email": "hassan.hamad@alnaqool.com",
+      "subject": "Correct directory entry",
+      "message": "Please update my phone number in the family directory.",
+      "isRead": false
+    }
+  ],
+  "passwordResetRequests": [
     {
-      "id": "9",
-      "name": "Ahmed Abdullah Al Naqool",
-      "role": "Family Member",
-      "branchId": "1",
-      "branchName": "Al Mofreh",
-      "phone": "+966 50 123 4567",
-      "email": "ahmed.alnaqool@email.com",
-      "city": "Riyadh"
+      "userKey": "omar",
+      "email": "omar.mofreh@alnaqool.com",
+      "isResolved": false
     }
   ],
   "councilItems": {
     "meetings": [
       {
-        "id": "1",
-        "title": "Q2 Council Meeting",
-        "subtitle": "Family Council Hall",
-        "meta": "June 15, 2024 · 4:00 PM",
+        "title": "Q2 Council Meeting 2026",
+        "subtitle": "Heritage Center, Riyadh",
+        "meta": "June 28, 2026 · 4:00 PM",
         "status": "Upcoming"
       },
       {
-        "id": "2",
         "title": "Annual General Meeting",
-        "subtitle": "Heritage Center",
-        "meta": "July 10, 2024 · 5:00 PM",
+        "subtitle": "Diplomatic Quarter",
+        "meta": "December 18, 2026 · 6:00 PM",
         "status": "Scheduled"
       },
       {
-        "id": "3",
-        "title": "Q1 Council Meeting",
-        "subtitle": "Family Council Hall",
-        "meta": "March 12, 2024 · 4:00 PM",
+        "title": "Q1 Council Meeting 2026",
+        "subtitle": "Heritage Center",
+        "meta": "March 22, 2026 · 4:00 PM",
         "status": "Completed"
       }
     ],
     "committees": [
       {
-        "id": "1",
         "title": "Events Committee",
-        "subtitle": "12 members",
+        "subtitle": "14 members",
         "meta": "Chair: Mohammed Al Mofreh",
         "status": "Active"
       },
       {
-        "id": "2",
         "title": "Youth Committee",
-        "subtitle": "8 members",
+        "subtitle": "11 members",
         "meta": "Chair: Omar Al Mofreh",
         "status": "Active"
       },
       {
-        "id": "3",
         "title": "Heritage Committee",
-        "subtitle": "10 members",
+        "subtitle": "9 members",
         "meta": "Chair: Noura Al Saeed",
+        "status": "Active"
+      },
+      {
+        "title": "Welfare Committee",
+        "subtitle": "8 members",
+        "meta": "Chair: Hassan Al Hamad",
         "status": "Active"
       }
     ],
     "voting": [
       {
-        "id": "1",
-        "title": "Annual Budget Approval",
-        "subtitle": "Closes in 3 days",
-        "meta": "142 votes cast",
+        "title": "2026 Welfare Fund Budget",
+        "subtitle": "Closes in 4 days",
+        "meta": "156 votes cast",
         "status": "Open"
       },
       {
-        "id": "2",
-        "title": "Youth Program Funding",
-        "subtitle": "Closes in 5 days",
-        "meta": "98 votes cast",
+        "title": "Youth Scholarship Program",
+        "subtitle": "Closes in 6 days",
+        "meta": "112 votes cast",
         "status": "Open"
       }
     ],
     "tasks": [
       {
-        "id": "1",
-        "title": "Prepare Q2 meeting agenda",
-        "subtitle": "Assigned to Sara Al Mofreh",
-        "meta": "Due June 12, 2024",
+        "title": "Finalize Q2 meeting agenda",
+        "subtitle": "Assigned to Maha Al Naqool",
+        "meta": "Due June 25, 2026",
         "status": "In Progress"
       },
       {
-        "id": "2",
-        "title": "Update family genealogy records",
-        "subtitle": "Assigned to Heritage Committee",
-        "meta": "Due June 20, 2024",
+        "title": "Update genealogy records",
+        "subtitle": "Heritage Committee",
+        "meta": "Due July 15, 2026",
+        "status": "Open"
+      },
+      {
+        "title": "Confirm December venue catering",
+        "subtitle": "Events Committee",
+        "meta": "Due August 1, 2026",
         "status": "Open"
       }
     ],
     "decisions": [
       {
-        "id": "1",
-        "title": "Approve annual gathering venue",
-        "subtitle": "Decision #2024-18",
-        "meta": "Approved · May 28, 2024",
+        "title": "Approve December gathering venue",
+        "subtitle": "Decision #2026-12",
+        "meta": "Approved · June 10, 2026",
         "status": "Approved"
       },
       {
-        "id": "2",
-        "title": "Youth leadership program launch",
-        "subtitle": "Decision #2024-17",
-        "meta": "Approved · May 15, 2024",
+        "title": "Launch youth leadership program",
+        "subtitle": "Decision #2026-11",
+        "meta": "Approved · May 28, 2026",
+        "status": "Approved"
+      },
+      {
+        "title": "Eastern branch reunion date",
+        "subtitle": "Decision #2026-10",
+        "meta": "Approved · May 15, 2026",
         "status": "Approved"
       }
     ],
     "members": [
       {
-        "id": "1",
-        "title": "Abdullah Al Naqool",
+        "title": "Abdullah Mohammed Al Naqool",
         "subtitle": "Council President",
-        "meta": "Al Naqool Branch",
+        "meta": "Al Naqool",
         "status": "Active"
       },
       {
-        "id": "2",
-        "title": "Mohammed Al Mofreh",
+        "title": "Mohammed Salman Al Mofreh",
         "subtitle": "Branch Representative",
         "meta": "Al Mofreh",
         "status": "Active"
       },
       {
-        "id": "3",
-        "title": "Khalid Al Dhafer",
+        "title": "Khalid Ibrahim Al Dhafer",
         "subtitle": "Branch Representative",
         "meta": "Al Dhafer",
+        "status": "Active"
+      },
+      {
+        "title": "Noura Fahad Al Saeed",
+        "subtitle": "Council Secretary",
+        "meta": "Al Saeed",
         "status": "Active"
       }
     ]

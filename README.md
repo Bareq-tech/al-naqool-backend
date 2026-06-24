@@ -178,12 +178,19 @@ Pass `?lang=en` (default) or `?lang=ar` on any mobile endpoint to receive locali
 
 ## Demo accounts
 
-| Role   | Username | Email                     | Password    |
-|--------|----------|---------------------------|-------------|
-| Member | ahmed    | ahmed.alnaqool@email.com  | password123 |
-| Admin  | admin    | admin@alnaqool.com        | Admin123!   |
+| Role | Username | Password |
+|------|----------|----------|
+| Admin | `admin` | `Admin123!` |
+| Member | `ahmed` | `password123` |
+| Branch Head | `mohammed.mofreh` | `password123` |
+| Council President | `abdullah.president` | `password123` |
+| Pending registration | `faisal.new` | `password123` (awaiting admin approval) |
+
+Seed data includes 6 branches, 8 users, linked events, conversations, directory, council items, documents, and contact submissions — all with bilingual EN/AR content.
 
 Guest access: `POST /api/auth/guest` (mobile API).
+
+**Re-seed on Railway:** seed runs only when the database is empty. Drop/recreate the Postgres database or delete all rows from `HomeStats`, then redeploy.
 
 ## Mobile API endpoints
 
