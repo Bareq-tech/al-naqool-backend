@@ -10,6 +10,14 @@ public static class DatabaseConnection
     {
         var raw = GetRawConnectionString(configuration, name);
 
+        if (IsUnresolvedReference(raw))
+        {
+            throw new InvalidOperationException(
+                $"Connection string '{name}' looks like an unresolved Railway reference: {raw}. " +
+                "In Railway Variables, use 'Add Reference' to link Postgres.DATABASE_URL — " +
+                "do not paste the literal text ${{ Postgres.DATABASE_URL }}.");
+        }
+
         if (IsPlaceholder(raw))
         {
             throw new InvalidOperationException(
@@ -81,6 +89,10 @@ public static class DatabaseConnection
 
     private static bool IsPlaceholder(string? value) =>
         !string.IsNullOrWhiteSpace(value) && value.Contains("#{", StringComparison.Ordinal);
+
+    private static bool IsUnresolvedReference(string? value) =>
+        !string.IsNullOrWhiteSpace(value)
+        && value.Contains("${{", StringComparison.Ordinal);
 
     private static string? SanitizeValue(string? value)
     {

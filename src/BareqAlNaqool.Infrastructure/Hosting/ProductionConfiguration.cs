@@ -55,7 +55,15 @@ public static class ProductionConfiguration
         {
             throw new InvalidOperationException(
                 "ConnectionStrings__DefaultConnection must be set in Production. " +
-                "On Railway: ConnectionStrings__DefaultConnection=${{ Postgres.DATABASE_URL }}");
+                "On Railway: ConnectionStrings__DefaultConnection=${{ Postgres.DATABASE_URL }} " +
+                "(use Add Reference, not a typed literal).");
+        }
+
+        if (raw.Contains("${{", StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "ConnectionStrings__DefaultConnection is an unresolved Railway template. " +
+                "Use Railway's 'Add Reference' to link Postgres.DATABASE_URL.");
         }
 
         if (raw.Contains("#{", StringComparison.Ordinal))
