@@ -190,7 +190,7 @@ Seed data includes 6 branches, 8 users, linked events, conversations, directory,
 
 Guest access: `POST /api/auth/guest` (mobile API).
 
-**Re-seed on Railway:** seed runs only when the database is empty. Drop/recreate the Postgres database or delete all rows from `HomeStats`, then redeploy.
+**Re-seed on Railway:** seed runs when `FamilyBranches` is empty (even if `AspNetUsers` already has accounts from a partial deploy). Redeploy after pushing — no need to wipe the database unless you want a completely fresh start.
 
 ## Mobile API endpoints
 

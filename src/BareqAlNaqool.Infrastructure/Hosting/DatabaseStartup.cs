@@ -70,6 +70,6 @@ public static class DatabaseStartup
     {
         await using var scope = services.CreateAsyncScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        return !await db.HomeStats.AnyAsync();
+        return !await db.FamilyBranches.AnyAsync();
     }
 }

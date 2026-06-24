@@ -29,7 +29,7 @@ public static class DataSeeder
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
         var environment = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();
 
-        if (await db.HomeStats.AnyAsync())
+        if (await IsSeedCompleteAsync(db))
         {
             return;
         }
@@ -115,6 +115,14 @@ public static class DataSeeder
         foreach (var item in en.GetProperty("users").EnumerateArray())
         {
             var key = item.GetProperty("key").GetString() ?? string.Empty;
+            var userName = item.GetProperty("userName").GetString() ?? string.Empty;
+            var existing = await userManager.FindByNameAsync(userName);
+            if (existing is not null)
+            {
+                ids[key] = existing.Id;
+                continue;
+            }
+
             var branchKey = item.GetProperty("branchKey").GetString() ?? string.Empty;
             branchIds.TryGetValue(branchKey, out var branchId);
 
@@ -159,6 +167,11 @@ public static class DataSeeder
 
     private static async Task SeedHomeStatsAsync(AppDbContext db, JsonElement en)
     {
+        if (await db.HomeStats.AnyAsync())
+        {
+            return;
+        }
+
         var stats = en.GetProperty("homeStats");
         db.HomeStats.Add(new HomeStat
         {
@@ -184,6 +197,11 @@ public static class DataSeeder
 
     private static async Task SeedAppSettingsAsync(AppDbContext db, JsonElement en, JsonElement ar)
     {
+        if (await db.AppSettings.AnyAsync())
+        {
+            return;
+        }
+
         SaveAppSetting(db, AppSettingKeys.NewsCategories, en, ar, "newsCategories");
         SaveAppSetting(db, AppSettingKeys.MessageFilters, en, ar, "messageFilters");
         SaveAppSetting(db, AppSettingKeys.GalleryTypes, en, ar, "galleryTypes");
@@ -733,4 +751,7 @@ public static class DataSeeder
 
         return 0;
     }
+
+    private static async Task<bool> IsSeedCompleteAsync(AppDbContext db) =>
+        await db.FamilyBranches.AnyAsync();
 }
