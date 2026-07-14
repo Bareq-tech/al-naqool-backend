@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
         services.Configure<DatabaseStartupOptions>(configuration.GetSection(DatabaseStartupOptions.SectionName));
         services.Configure<StorageOptions>(configuration.GetSection(StorageOptions.SectionName));
+        services.AddHttpClient();
         services.AddSingleton<IFileStorageService, Storage.LocalFileStorageService>();
 
         services.AddDbContext<AppDbContext>(options =>
