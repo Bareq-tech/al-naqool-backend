@@ -40,13 +40,20 @@ public class LocalFileStorageService(IOptions<StorageOptions> options, IHttpClie
 
         if (!string.IsNullOrWhiteSpace(_options.AdminFilesBaseUrl))
         {
-            var remoteUrl = $"{_options.AdminFilesBaseUrl.TrimEnd('/')}{_options.PublicBasePath.TrimEnd('/')}/{fileName}";
-            using var client = httpClientFactory.CreateClient(nameof(LocalFileStorageService));
-            using var response = await client.GetAsync(remoteUrl, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-                return new MemoryStream(bytes);
+                var remoteUrl = $"{_options.AdminFilesBaseUrl.TrimEnd('/')}{_options.PublicBasePath.TrimEnd('/')}/{fileName}";
+                using var client = httpClientFactory.CreateClient(nameof(LocalFileStorageService));
+                using var response = await client.GetAsync(remoteUrl, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                if (response.IsSuccessStatusCode)
+                {
+                    var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+                    return new MemoryStream(bytes);
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
 
