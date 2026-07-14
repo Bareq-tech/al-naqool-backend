@@ -30,6 +30,13 @@ await DatabaseStartup.ApplyConfiguredStartupAsync(
     app.Logger,
     app.Environment);
 
+var storageAdminBaseUrl = app.Configuration["Storage:AdminFilesBaseUrl"];
+if (app.Environment.IsProduction() && string.IsNullOrWhiteSpace(storageAdminBaseUrl))
+{
+    app.Logger.LogWarning(
+        "Storage:AdminFilesBaseUrl is not configured. Document downloads will fail unless files exist on this service. Set Storage__AdminFilesBaseUrl to the admin API public URL.");
+}
+
 app.MapBareqHealthChecks();
 app.UseBareqCors();
 app.UseBareqSwagger("Bareq Al Naqool Mobile API");

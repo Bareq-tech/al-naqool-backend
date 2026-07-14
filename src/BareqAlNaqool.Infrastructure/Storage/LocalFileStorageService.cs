@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace BareqAlNaqool.Infrastructure.Storage;
 
-public class LocalFileStorageService(IOptions<StorageOptions> options) : IFileStorageService
+public class LocalFileStorageService(IOptions<StorageOptions> options, IHttpClientFactory httpClientFactory) : IFileStorageService
 {
     private readonly StorageOptions _options = options.Value;
 
@@ -29,17 +29,35 @@ public class LocalFileStorageService(IOptions<StorageOptions> options) : IFileSt
         return new FileUploadResultDto(url, storedName, size);
     }
 
-    public Task<Stream?> OpenReadAsync(string url, CancellationToken cancellationToken = default)
+    public async Task<Stream?> OpenReadAsync(string url, CancellationToken cancellationToken = default)
     {
         var fileName = Path.GetFileName(url);
         var fullPath = Path.Combine(Path.GetFullPath(_options.RootPath), fileName);
-        if (!File.Exists(fullPath))
+        if (File.Exists(fullPath))
         {
-            return Task.FromResult<Stream?>(null);
+            return File.OpenRead(fullPath);
         }
 
-        Stream stream = File.OpenRead(fullPath);
-        return Task.FromResult<Stream?>(stream);
+        if (!string.IsNullOrWhiteSpace(_options.AdminFilesBaseUrl))
+        {
+            try
+            {
+                var remoteUrl = $"{_options.AdminFilesBaseUrl.TrimEnd('/')}{_options.PublicBasePath.TrimEnd('/')}/{fileName}";
+                using var client = httpClientFactory.CreateClient(nameof(LocalFileStorageService));
+                using var response = await client.GetAsync(remoteUrl, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                if (response.IsSuccessStatusCode)
+                {
+                    var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+                    return new MemoryStream(bytes);
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        return null;
     }
 
     public string GetPublicPath(string storedPath) => storedPath;

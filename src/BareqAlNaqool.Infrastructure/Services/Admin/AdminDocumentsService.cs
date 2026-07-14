@@ -80,7 +80,7 @@ public class AdminDocumentsService(AppDbContext db) : IAdminCrudService<AdminDoc
 
     private static DateTime ParseDocumentDate(string dateEn)
     {
-        if (DateTime.TryParse(dateEn, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsed))
+        if (DateTime.TryParse(dateEn, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out var parsed))
         {
             return parsed;
         }
@@ -115,7 +115,7 @@ public class AdminDocumentsService(AppDbContext db) : IAdminCrudService<AdminDoc
             db,
             EntityTypes.Document,
             id,
-            new { title = dto.TitleEn, date = dto.DateEn, description = dto.DescriptionEn },
-            new { title = dto.TitleAr, date = dto.DateAr, description = dto.DescriptionAr },
+            new { title = dto.TitleEn, date = dto.DateEn, description = dto.DescriptionEn, category = dto.Category },
+            new { title = dto.TitleAr, date = dto.DateAr, description = dto.DescriptionAr, category = dto.Category },
             cancellationToken);
 }
