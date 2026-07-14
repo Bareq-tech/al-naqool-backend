@@ -27,9 +27,6 @@ public class BranchesAdminController(IAdminCrudService<AdminBranchDto, AdminBran
 [Route("api/admin/albums")]
 public class AlbumsAdminController(IAdminCrudService<AdminAlbumDto, AdminAlbumCreateDto, AdminAlbumUpdateDto> service) : AdminCrudController<AdminAlbumDto, AdminAlbumCreateDto, AdminAlbumUpdateDto>(service);
 
-[Route("api/admin/documents")]
-public class DocumentsAdminController(IAdminCrudService<AdminDocumentDto, AdminDocumentCreateDto, AdminDocumentUpdateDto> service) : AdminCrudController<AdminDocumentDto, AdminDocumentCreateDto, AdminDocumentUpdateDto>(service);
-
 [Route("api/admin/notifications")]
 public class NotificationsAdminController(IAdminCrudService<AdminNotificationDto, AdminNotificationCreateDto, AdminNotificationUpdateDto> service) : AdminCrudController<AdminNotificationDto, AdminNotificationCreateDto, AdminNotificationUpdateDto>(service);
 
