@@ -75,11 +75,14 @@ public class AdminBranchesService(AppDbContext db) : IAdminCrudService<AdminBran
     private async Task<AdminBranchDto> MapAsync(FamilyBranch item, CancellationToken cancellationToken)
     {
         var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.FamilyBranch, item.Id, cancellationToken);
+        // Live count from branch-members so MemberCount cannot drift.
+        var memberCount = await db.BranchMembers.AsNoTracking()
+            .CountAsync(x => x.BranchId == item.Id, cancellationToken);
         return new AdminBranchDto(
             IdFormatter.ToStringId(item.Id),
             AdminTranslationHelper.Get(en, "name"),
             AdminTranslationHelper.Get(ar, "name"),
-            item.MemberCount,
+            memberCount,
             AdminTranslationHelper.Get(en, "description"),
             AdminTranslationHelper.Get(ar, "description"),
             item.ImageUrl);

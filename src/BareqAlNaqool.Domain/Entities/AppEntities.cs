@@ -74,6 +74,8 @@ public class BranchMember
 public class TreeMember
 {
     public int Id { get; set; }
+    public int? ParentId { get; set; }
+    public int? SpouseId { get; set; }
     public int Generation { get; set; }
     public bool IsFounder { get; set; }
     public string ImageUrl { get; set; } = string.Empty;

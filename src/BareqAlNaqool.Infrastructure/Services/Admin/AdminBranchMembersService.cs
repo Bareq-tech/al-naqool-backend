@@ -30,14 +30,18 @@ public class AdminBranchMembersService(AppDbContext db) : IAdminCrudService<Admi
 
     public async Task<AdminBranchMemberDto> CreateAsync(AdminBranchMemberCreateDto dto, CancellationToken cancellationToken = default)
     {
+        var branchId = IdFormatter.ParseId(dto.BranchId);
+        await EnsureBranchExistsAsync(branchId, cancellationToken);
+
         var entity = new BranchMember
         {
-            BranchId = IdFormatter.ParseId(dto.BranchId),
+            BranchId = branchId,
             ImageUrl = dto.ImageUrl
         };
         db.BranchMembers.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
         await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
+        await RefreshBranchMemberCountAsync(branchId, cancellationToken);
         return await MapAsync(entity, cancellationToken);
     }
 
@@ -49,10 +53,21 @@ public class AdminBranchMembersService(AppDbContext db) : IAdminCrudService<Admi
             return null;
         }
 
-        entity.BranchId = IdFormatter.ParseId(dto.BranchId);
+        var previousBranchId = entity.BranchId;
+        var branchId = IdFormatter.ParseId(dto.BranchId);
+        await EnsureBranchExistsAsync(branchId, cancellationToken);
+
+        entity.BranchId = branchId;
         entity.ImageUrl = dto.ImageUrl;
         await db.SaveChangesAsync(cancellationToken);
         await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
+
+        await RefreshBranchMemberCountAsync(branchId, cancellationToken);
+        if (previousBranchId != branchId)
+        {
+            await RefreshBranchMemberCountAsync(previousBranchId, cancellationToken);
+        }
+
         return await MapAsync(entity, cancellationToken);
     }
 
@@ -64,9 +79,32 @@ public class AdminBranchMembersService(AppDbContext db) : IAdminCrudService<Admi
             return false;
         }
 
+        var branchId = entity.BranchId;
         db.BranchMembers.Remove(entity);
         await db.SaveChangesAsync(cancellationToken);
+        await RefreshBranchMemberCountAsync(branchId, cancellationToken);
         return true;
+    }
+
+    private async Task EnsureBranchExistsAsync(int branchId, CancellationToken cancellationToken)
+    {
+        var exists = await db.FamilyBranches.AnyAsync(x => x.Id == branchId, cancellationToken);
+        if (!exists)
+        {
+            throw new ArgumentException($"Branch '{IdFormatter.ToStringId(branchId)}' was not found.");
+        }
+    }
+
+    private async Task RefreshBranchMemberCountAsync(int branchId, CancellationToken cancellationToken)
+    {
+        var branch = await db.FamilyBranches.FirstOrDefaultAsync(x => x.Id == branchId, cancellationToken);
+        if (branch is null)
+        {
+            return;
+        }
+
+        branch.MemberCount = await db.BranchMembers.CountAsync(x => x.BranchId == branchId, cancellationToken);
+        await db.SaveChangesAsync(cancellationToken);
     }
 
     private async Task<AdminBranchMemberDto> MapAsync(BranchMember item, CancellationToken cancellationToken)
