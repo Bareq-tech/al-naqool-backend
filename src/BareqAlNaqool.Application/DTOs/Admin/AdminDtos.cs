@@ -181,6 +181,8 @@ public record AdminTreeMemberDto(
     string NameAr,
     string SubtitleEn,
     string SubtitleAr,
+    string? ParentId,
+    string? SpouseId,
     int Generation,
     bool IsFounder,
     string ImageUrl,
@@ -191,20 +193,18 @@ public record AdminTreeMemberCreateDto(
     string NameAr,
     string SubtitleEn,
     string SubtitleAr,
-    int Generation,
-    bool IsFounder,
-    string ImageUrl,
-    int SortOrder);
+    string? ParentId,
+    string? SpouseId,
+    string ImageUrl);
 
 public record AdminTreeMemberUpdateDto(
     string NameEn,
     string NameAr,
     string SubtitleEn,
     string SubtitleAr,
-    int Generation,
-    bool IsFounder,
-    string ImageUrl,
-    int SortOrder);
+    string? ParentId,
+    string? SpouseId,
+    string ImageUrl);
 
 public record AdminAlbumDto(
     string Id,

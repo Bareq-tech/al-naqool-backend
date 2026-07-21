@@ -350,18 +350,28 @@ public static class DataSeeder
     private static async Task SeedTreeMembersAsync(AppDbContext db, JsonElement en, JsonElement ar)
     {
         var index = 0;
+        var lastIdByGeneration = new Dictionary<int, int>();
         foreach (var item in en.GetProperty("founderLineage").EnumerateArray())
         {
             index++;
+            var generation = item.GetProperty("generation").GetInt32();
+            int? parentId = null;
+            if (generation > 0 && lastIdByGeneration.TryGetValue(generation - 1, out var parentCandidate))
+            {
+                parentId = parentCandidate;
+            }
+
             var entity = new TreeMember
             {
-                Generation = item.GetProperty("generation").GetInt32(),
+                ParentId = parentId,
+                Generation = generation,
                 IsFounder = item.TryGetProperty("isFounder", out var founder) && founder.GetBoolean(),
                 ImageUrl = item.GetProperty("imageUrl").GetString() ?? string.Empty,
                 SortOrder = index
             };
             db.TreeMembers.Add(entity);
             await db.SaveChangesAsync();
+            lastIdByGeneration[generation] = entity.Id;
             await SaveBilingualAsync(db, EntityTypes.TreeMember, entity.Id, item, ar.GetProperty("founderLineage")[index - 1]);
         }
     }

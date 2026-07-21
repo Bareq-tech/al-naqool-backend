@@ -33,9 +33,12 @@ public class AdminDirectoryService(AppDbContext db) : IAdminCrudService<AdminDir
 
     public async Task<AdminDirectoryMemberDto> CreateAsync(AdminDirectoryMemberCreateDto dto, CancellationToken cancellationToken = default)
     {
+        var branchId = IdFormatter.ParseId(dto.BranchId);
+        await EnsureBranchExistsAsync(branchId, cancellationToken);
+
         var entity = new DirectoryMember
         {
-            BranchId = IdFormatter.ParseId(dto.BranchId),
+            BranchId = branchId,
             Phone = dto.Phone,
             Email = dto.Email
         };
@@ -53,7 +56,10 @@ public class AdminDirectoryService(AppDbContext db) : IAdminCrudService<AdminDir
             return null;
         }
 
-        entity.BranchId = IdFormatter.ParseId(dto.BranchId);
+        var branchId = IdFormatter.ParseId(dto.BranchId);
+        await EnsureBranchExistsAsync(branchId, cancellationToken);
+
+        entity.BranchId = branchId;
         entity.Phone = dto.Phone;
         entity.Email = dto.Email;
         await db.SaveChangesAsync(cancellationToken);
@@ -74,9 +80,19 @@ public class AdminDirectoryService(AppDbContext db) : IAdminCrudService<AdminDir
         return true;
     }
 
+    private async Task EnsureBranchExistsAsync(int branchId, CancellationToken cancellationToken)
+    {
+        var exists = await db.FamilyBranches.AnyAsync(x => x.Id == branchId, cancellationToken);
+        if (!exists)
+        {
+            throw new ArgumentException($"Branch '{IdFormatter.ToStringId(branchId)}' was not found.");
+        }
+    }
+
     private async Task<AdminDirectoryMemberDto> MapAsync(DirectoryMember item, CancellationToken cancellationToken)
     {
         var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.DirectoryMember, item.Id, cancellationToken);
+        // Always resolve live branch names so renames stay consistent.
         var (branchEn, branchAr) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.FamilyBranch, item.BranchId, cancellationToken);
         return new AdminDirectoryMemberDto(
             IdFormatter.ToStringId(item.Id),

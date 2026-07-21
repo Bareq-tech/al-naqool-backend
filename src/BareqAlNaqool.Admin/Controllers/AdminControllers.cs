@@ -34,7 +34,53 @@ public class NotificationsAdminController(IAdminCrudService<AdminNotificationDto
 public class CouncilItemsAdminController(IAdminCrudService<AdminCouncilItemDto, AdminCouncilItemCreateDto, AdminCouncilItemUpdateDto> service) : AdminCrudController<AdminCouncilItemDto, AdminCouncilItemCreateDto, AdminCouncilItemUpdateDto>(service);
 
 [Route("api/admin/directory-members")]
-public class DirectoryMembersAdminController(IAdminCrudService<AdminDirectoryMemberDto, AdminDirectoryMemberCreateDto, AdminDirectoryMemberUpdateDto> service) : AdminCrudController<AdminDirectoryMemberDto, AdminDirectoryMemberCreateDto, AdminDirectoryMemberUpdateDto>(service);
+[Authorize(Policy = "AdminOnly")]
+[ApiController]
+public class DirectoryMembersAdminController(IAdminCrudService<AdminDirectoryMemberDto, AdminDirectoryMemberCreateDto, AdminDirectoryMemberUpdateDto> service)
+    : ControllerBase
+{
+    [HttpGet]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        => Ok(await service.GetAllAsync(cancellationToken));
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
+    {
+        var item = await service.GetByIdAsync(id, cancellationToken);
+        return item is null ? NotFound() : Ok(item);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] AdminDirectoryMemberCreateDto dto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return Ok(await service.CreateAsync(dto, cancellationToken));
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(string id, [FromBody] AdminDirectoryMemberUpdateDto dto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await service.UpdateAsync(id, dto, cancellationToken);
+            return item is null ? NotFound() : Ok(item);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
+        => await service.DeleteAsync(id, cancellationToken) ? NoContent() : NotFound();
+}
 
 [Route("api/admin/users")]
 public class UsersAdminController(IAdminCrudService<AdminUserDto, AdminUserCreateDto, AdminUserUpdateDto> service) : AdminCrudController<AdminUserDto, AdminUserCreateDto, AdminUserUpdateDto>(service);

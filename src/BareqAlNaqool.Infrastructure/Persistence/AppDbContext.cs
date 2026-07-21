@@ -60,5 +60,23 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>
         builder.Entity<AppSetting>()
             .HasIndex(x => x.Key)
             .IsUnique();
+
+        builder.Entity<TreeMember>()
+            .HasOne<TreeMember>()
+            .WithMany()
+            .HasForeignKey(x => x.ParentId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<TreeMember>()
+            .HasOne<TreeMember>()
+            .WithMany()
+            .HasForeignKey(x => x.SpouseId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<TreeMember>()
+            .HasIndex(x => x.ParentId);
+
+        builder.Entity<TreeMember>()
+            .HasIndex(x => x.SpouseId);
     }
 }
