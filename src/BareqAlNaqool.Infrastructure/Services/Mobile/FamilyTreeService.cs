@@ -55,11 +55,14 @@ public class FamilyTreeService(AppDbContext db, AppDataHelper helper) : IFamilyT
         {
             var map = await TranslationStore.GetMapAsync(db, EntityTypes.TreeMember, member.Id, helper.Lang, cancellationToken);
             result.Add(new TreeMemberDto(
+                IdFormatter.ToStringId(member.Id),
                 TranslationStore.GetString(map, "name"),
                 TranslationStore.GetString(map, "subtitle"),
                 member.Generation,
                 member.IsFounder,
-                member.ImageUrl));
+                member.ImageUrl,
+                member.ParentId is null ? null : IdFormatter.ToStringId(member.ParentId.Value),
+                member.SortOrder));
         }
 
         return result;
