@@ -36,6 +36,50 @@ public static class TranslationStore
         }
     }
 
+    /// <summary>
+    /// Merges the provided fields into the existing translation JSON instead of replacing it.
+    /// </summary>
+    public static async Task MergeAsync(
+        Persistence.AppDbContext db,
+        string entityType,
+        int entityId,
+        string language,
+        object data,
+        CancellationToken cancellationToken = default)
+    {
+        var existing = await db.EntityTranslations
+            .FirstOrDefaultAsync(
+                x => x.EntityType == entityType && x.EntityId == entityId && x.Language == language,
+                cancellationToken);
+
+        var map = existing is null
+            ? new Dictionary<string, JsonElement>()
+            : JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(existing.DataJson)
+              ?? new Dictionary<string, JsonElement>();
+
+        using var patchDocument = JsonSerializer.SerializeToDocument(data);
+        foreach (var prop in patchDocument.RootElement.EnumerateObject())
+        {
+            map[prop.Name] = prop.Value.Clone();
+        }
+
+        var json = JsonSerializer.Serialize(map);
+        if (existing is null)
+        {
+            db.EntityTranslations.Add(new Domain.Entities.EntityTranslation
+            {
+                EntityType = entityType,
+                EntityId = entityId,
+                Language = language,
+                DataJson = json
+            });
+        }
+        else
+        {
+            existing.DataJson = json;
+        }
+    }
+
     public static async Task<Dictionary<string, JsonElement>> GetMapAsync(
         Persistence.AppDbContext db,
         string entityType,

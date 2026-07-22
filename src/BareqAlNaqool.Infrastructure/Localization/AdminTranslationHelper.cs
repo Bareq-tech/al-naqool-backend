@@ -18,6 +18,19 @@ public static class AdminTranslationHelper
         await db.SaveChangesAsync(cancellationToken);
     }
 
+    public static async Task MergeBilingualAsync(
+        AppDbContext db,
+        string entityType,
+        int entityId,
+        object enData,
+        object arData,
+        CancellationToken cancellationToken = default)
+    {
+        await TranslationStore.MergeAsync(db, entityType, entityId, "en", enData, cancellationToken);
+        await TranslationStore.MergeAsync(db, entityType, entityId, "ar", arData, cancellationToken);
+        await db.SaveChangesAsync(cancellationToken);
+    }
+
     public static async Task<(Dictionary<string, JsonElement> En, Dictionary<string, JsonElement> Ar)> GetBilingualAsync(
         AppDbContext db,
         string entityType,
