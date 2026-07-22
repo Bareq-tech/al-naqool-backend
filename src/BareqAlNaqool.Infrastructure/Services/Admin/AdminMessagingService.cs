@@ -55,7 +55,7 @@ public class AdminMessagingService(AppDbContext db) : IAdminMessagingService
             new { content = dto.ContentAr, senderName = admin.FullName, time = TimeAgoFormatter.FormatTime(message.SentAt, "ar") },
             cancellationToken);
 
-        await AdminTranslationHelper.SaveBilingualAsync(
+        await AdminTranslationHelper.MergeBilingualAsync(
             db,
             EntityTypes.Conversation,
             conversationId,

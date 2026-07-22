@@ -138,10 +138,34 @@ public class AdminConversationsService(AppDbContext db) : IAdminCrudService<Admi
     {
         var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.Conversation, item.Id, cancellationToken);
         var participantIds = item.Participants.Select(x => IdFormatter.ToStringId(x.UserId)).ToList();
+        var nameEn = AdminTranslationHelper.Get(en, "name");
+        var nameAr = AdminTranslationHelper.Get(ar, "name");
+
+        if (!item.IsGroup &&
+            (string.IsNullOrWhiteSpace(nameEn) || string.IsNullOrWhiteSpace(nameAr)) &&
+            item.Participants.Count > 0)
+        {
+            var participantUserId = item.Participants.First().UserId;
+            var user = await db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == participantUserId, cancellationToken);
+            var displayName = user is null
+                ? string.Empty
+                : (string.IsNullOrWhiteSpace(user.FullName) ? (user.UserName ?? string.Empty) : user.FullName);
+
+            if (string.IsNullOrWhiteSpace(nameEn))
+            {
+                nameEn = displayName;
+            }
+
+            if (string.IsNullOrWhiteSpace(nameAr))
+            {
+                nameAr = displayName;
+            }
+        }
+
         return new AdminConversationDto(
             IdFormatter.ToStringId(item.Id),
-            AdminTranslationHelper.Get(en, "name"),
-            AdminTranslationHelper.Get(ar, "name"),
+            nameEn,
+            nameAr,
             AdminTranslationHelper.Get(en, "lastMessage"),
             AdminTranslationHelper.Get(ar, "lastMessage"),
             item.IsGroup,
@@ -150,14 +174,20 @@ public class AdminConversationsService(AppDbContext db) : IAdminCrudService<Admi
             participantIds);
     }
 
-    private Task SaveTranslationsAsync(int id, AdminConversationCreateDto dto, CancellationToken cancellationToken) =>
-        AdminTranslationHelper.SaveBilingualAsync(
+    private async Task SaveTranslationsAsync(int id, AdminConversationCreateDto dto, CancellationToken cancellationToken)
+    {
+        var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.Conversation, id, cancellationToken);
+        var lastMessageEn = AdminTranslationHelper.Get(en, "lastMessage");
+        var lastMessageAr = AdminTranslationHelper.Get(ar, "lastMessage");
+
+        await AdminTranslationHelper.SaveBilingualAsync(
             db,
             EntityTypes.Conversation,
             id,
-            new { name = dto.NameEn, lastMessage = string.Empty, type = dto.Type },
-            new { name = dto.NameAr, lastMessage = string.Empty, type = dto.Type },
+            new { name = dto.NameEn, lastMessage = lastMessageEn, type = dto.Type },
+            new { name = dto.NameAr, lastMessage = lastMessageAr, type = dto.Type },
             cancellationToken);
+    }
 
     private async Task SyncParticipantsAsync(int conversationId, IReadOnlyList<string> participantUserIds, CancellationToken cancellationToken)
     {
