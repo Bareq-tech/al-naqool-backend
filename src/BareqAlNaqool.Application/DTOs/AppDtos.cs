@@ -31,7 +31,15 @@ public record FamilyBranchDto(string Id, string Name, int MemberCount, string De
 
 public record BranchMemberDto(string Id, string Name, string Role, string BranchId, string ImageUrl);
 
-public record TreeMemberDto(string Name, string Subtitle, int Generation, bool IsFounder, string ImageUrl);
+public record TreeMemberDto(
+    string Id,
+    string Name,
+    string Subtitle,
+    int Generation,
+    bool IsFounder,
+    string ImageUrl,
+    string? ParentId,
+    int SortOrder);
 
 public record ConversationDto(string Id, string Name, string LastMessage, string Time, int UnreadCount, bool IsGroup, string Type);
 
