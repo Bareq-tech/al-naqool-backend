@@ -74,3 +74,10 @@ public static class AppSettingKeys
     public const string AppBranding = "appBranding";
     public const string QuickAccessTiles = "quickAccessTiles";
 }
+
+public static class ConversationTypes
+{
+    public const string Direct = "Direct";
+    public const string Groups = "Groups";
+    public const string Announcements = "Announcements";
+}

@@ -30,16 +30,17 @@ public class AdminConversationsService(AppDbContext db) : IAdminCrudService<Admi
 
     public async Task<AdminConversationDto> CreateAsync(AdminConversationCreateDto dto, CancellationToken cancellationToken = default)
     {
+        var resolved = await ResolveConversationFieldsAsync(dto, cancellationToken);
         var entity = new Conversation
         {
-            IsGroup = dto.IsGroup,
-            TypeKey = dto.Type,
+            IsGroup = resolved.IsGroup,
+            TypeKey = resolved.Type!,
             LastMessageAt = DateTime.UtcNow
         };
         db.Conversations.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
-        await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
-        await SyncParticipantsAsync(entity.Id, dto.ParticipantUserIds, cancellationToken);
+        await SaveTranslationsAsync(entity.Id, resolved, cancellationToken);
+        await SyncParticipantsAsync(entity.Id, resolved.ParticipantUserIds, cancellationToken);
         entity = await db.Conversations.Include(x => x.Participants).FirstAsync(x => x.Id == entity.Id, cancellationToken);
         return await MapAsync(entity, cancellationToken);
     }
@@ -52,11 +53,15 @@ public class AdminConversationsService(AppDbContext db) : IAdminCrudService<Admi
             return null;
         }
 
-        entity.IsGroup = dto.IsGroup;
-        entity.TypeKey = dto.Type;
+        var resolved = await ResolveConversationFieldsAsync(
+            new AdminConversationCreateDto(dto.NameEn, dto.NameAr, dto.IsGroup, dto.Type, dto.ParticipantUserIds),
+            cancellationToken);
+
+        entity.IsGroup = resolved.IsGroup;
+        entity.TypeKey = resolved.Type!;
         await db.SaveChangesAsync(cancellationToken);
-        await SaveTranslationsAsync(entity.Id, dto, cancellationToken);
-        await SyncParticipantsAsync(entity.Id, dto.ParticipantUserIds, cancellationToken);
+        await SaveTranslationsAsync(entity.Id, resolved, cancellationToken);
+        await SyncParticipantsAsync(entity.Id, resolved.ParticipantUserIds, cancellationToken);
         entity = await db.Conversations.Include(x => x.Participants).FirstAsync(x => x.Id == entity.Id, cancellationToken);
         return await MapAsync(entity, cancellationToken);
     }
@@ -78,6 +83,57 @@ public class AdminConversationsService(AppDbContext db) : IAdminCrudService<Admi
         return true;
     }
 
+    private async Task<AdminConversationCreateDto> ResolveConversationFieldsAsync(
+        AdminConversationCreateDto dto,
+        CancellationToken cancellationToken)
+    {
+        if (dto.ParticipantUserIds is null || dto.ParticipantUserIds.Count == 0)
+        {
+            throw new ArgumentException("At least one participantUserId is required.");
+        }
+
+        if (dto.IsGroup)
+        {
+            if (string.IsNullOrWhiteSpace(dto.NameEn))
+            {
+                throw new ArgumentException("nameEn is required for group conversations.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.NameAr))
+            {
+                throw new ArgumentException("nameAr is required for group conversations.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Type))
+            {
+                throw new ArgumentException("type is required for group conversations.");
+            }
+
+            return dto with
+            {
+                NameEn = dto.NameEn.Trim(),
+                NameAr = dto.NameAr.Trim(),
+                Type = dto.Type.Trim()
+            };
+        }
+
+        var participantId = dto.ParticipantUserIds[0];
+        var userId = IdFormatter.ParseId(participantId);
+        var user = await db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == userId, cancellationToken)
+            ?? throw new ArgumentException($"Participant user '{participantId}' was not found.");
+
+        var displayName = string.IsNullOrWhiteSpace(user.FullName)
+            ? (user.UserName ?? participantId)
+            : user.FullName;
+
+        return dto with
+        {
+            NameEn = displayName,
+            NameAr = displayName,
+            Type = ConversationTypes.Direct
+        };
+    }
+
     private async Task<AdminConversationDto> MapAsync(Conversation item, CancellationToken cancellationToken)
     {
         var (en, ar) = await AdminTranslationHelper.GetBilingualAsync(db, EntityTypes.Conversation, item.Id, cancellationToken);
@@ -93,9 +149,6 @@ public class AdminConversationsService(AppDbContext db) : IAdminCrudService<Admi
             item.LastMessageAt,
             participantIds);
     }
-
-    private Task SaveTranslationsAsync(int id, AdminConversationUpdateDto dto, CancellationToken cancellationToken) =>
-        SaveTranslationsAsync(id, new AdminConversationCreateDto(dto.NameEn, dto.NameAr, dto.IsGroup, dto.Type, dto.ParticipantUserIds), cancellationToken);
 
     private Task SaveTranslationsAsync(int id, AdminConversationCreateDto dto, CancellationToken cancellationToken) =>
         AdminTranslationHelper.SaveBilingualAsync(

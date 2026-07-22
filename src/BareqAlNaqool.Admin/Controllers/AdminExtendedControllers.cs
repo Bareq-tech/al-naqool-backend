@@ -120,8 +120,53 @@ public class CouncilMeetingsAdminController(IAdminCrudService<AdminCouncilMeetin
     : AdminCrudController<AdminCouncilMeetingDto, AdminCouncilMeetingCreateDto, AdminCouncilMeetingUpdateDto>(service);
 
 [Route("api/admin/conversations")]
+[Authorize(Policy = "AdminOnly")]
+[ApiController]
 public class ConversationsAdminController(IAdminCrudService<AdminConversationDto, AdminConversationCreateDto, AdminConversationUpdateDto> service)
-    : AdminCrudController<AdminConversationDto, AdminConversationCreateDto, AdminConversationUpdateDto>(service);
+    : ControllerBase
+{
+    [HttpGet]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        => Ok(await service.GetAllAsync(cancellationToken));
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
+    {
+        var item = await service.GetByIdAsync(id, cancellationToken);
+        return item is null ? NotFound() : Ok(item);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] AdminConversationCreateDto dto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return Ok(await service.CreateAsync(dto, cancellationToken));
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(string id, [FromBody] AdminConversationUpdateDto dto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await service.UpdateAsync(id, dto, cancellationToken);
+            return item is null ? NotFound() : Ok(item);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
+        => await service.DeleteAsync(id, cancellationToken) ? NoContent() : NotFound();
+}
 
 [ApiController]
 [Authorize(Policy = "AdminOnly")]

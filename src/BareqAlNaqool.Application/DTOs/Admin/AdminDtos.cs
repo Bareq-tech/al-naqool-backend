@@ -554,17 +554,17 @@ public record AdminConversationDto(
     IReadOnlyList<string> ParticipantUserIds);
 
 public record AdminConversationCreateDto(
-    string NameEn,
-    string NameAr,
+    string? NameEn,
+    string? NameAr,
     bool IsGroup,
-    string Type,
+    string? Type,
     IReadOnlyList<string> ParticipantUserIds);
 
 public record AdminConversationUpdateDto(
-    string NameEn,
-    string NameAr,
+    string? NameEn,
+    string? NameAr,
     bool IsGroup,
-    string Type,
+    string? Type,
     IReadOnlyList<string> ParticipantUserIds);
 
 public record AdminChatMessageDto(
